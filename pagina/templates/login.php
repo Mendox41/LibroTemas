@@ -35,7 +35,6 @@
                 <input type="text" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Contraseña" required>
                 <button type="submit" id="loginBtn" class="btn btn-success">Iniciar Sesión</button>
-                <button type="submit" id="forgotPassBtn" class="btn btn-warning">Me olvide la contraseña</button>
             </form>
         </div>
 
