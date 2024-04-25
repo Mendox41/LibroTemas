@@ -532,10 +532,10 @@ CREATE TABLE `user` (
 CREATE TABLE `libro_temas` (
   `id_libro_tema` INT NOT NULL,
   `id_curcom` INT NOT NULL,
-  `tema` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(45) NULL,
-  `id_profesor` VARCHAR(45) NULL,
-  `id_relacion` VARCHAR(45) NULL,
+  `tema` VARCHAR(150) NULL,
+  `descripcion` NVARCHAR(245) NULL,
+  `id_profesor` INT NULL,
+  `id_relacion` INT NULL,
   PRIMARY KEY (`id_libro_tema`));
 
 
