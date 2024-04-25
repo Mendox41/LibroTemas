@@ -531,6 +531,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `libro_temas` (
   `id_libro_tema` INT NOT NULL,
+  `id_curcom` INT NOT NULL,
   `tema` VARCHAR(45) NULL,
   `descripcion` VARCHAR(45) NULL,
   `id_profesor` VARCHAR(45) NULL,
