@@ -1,17 +1,21 @@
 <?php
-include("../database/connection.php");
-include("../error_stmt/errorFunctions.php");
+// Incluir el archivo de conexión a la base de datos
+include(__DIR__ . "/../database/conection.php");
+
+// Incluir las funciones de error
+include(__DIR__ . "/../error_stmt/errorFunctions.php");
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$usuario = isset($_POST['usuario']) ? $_POST['usuario'] : null;
-$pass = isset($_POST['pass']) ? $_POST['pass'] : null;
+$user = isset($_POST['user']) ? $_POST['user'] : null;
+$password = isset($_POST['password']) ? $_POST['password'] : null;
 
 $result = new stdClass();
 $result->success = false;
 
-if (empty($usuario) || empty($pass)) {
+if (empty($user) || empty($password)) {
     error_request($result, "Todos los campos deben ser completados");
 }
 
@@ -24,7 +28,7 @@ if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
 }
 
-$stmt->bind_param("s", $usuario);
+$stmt->bind_param("s", $user);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
@@ -34,10 +38,11 @@ if (!$stmt->execute()) {
 $stmt->bind_result($id_usuario, $usuario, $stored_password, $active, $admin);
 $exists = $stmt->fetch();
 
+
 $stmt->close();
 
 // Verificar si el usuario existe y la contraseña es correcta
-if ($exists && password_verify($pass, $stored_password) && $active) {
+if ($exists && password_verify($password, $stored_password) && $active == 1) {
     
     // Crear una sesión para el usuario
     session_start();

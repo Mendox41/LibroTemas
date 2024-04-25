@@ -4,11 +4,8 @@
 /* 
 
 It needs the next parameters:
-    - Name: as 'name'.
-    - Last Name: as 'last_name'.
-    - Email: as 'email'.
-    - Password: as 'password'.
-    - Team: as 'team_name'.
+    - usuario: as 'usuario'.
+    - Password: as 'pass'.
 
 Returns:
     If the information was Okay, then redirect to login.
@@ -18,56 +15,42 @@ Returns:
 
 */
 
-include ("../database/connection.php");
+include(__DIR__ . "/../database/conection.php");
 include ("validation.php");
-include_once ("../error_stmt/errorFunctions.php");
-include_once ("../team/getIdTeam.php");
+include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
 
-$name = !empty($_POST['name']) ? $_POST['name'] : null;
-$last_name = !empty($_POST['last_name']) ? $_POST['last_name'] : null;
-$email = !empty($_POST['email']) ? $_POST['email'] : null;
-$plain_password = !empty($_POST['password']) ? $_POST['password'] : null;
-$team_name = !empty($_POST['team_name']) ? $_POST['team_name'] : null;
+$usuario = !empty($_POST['usuario']) ? $_POST['usuario'] : null;
+$plain_password = !empty($_POST['pass']) ? $_POST['pass'] : null;
+
 
 $result = new stdClass();
 $result->success = true;
 
-if(($name === null) || ($last_name === null) || ($email === null) || ($plain_password === null) || ($team_name === null)) {
+if(($usuario === null) || ($plain_password === null)) {
     error_request($result, "All field must be complete");
 }
 
-$databaseName = "marcianGol";
+$databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
-# Validate the email in the database
-if (!is_email_valid($conn, $email)){
-    error_request($result, "The email already exists.");
-} 
 
-# Validate the password format
-if (!is_pass_valid($plain_password)) {
-    error_request($result, "The password is not valid.");
-}
+// # Validate the pass format
+// if (!is_pass_valid($plain_password)) {
+//     error_request($result, "La contrasenia no es valida.");
+// }
 
 $hashed_password = password_hash($plain_password, PASSWORD_DEFAULT);
 
-# Get the id team of the user
-$id_team = get_team_id($conn, $team_name);
-
-if (!$id_team->success) {
-    error_request($result, "The team '" . $team_name ."' doesn't exists");
-}
-
 # Insert instruction
-$insertUserQuery = "INSERT INTO user (name, last_name, email, password, id_team) VALUES (?, ?, ?, ?, ?)";
+$insertUserQuery = "INSERT INTO usuarios (usuario, pass) VALUES (?, ?)";
 $stmt = $conn->prepare($insertUserQuery);
 
 if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
 }
 
-$stmt->bind_param("ssssi", $name, $last_name, $email, $hashed_password, $id_team->id_team);
+$stmt->bind_param("ss", $usuario, $hashed_password);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
