@@ -32,8 +32,6 @@ $stmt->bind_param("i", $id_usuario);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
-}else if{
-    
 }
 
 // Manejo de resultados
@@ -53,24 +51,24 @@ if (!$stmt->fetch()) {
    while ($fila = $stmt->fetch()) {
     $datoRelacion = new stdClass();
 
-    $datoRelacion -> id_curcom = $id_curcom[];
+    $datoRelacion -> id_curcom = $id_curcom;
     $datoRelacion ->id_relacion = $id_relacion;
-    $datoRelacion ->carrera = $carrera
-    $datoRelacion ->anio = $anio
-    $datoRelacion ->semestre = $semestre
-    $datoRelacion ->materia = $materia
-    $datoRelacion ->id_profesor = $id_profesor
-    $datoRelacion ->legajo = $legajo
-    $datoRelacion ->apellido_nombre = $apellido_nombre
-    $datoRelacion ->turno = $turno
-    $datoRelacion ->id_comision = $id_comision
-    $datoRelacion ->$comision = $comision
+    $datoRelacion ->carrera = $carrera;
+    $datoRelacion ->anio = $anio;
+    $datoRelacion ->semestre = $semestre;
+    $datoRelacion ->materia = $materia;
+    $datoRelacion ->id_profesor = $id_profesor;
+    $datoRelacion ->legajo = $legajo;
+    $datoRelacion ->apellido_nombre = $apellido_nombre;
+    $datoRelacion ->turno = $turno;
+    $datoRelacion ->id_comision = $id_comision;
+    $datoRelacion ->$comision = $comision;
 
     array_push($relacion, $datoRelacion);
    }
 
    $objRelacion = new stdClass();
-   $objRelacion -> relacion = $relacion 
+   $objRelacion -> relacion = $relacion; 
    $result -> respuesta = $objRelacion;
    $result->success = true;          
 }
