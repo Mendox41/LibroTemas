@@ -31,7 +31,7 @@ $(document).ready(function () {
 
         var objAjax = $.ajax({
             type: "post",
-            url: "../php/session/processLogin.php",
+            url: "../php/session/process-login.php",
             data: datosLoginForm,
             success: function (respuesta) {
                 var data = JSON.parse(respuesta);
@@ -52,13 +52,5 @@ $(document).ready(function () {
         });
 
     });
-
-    $('#registerBtn').click(function (event) {
-        event.preventDefault();
-
-        window.location.href = "register.html";
-
-    });
-
 
 });
