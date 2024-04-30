@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (isset($_SESSION['idSesion'])) {
+    header('Location: user/home.php');
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -30,9 +39,10 @@
         <div class="login-container">
             <h2>Login</h2>
             <form id="loginForm" class="login-form" method="post" action="../php/session/processLogin.php">
+
                 <label for="errorMessage" id="errorMessage" class="oculto"></label>
 
-                <input type="text" id="email" name="email" placeholder="Email" required>
+                <input type="text" id="email" name="email" placeholder="Email o Nombre de Usuario" required>
                 <input type="password" id="password" name="password" placeholder="Contraseña" required>
                 <button type="submit" id="loginBtn" class="btn btn-success">Iniciar Sesión</button>
             </form>
@@ -50,6 +60,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+
+    <!-- Google CND of Jquery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- Script validacion de login -->
+    <script src="../js/login.js"></script>
+
 </body>
 
 </html>
