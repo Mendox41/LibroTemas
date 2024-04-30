@@ -1,0 +1,37 @@
+body {
+    background-color: #951D1D;
+}
+
+.navbar {
+    background-color: white;
+}s
+
+main{
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; */
+}
+
+.main-container{
+     margin: 10%;
+     
+}
+
+.accordion{
+    --bs-accordion-btn-bg: #ffc0d3;
+    --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-active-color: white;
+    --bs-accordion-active-bg: #ff5c8d;
+
+
+}
