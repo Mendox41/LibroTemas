@@ -15,7 +15,7 @@ if (isset($_SESSION['idSesion'])) {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    $user = isset($_POST['user']) ? $_POST['user'] : null;
+    $user = isset($_POST['email']) ? $_POST['email'] : null;
     $password = isset($_POST['password']) ? $_POST['password'] : null;
 
     $result = new stdClass();
