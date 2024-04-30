@@ -38,7 +38,7 @@ if (isset($_SESSION['idSesion'])) {
     <main>
         <div class="login-container">
             <h2>Login</h2>
-            <form id="loginForm" class="login-form" method="post" action="../php/session/processLogin.php">
+            <form id="loginForm" class="login-form" method="post" action="">
 
                 <label for="errorMessage" id="errorMessage" class="oculto"></label>
 
