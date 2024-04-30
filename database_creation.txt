@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2024 a las 17:20:11
+-- Tiempo de generación: 30-04-2024 a las 18:46:17
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -20,11 +20,54 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `300hs_laborales`
 
-CREATE DATABASE 300hs_laborales;
+USE 300hs_laborales;
 --
 
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150))   BEGIN
+    SELECT 
+        id_usuario, 
+        usuario,
+        pass, 
+        isActive, 
+        isAdmin 
+    FROM usuarios 
+    WHERE usuario = log_user;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `materia_profesor` (IN `id_user` INT)   BEGIN
+ SELECT 
+        t1.id_curso, 
+        T2.id_relacion, 
+        T6.carrera, 
+        T7.anio, 
+        T8.semestre, 
+        T9.materia, 
+        T1.id_profesor,
+        T3.legajo ,
+        T3.apellido_nombre, 
+        T4.turno, 
+        T1.id_comision ,
+        T5.comision 
+    FROM cursos AS T1
+    INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+    INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
+    INNER JOIN turnos as T4 ON T4.id_turno = T1.id_turno
+    INNER JOIN comisiones as T5 ON T5.id_comision = T1.id_comision
+    INNER JOIN carreras AS T6 ON T6.id_carrera = T2.id_carrera
+    INNER JOIN anios AS T7 ON T7.id_anio = T2.id_anio
+    INNER JOIN semestres AS T8 ON T8.id_semestre = T2.id_semestre
+    INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
+    WHERE T3.id_usuario = id_user
+    ORDER BY t6.carrera;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
-USE 300hs_laborales;
 
 --
 -- Estructura de tabla para la tabla `anios`
@@ -93,41 +136,64 @@ INSERT INTO `comisiones` (`id_comision`, `comision`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `curcom`
+-- Estructura de tabla para la tabla `cursos`
 --
 
-CREATE TABLE `curcom` (
-  `id_curcom` int NOT NULL,
+CREATE TABLE `cursos` (
+  `id_curso` int NOT NULL,
   `id_relacion` int DEFAULT NULL,
   `id_comision` int DEFAULT NULL,
   `id_profesor` int DEFAULT NULL,
-  `id_turno` int DEFAULT NULL
+  `id_turno` int DEFAULT NULL,
+  `isActive` smallint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `curcom`
+-- Volcado de datos para la tabla `cursos`
 --
 
-INSERT INTO `curcom` (`id_curcom`, `id_relacion`, `id_comision`, `id_profesor`, `id_turno`) VALUES
-(1, 1, 1, 1, 3),
-(2, 1, 1, 15, 3),
-(3, 10, 1, 22, 3),
-(4, 41, 1, 33, 1),
-(5, 41, 1, 3, 1),
-(6, 29, 1, 10, 1),
-(7, 29, 1, 26, 1),
-(8, 92, 1, 2, 3),
-(9, 90, 1, 18, 3),
-(11, 112, 1, 25, 3),
-(12, 113, 1, 12, 1)
-(3, 1, 18, 3),
-(37, 1, 18, 2),
-(53, 1, 18, 2),
-(90, 1, 18, 3),
-(93, 1, 18, 3),
-(68, 1, 1, 1),
-(20, 1, 1, 3),
-(20, 1, 26, 3);
+INSERT INTO `cursos` (`id_curso`, `id_relacion`, `id_comision`, `id_profesor`, `id_turno`, `isActive`) VALUES
+(1, 1, 1, 1, 3, NULL),
+(2, 1, 1, 15, 3, NULL),
+(3, 10, 1, 22, 3, NULL),
+(4, 41, 1, 33, 1, NULL),
+(5, 41, 1, 3, 1, NULL),
+(6, 29, 1, 10, 1, NULL),
+(7, 29, 1, 26, 1, NULL),
+(8, 92, 1, 2, 3, NULL),
+(9, 90, 1, 18, 3, NULL),
+(11, 112, 1, 25, 3, NULL),
+(12, 113, 1, 12, 1, NULL),
+(13, 3, 1, 18, 3, NULL),
+(14, 37, 1, 18, 2, NULL),
+(15, 53, 1, 18, 2, NULL),
+(17, 93, 1, 18, 3, NULL),
+(18, 68, 1, 1, 1, NULL),
+(19, 20, 1, 1, 3, NULL),
+(20, 20, 1, 26, 3, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `libro_temas`
+--
+
+CREATE TABLE `libro_temas` (
+  `id_libro_tema` int NOT NULL,
+  `id_curso` int NOT NULL,
+  `tema` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `descripcion` varchar(245) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `id_profesor` int DEFAULT NULL,
+  `id_relacion` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `libro_temas`
+--
+
+INSERT INTO `libro_temas` (`id_libro_tema`, `id_curso`, `tema`, `descripcion`, `id_profesor`, `id_relacion`) VALUES
+(1, 18, 'Linux', 'hoy di linux terminal', 1, 68),
+(2, 14, 'Python', 'hoy di python basico', 18, 37);
 
 -- --------------------------------------------------------
 
@@ -283,52 +349,53 @@ CREATE TABLE `profesores` (
   `telefono_2` varchar(45) DEFAULT NULL,
   `celular` varchar(45) DEFAULT NULL,
   `mail_comunidad` varchar(45) DEFAULT NULL,
-  `mail_secundario` varchar(45) DEFAULT NULL
+  `mail_secundario` varchar(45) DEFAULT NULL,
+  `id_usuario` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `carrera`, `telefono_1`, `telefono_2`, `celular`, `mail_comunidad`, `mail_secundario`) VALUES
-(1, 8738, 'AGUILERA, Sergio', 'Titular', 'IT', '', '4511-4716/07', '15-5993-4982', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar '),
-(2, 8827, 'ALDEGANI, Gustavo', 'Adjunto I', 'IT', '4953-6711', '', '15-4430-0728', 'gustavo.aldegani', 'aldegani@arnet.com.ar'),
-(3, 8744, 'ANGELERI, Paula María', 'Titular', 'IT', '4796-4207', '', '15-6262-2423', 'paula.angeleri', 'paula.angeleri@ub.edu.ar'),
-(4, 16069, 'ARGOTA BICHARA, Maria Patricia', 'Coord. Doc.', 'IT', '', '', '15-3792-2490      ', 'patricia.argota', ''),
-(5, 8944, 'BLANCO, Miguel Angel', 'Asociado', 'IT', '', '', '15-3067-4547      ', 'miguel.blanco', ''),
-(6, 8943, 'BOCCATONDA, Carmen', 'Coord. Doc.', 'IT', '', '2914029490', '', 'carmen.boccatonda', ''),
-(7, 8935, 'BREST, Pedro', 'Coord. Doc.', 'IT', '', '', '', 'pedro.brest', 'pbrest@hotmail.com'),
-(8, 8862, 'CEBALLOS, Jorge Luis', 'Titular', 'IT', '4703-1421', '', '15-4085-9312', 'jorge.ceballos', 'ceballos001@yahoo.com.ar'),
-(9, 30253, 'CERDA, Natalia Soledad', 'JTP', 'IT', '', '', '15-4578-9761', 'natalia.cerda', ''),
-(10, 8410, 'CICINELLI, Diana', 'Asociado', 'IT', '4901-7717', '', '15-3271-8062', 'diana.cicinelli', 'dcicinelli@gmail.com'),
-(11, 8902, 'COCENTINO, Mariano', 'Titular', 'IT', '490-21413', '', ' 6006-2516', 'mariano.cocentino', 'MSC@marianok.com.ar'),
-(12, 8937, 'DAITTER, Patricia', 'Coord. Doc.', 'IT', '', '', '', 'patricia.daitter', 'patricia.daitter@gmail.com'),
-(13, 14469, 'DALLOCCHIO, Estefanía', 'JTP', 'IT', '4632-9684', '4632-9684', '15-4175-0886', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar'),
-(14, 8942, 'DI FAZIO, Karina', 'Adj.III de Grado ', 'IT', '', '', '15-3227-5847      ', 'karina.difazio', ''),
-(15, 8866, 'DURÁN, José', 'Asociado', 'IT', '4772-4675', '', '15-4496-8255', 'jose.duran', 'jedo370@gmail.com'),
-(16, 8938, 'ESTEVES, Carlos', 'Coord. Doc.', 'IT', '', '', '', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar'),
-(17, 14435, 'FERNANDEZ CROCCO, Gabriel', 'Adjunto I', 'IT', '', '5274-6262', '15-5937-1045', 'gabriel.fernandez', 'gafernandez@rocketmail.com'),
-(18, 8239, 'GREINER, Laura C', 'Asociado', 'IT', '4797-3511', '4015-1851', '15-3001-4542', 'laura.greiner', 'lgreiner@anses.gov.ar'),
-(19, 8628, 'HADAD, Graciela', 'Titular', 'IT', '4786-6363', '', '15-5960-6941', 'graciela.hadad', 'gracielahadad@gmail.com'),
-(20, 8946, 'MARCHINI, jorge', 'Coord. Doc.', 'IT', '', '', '15-4085-1988      ', 'jorge.marchini', ''),
-(21, 14402, 'KLEINER, Roberto', 'Titular', 'I', '4862-0352', '', '15-5114-0062', 'roberto.kleiner', 'roberto.kleiner55@gmail.com'),
-(22, 8918, 'MENAL, Claudio Marcelo', 'Adjunto II', 'IT', '4758-2246', '4758-2246', '15-6895-0786', 'claudio.menal', 'marcelomenal@gmail.com'),
-(23, 8849, 'MENGIDE, Juán Pablo', 'Adjunto II', 'IT', '4782-0622', '', '15-5798-6081', 'juanpablo.mengide', ''),
-(24, 8873, 'MITARITONNA, Alejandro', 'Asociado', 'IT', '4796-4046', '', '15-3057-5049', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com'),
-(25, 8915, 'MOSCUZZA GUIDONI, Marcelo', 'Adjunto II', 'IT', '4210-3493', '4210-3493', '15-3098-3099', 'marcelo.moscuzza', 'moscuzzama@yahoo.com'),
-(26, 8840, 'PICCIN, Ana María', 'Titular', 'IT', '4805-8264', '', '15-3124-1678', 'ana.piccin', 'anapiccin@yahoo.com'),
-(27, 8158, 'PICCIRILLI, Darío', 'Titular', 'IT', '4805-2284', '', '15-4446-0765', 'dario.piccirilli', 'dariopiccirilli@gmail.com'),
-(28, 14503, 'PUYOL, Orlando', 'Asociado', 'IT', '4861-4553', '4000-7600', 'NO USA', 'orlando.puyol', 'puyol.orlando@gmail.com'),
-(29, 21092, 'RAFFO, Daniela', 'JTP', 'IT', '4502-6164', '', '15-5008-6957', 'daniela.raffo', 'madaraf123@hotmail.com'),
-(30, 8914, 'REINOSA, Enrique José', 'Titular', 'IT', '4555-7382', '4342-0199', '', 'enrique.reinosa', 'ereinosa@gmail.com'),
-(31, 8901, 'SEBASTIAN, Alberto', 'Adjunto III', 'IT', '4524-9176', '', '15-4147-9251', 'sebastian.alberto', 'asebastian@outlook.com.ar'),
-(32, 8947, 'SECATORE, Miguel', 'Coord. Doc.', 'IT', '', '', '15-2252-6556', 'miguela.secatore', ''),
-(33, 8809, 'TITIOSKY, Rolando', 'Titular', 'IT', '', '', '15-6478-9926', 'rolando.titiosky', 'rolando.titiosky@gmail.com'),
-(34, 8871, 'TORO, Juán Roberto', 'Adjunto III', 'IT', '', '1124094170', '15-5513-0176', 'juan.toro', 'j_r_toro@hotmail.com'),
-(35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', '3526-0409', '', '15-3153-2216', 'adrian.tozzi', ''),
-(36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', '', '', '15-4427-2000/4551-5899', 'guillermina.zambrana', ''),
-(37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', '', '', '1553183221', 'macarena.gorgal', ''),
-(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', '4701-4011', '', '15-5425-7993', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com');
+INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `carrera`, `telefono_1`, `telefono_2`, `celular`, `mail_comunidad`, `mail_secundario`, `id_usuario`) VALUES
+(1, 8738, 'AGUILERA, Sergio', 'Titular', 'IT', '', '4511-4716/07', '15-5993-4982', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2'),
+(2, 8827, 'ALDEGANI, Gustavo', 'Adjunto I', 'IT', '4953-6711', '', '15-4430-0728', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL),
+(3, 8744, 'ANGELERI, Paula María', 'Titular', 'IT', '4796-4207', '', '15-6262-2423', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL),
+(4, 16069, 'ARGOTA BICHARA, Maria Patricia', 'Coord. Doc.', 'IT', '', '', '15-3792-2490      ', 'patricia.argota', '', NULL),
+(5, 8944, 'BLANCO, Miguel Angel', 'Asociado', 'IT', '', '', '15-3067-4547      ', 'miguel.blanco', '', NULL),
+(6, 8943, 'BOCCATONDA, Carmen', 'Coord. Doc.', 'IT', '', '2914029490', '', 'carmen.boccatonda', '', NULL),
+(7, 8935, 'BREST, Pedro', 'Coord. Doc.', 'IT', '', '', '', 'pedro.brest', 'pbrest@hotmail.com', NULL),
+(8, 8862, 'CEBALLOS, Jorge Luis', 'Titular', 'IT', '4703-1421', '', '15-4085-9312', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL),
+(9, 30253, 'CERDA, Natalia Soledad', 'JTP', 'IT', '', '', '15-4578-9761', 'natalia.cerda', '', NULL),
+(10, 8410, 'CICINELLI, Diana', 'Asociado', 'IT', '4901-7717', '', '15-3271-8062', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL),
+(11, 8902, 'COCENTINO, Mariano', 'Titular', 'IT', '490-21413', '', ' 6006-2516', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL),
+(12, 8937, 'DAITTER, Patricia', 'Coord. Doc.', 'IT', '', '', '', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL),
+(13, 14469, 'DALLOCCHIO, Estefanía', 'JTP', 'IT', '4632-9684', '4632-9684', '15-4175-0886', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL),
+(14, 8942, 'DI FAZIO, Karina', 'Adj.III de Grado ', 'IT', '', '', '15-3227-5847      ', 'karina.difazio', '', NULL),
+(15, 8866, 'DURÁN, José', 'Asociado', 'IT', '4772-4675', '', '15-4496-8255', 'jose.duran', 'jedo370@gmail.com', NULL),
+(16, 8938, 'ESTEVES, Carlos', 'Coord. Doc.', 'IT', '', '', '', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL),
+(17, 14435, 'FERNANDEZ CROCCO, Gabriel', 'Adjunto I', 'IT', '', '5274-6262', '15-5937-1045', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL),
+(18, 8239, 'GREINER, Laura C', 'Asociado', 'IT', '4797-3511', '4015-1851', '15-3001-4542', 'laura.greiner', 'lgreiner@anses.gov.ar', '3'),
+(19, 8628, 'HADAD, Graciela', 'Titular', 'IT', '4786-6363', '', '15-5960-6941', 'graciela.hadad', 'gracielahadad@gmail.com', NULL),
+(20, 8946, 'MARCHINI, jorge', 'Coord. Doc.', 'IT', '', '', '15-4085-1988      ', 'jorge.marchini', '', NULL),
+(21, 14402, 'KLEINER, Roberto', 'Titular', 'I', '4862-0352', '', '15-5114-0062', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL),
+(22, 8918, 'MENAL, Claudio Marcelo', 'Adjunto II', 'IT', '4758-2246', '4758-2246', '15-6895-0786', 'claudio.menal', 'marcelomenal@gmail.com', NULL),
+(23, 8849, 'MENGIDE, Juán Pablo', 'Adjunto II', 'IT', '4782-0622', '', '15-5798-6081', 'juanpablo.mengide', '', NULL),
+(24, 8873, 'MITARITONNA, Alejandro', 'Asociado', 'IT', '4796-4046', '', '15-3057-5049', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL),
+(25, 8915, 'MOSCUZZA GUIDONI, Marcelo', 'Adjunto II', 'IT', '4210-3493', '4210-3493', '15-3098-3099', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL),
+(26, 8840, 'PICCIN, Ana María', 'Titular', 'IT', '4805-8264', '', '15-3124-1678', 'ana.piccin', 'anapiccin@yahoo.com', NULL),
+(27, 8158, 'PICCIRILLI, Darío', 'Titular', 'IT', '4805-2284', '', '15-4446-0765', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL),
+(28, 14503, 'PUYOL, Orlando', 'Asociado', 'IT', '4861-4553', '4000-7600', 'NO USA', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL),
+(29, 21092, 'RAFFO, Daniela', 'JTP', 'IT', '4502-6164', '', '15-5008-6957', 'daniela.raffo', 'madaraf123@hotmail.com', NULL),
+(30, 8914, 'REINOSA, Enrique José', 'Titular', 'IT', '4555-7382', '4342-0199', '', 'enrique.reinosa', 'ereinosa@gmail.com', NULL),
+(31, 8901, 'SEBASTIAN, Alberto', 'Adjunto III', 'IT', '4524-9176', '', '15-4147-9251', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL),
+(32, 8947, 'SECATORE, Miguel', 'Coord. Doc.', 'IT', '', '', '15-2252-6556', 'miguela.secatore', '', NULL),
+(33, 8809, 'TITIOSKY, Rolando', 'Titular', 'IT', '', '', '15-6478-9926', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL),
+(34, 8871, 'TORO, Juán Roberto', 'Adjunto III', 'IT', '', '1124094170', '15-5513-0176', 'juan.toro', 'j_r_toro@hotmail.com', NULL),
+(35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', '3526-0409', '', '15-3153-2216', 'adrian.tozzi', '', NULL),
+(36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', '', '', '15-4427-2000/4551-5899', 'guillermina.zambrana', '', NULL),
+(37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', '', '', '1553183221', 'macarena.gorgal', '', NULL),
+(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', '4701-4011', '', '15-5425-7993', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -511,10 +578,10 @@ INSERT INTO `turnos` (`id_turno`, `turno`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `usuarios` (
   `id_usuario` int NOT NULL,
   `usuario` varchar(200) DEFAULT NULL,
   `pass` varchar(250) DEFAULT NULL,
@@ -522,23 +589,17 @@ CREATE TABLE `user` (
   `isAdmin` smallint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `libro_temas`
+-- Volcado de datos para la tabla `usuarios`
 --
 
-CREATE TABLE `libro_temas` (
-  `id_libro_tema` INT NOT NULL,
-  `id_curcom` INT NOT NULL,
-  `tema` VARCHAR(150) NULL,
-  `descripcion` NVARCHAR(245) NULL,
-  `id_profesor` INT NULL,
-  `id_relacion` INT NULL,
-  PRIMARY KEY (`id_libro_tema`));
-
-
+INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`) VALUES
+(1, 'admin', '1234', 1, 1),
+(2, 'sergio', '$2y$10$Hh3a4lXNUX2E7EBb3bT5Y./48twVXqgdPAgYat.Zst//ssadadsda', 1, 0),
+(3, 'laura', '1234', 1, 0),
+(4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0),
+(5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0),
+(6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0);
 
 --
 -- Índices para tablas volcadas
@@ -563,10 +624,16 @@ ALTER TABLE `comisiones`
   ADD PRIMARY KEY (`id_comision`);
 
 --
--- Indices de la tabla `curcom`
+-- Indices de la tabla `cursos`
 --
-ALTER TABLE `curcom`
-  ADD PRIMARY KEY (`id_curcom`);
+ALTER TABLE `cursos`
+  ADD PRIMARY KEY (`id_curso`);
+
+--
+-- Indices de la tabla `libro_temas`
+--
+ALTER TABLE `libro_temas`
+  ADD PRIMARY KEY (`id_libro_tema`);
 
 --
 -- Indices de la tabla `materias`
@@ -599,10 +666,32 @@ ALTER TABLE `turnos`
   ADD PRIMARY KEY (`id_turno`);
 
 --
--- Indices de la tabla `user`
+-- Indices de la tabla `usuarios`
 --
-ALTER TABLE `user`
+ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `libro_temas`
+--
+ALTER TABLE `libro_temas`
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
