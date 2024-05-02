@@ -60,7 +60,16 @@ if (isset($_SESSION['idSesion'])) {
         $_SESSION['admin'] = $admin;
 
         $result->success = true;
-    }
+    }else if ($exists && password_verify($password, $stored_password) && $active == 0){
+        $result->message = 'El usuario se encuentra desactivado';
+        $result->success = false;
+        
+
+    }else{
+        $result->message = 'El email o la contraseña son incorrectos';
+        $result->success = false;
+
+    };
 
     echo json_encode($result);
 
