@@ -7,7 +7,6 @@ if (!isset($_SESSION['idSession'])) {
     exit();
 }else if ($_SESSION['admin'] ===  1) {
     header("location:../../templates/admin/home.php");
-    exit();
 }
 
 ?>
