@@ -26,7 +26,7 @@ include('../../php/session/validate-admin.php');
         <header>
             <!-- place navbar here -->
         </header>
-        <main></main>
+        <main>Holis soy el home del admin</main>
         <footer>
             <!-- place footer here -->
         </footer>
