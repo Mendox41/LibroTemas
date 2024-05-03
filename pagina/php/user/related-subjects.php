@@ -37,6 +37,7 @@ if (!$stmt->execute()) {
 $stmt->bind_result($id_curcom, $id_relacion, $carrera, $anio, $semestre, $materia, $id_profesor, $legajo, $apellido_nombre, $turno, $id_comision, $comision);
 
 $relacion = [];
+$cont = 0;
 
 while ($stmt->fetch()) {
     $datoRelacion = new stdClass();
@@ -54,16 +55,20 @@ while ($stmt->fetch()) {
     $datoRelacion->id_comision = $id_comision;
     $datoRelacion->comision = $comision;
 
+    $cont += 1;
+
     array_push($relacion, $datoRelacion);
 }
 
 if (empty($relacion)) {
     error_request($result, "No hay resultados para ese ID: " . $id_usuario);
 } else {
-    $objRelacion = new stdClass();
-    $objRelacion->relacion = $relacion;
-    $result->respuesta = $objRelacion;
+    // $objRelacion = new stdClass();
+    // $objRelacion->relacion = $relacion;
+    $result->respuesta = $relacion;
+    $result->cantidadRelaciones = $cont ;
     $result->success = true;
+
 }
 
 $stmt->close();
