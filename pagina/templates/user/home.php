@@ -1,5 +1,5 @@
 <?php
-include('../../php/session/validate-session.php');
+include ('../../php/session/validate-session.php');
 ?>
 
 
@@ -45,7 +45,7 @@ include('../../php/session/validate-session.php');
                             <a class="nav-link" href="#">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../php/session/destroy-session.php" >Cerrar Sesión</a>
+                            <a class="nav-link" href="../../php/session/destroy-session.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -275,9 +275,12 @@ include('../../php/session/validate-session.php');
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 
+    <!-- Google CND of Jquery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
     <!-- js -->
-    
+    <script src="../../js/user/user-actions.js"></script>
 
 </body>
 
