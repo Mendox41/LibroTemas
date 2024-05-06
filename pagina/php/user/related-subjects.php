@@ -5,6 +5,7 @@ include(__DIR__ . "/../database/conection.php");
 // Incluir las funciones de error
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
+mb_internal_encoding("UTF-8");
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -20,6 +21,7 @@ if (empty($id_usuario)) {
 
 $db_name = "300hs_laborales";
 mysqli_select_db($conn, $db_name);
+// $conn->set_charset("utf8");
 
 // Llamada al procedimiento almacenado
 $stmt = $conn->prepare("CALL materia_profesor(?)");
@@ -34,7 +36,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_curcom, $id_profesor, $id_relacion, $id_carrera, $carrera, $id_anio, $c_anio, $id_materia, $materia, $comision, $turno, $semestre);
+$stmt->bind_result($id_curcom, $id_profesor, $id_relacion, $id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $comision, $turno, $semestre);
 
 $relacion = [];
 $cont = 0;
@@ -48,11 +50,11 @@ while ($stmt->fetch()) {
     $datoRelacion->id_carrera = $id_carrera;
     $datoRelacion->carrera = $carrera;
     $datoRelacion->id_anio = $id_anio;
-    $datoRelacion->c_anio = $c_anio;
+    $datoRelacion->anio = $anio;
     $datoRelacion->id_materia = $id_materia;
     $datoRelacion->materia = $materia;
-    $datoRelacion->comision = $comision;
     $datoRelacion->turno = $turno;
+    $datoRelacion->comision = $comision;
     $datoRelacion->semestre = $semestre;
 
     $cont += 1;
