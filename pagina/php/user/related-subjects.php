@@ -34,7 +34,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_curcom, $id_relacion, $carrera, $anio, $semestre, $materia, $id_profesor, $legajo, $apellido_nombre, $turno, $id_comision, $comision);
+$stmt->bind_result($id_curcom, $id_profesor, $id_relacion, $id_carrera, $carrera, $id_anio, $c_anio, $id_materia, $materia, $comision, $turno, $semestre);
 
 $relacion = [];
 $cont = 0;
@@ -43,17 +43,17 @@ while ($stmt->fetch()) {
     $datoRelacion = new stdClass();
 
     $datoRelacion->id_curcom = $id_curcom;
-    $datoRelacion->id_relacion = $id_relacion;
-    $datoRelacion->carrera = $carrera;
-    $datoRelacion->anio = $anio;
-    $datoRelacion->semestre = $semestre;
-    $datoRelacion->materia = $materia;
     $datoRelacion->id_profesor = $id_profesor;
-    $datoRelacion->legajo = $legajo;
-    $datoRelacion->apellido_nombre = $apellido_nombre;
-    $datoRelacion->turno = $turno;
-    $datoRelacion->id_comision = $id_comision;
+    $datoRelacion->id_relacion = $id_relacion;
+    $datoRelacion->id_carrera = $id_carrera;
+    $datoRelacion->carrera = $carrera;
+    $datoRelacion->id_anio = $id_anio;
+    $datoRelacion->c_anio = $c_anio;
+    $datoRelacion->id_materia = $id_materia;
+    $datoRelacion->materia = $materia;
     $datoRelacion->comision = $comision;
+    $datoRelacion->turno = $turno;
+    $datoRelacion->semestre = $semestre;
 
     $cont += 1;
 
