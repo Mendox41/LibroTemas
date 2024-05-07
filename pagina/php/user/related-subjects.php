@@ -53,8 +53,9 @@ while ($stmt->fetch()) {
     $datoRelacion->anio = $anio;
     $datoRelacion->id_materia = $id_materia;
     $datoRelacion->materia = $materia;
+    $datoRelacion->id_turno = $id_turno;
     $datoRelacion->turno = $turno;
-    $datoRelacion->comision = $comision;
+    $datoRelacion->id_comision = $id_comision;
     $datoRelacion->semestre = $semestre;
 
     $cont += 1;
