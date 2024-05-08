@@ -20,9 +20,10 @@ SET time_zone = "+00:00";
 
 CREATE DATABASE IF NOT EXISTS 300hs_laborales;
 
+
 --
 USE 300hs_laborales;
---
+
 
 DELIMITER $$
 --
@@ -206,7 +207,16 @@ INSERT INTO `cursos` (`id_curso`, `id_relacion`, `id_comision`, `id_profesor`, `
 (17, 93, 1, 18, 3, 1, '2024'),
 (18, 68, 1, 1, 1, 1, '2024'),
 (19, 20, 1, 1, 3, 1, '2024'),
-(20, 20, 1, 26, 3, 1, '2024');
+(20, 20, 1, 26, 3, 1, '2024'),
+(39, 83, 1, 99, 3, 1, '2024'),
+(40, 86, 1, 99, 3, 1, '2024'),
+(41, 91, 1, 99, 3, 1, '2024'),
+(42, 88, 1, 99, 3, 1, '2024'),
+(43, 89, 1, 99, 3, 1, '2024'),
+(44, 88, 2, 99, 3, 1, '2024'),
+(45, 89, 2, 99, 3, 1, '2024'),
+(46, 90, 2, 99, 1, 1, '2024'),
+(47, 92, 2, 99, 1, 1, '2024');
 
 -- --------------------------------------------------------
 
@@ -434,7 +444,8 @@ INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `
 (35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', '3526-0409', '', '15-3153-2216', 'adrian.tozzi', '', NULL),
 (36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', '', '', '15-4427-2000/4551-5899', 'guillermina.zambrana', '', NULL),
 (37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', '', '', '1553183221', 'macarena.gorgal', '', NULL),
-(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', '4701-4011', '', '15-5425-7993', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL);
+(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', '4701-4011', '', '15-5425-7993', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL),
+(99, 410, 'Mendoza, Tomas', 'Estudiante', 'IT', '1111-1111', '11-1111-1111', '11-1111-1111', 'mendoza.tomas', 'tgmendoza@outlook.com', '99');
 
 -- --------------------------------------------------------
 
@@ -640,7 +651,8 @@ INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`) 
 (3, 'laura', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0),
 (4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0),
 (5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0),
-(6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0);
+(6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0),
+(99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0);
 
 --
 -- Índices para tablas volcadas
@@ -720,7 +732,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
@@ -732,7 +744,7 @@ ALTER TABLE `libro_temas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
