@@ -46,9 +46,9 @@ $(document).ready(function () {
                             var materiaAnterior;
                             var id_collapse_number = 1;
 
-                            var accordion_carrera_anterior;
-                            var accordion_anio_carrera_anterior;
-                            var accordion_materia_anterior;
+                            // var accordion_carrera_anterior;
+                            // var accordion_anio_carrera_anterior;
+                            // var accordion_materia_anterior;
 
                             var accordion_body_carrera_anterior;
                             var accordion_body_anio_carrera_anterior;
@@ -74,7 +74,7 @@ $(document).ready(function () {
                                 // creo button y le asigno la respectiva clase y atrubutos de bootstrap
                                 var button_carrera = document.createElement("button");
                                 button_carrera.classList.add("accordion-button", "collapsed");
-                                button_carrera.setAttribute("type", "false");
+                                button_carrera.setAttribute("type", false);
                                 button_carrera.setAttribute("data-bs-toggle", "collapse");
 
                                 // creo variables y les asigno valores que se diferencien de otros para controlar elementos de mejor manera
@@ -110,6 +110,8 @@ $(document).ready(function () {
                                 // Creo una variable accordion_body_carrera para luego insertrla en div_collapse_carrera dandole clase e id
                                 var accordion_body_carrera = document.createElement("div");
                                 accordion_body_carrera.classList.add("accordion-body");
+
+
                                 // agrego id
                                 var concat_accordion_body_carrera_id = "accordion-body-" + relacion.id_carrera;
                                 accordion_body_carrera.id = concat_accordion_body_carrera_id;
@@ -132,6 +134,8 @@ $(document).ready(function () {
                                 // Creo un nuevo accordion
 
                                 var accordion_anio_carrera = document.createElement("div");
+
+
                                 var concat_anio_carrera = "accordion-" + relacion.anio + "-" + relacion.id_carrera;
                                 accordion_anio_carrera.id = concat_anio_carrera;
                                 accordion_anio_carrera.classList.add("accordion");
@@ -150,7 +154,7 @@ $(document).ready(function () {
                                 // creo button y le asigno la respectiva clase y atrubutos de bootstrap
                                 var button_anio_carrera = document.createElement("button");
                                 button_anio_carrera.classList.add("accordion-button", "collapsed");
-                                button_anio_carrera.setAttribute("type", "false");
+                                button_anio_carrera.setAttribute("type", false);
                                 button_anio_carrera.setAttribute("data-bs-toggle", "collapse");
 
                                 // creo variables y les asigno valores que se diferencien de otros para controlar elementos de mejor manera
@@ -181,11 +185,12 @@ $(document).ready(function () {
 
 
                                 // Creo esta variable para usar como data-bs-parent mas adelante
-                                var id_accordion_anio_carrera = "#" + concat_anio_carrera;
+
+                                var id_accordion_body_carrera = "#" + concat_accordion_body_carrera_id;
 
                                 // seteo clase y atributos a div_collapse_anio_carrera
                                 div_collapse_anio_carrera.classList.add("accordion-collapse", "collapse");
-                                div_collapse_anio_carrera.setAttribute("data-bs-parent", id_accordion_anio_carrera); //cambiar accordionMain por concat_anio_carrera
+                                div_collapse_anio_carrera.setAttribute("data-bs-parent", id_accordion_body_carrera); //cambiar accordionMain por concat_anio_carrera
 
                                 // Creo una variable accordion_body_anio_carrera para luego insertrla en div_collapse_anio_carrera dandole clase e id
                                 var accordion_body_anio_carrera = document.createElement("div");
@@ -227,7 +232,7 @@ $(document).ready(function () {
                                 // creo button y le asigno la respectiva clase y atrubutos de bootstrap
                                 var button_materia = document.createElement("button");
                                 button_materia.classList.add("accordion-button", "collapsed");
-                                button_materia.setAttribute("type", "false");
+                                button_materia.setAttribute("type", false);
                                 button_materia.setAttribute("data-bs-toggle", "collapse");
 
                                 // creo variables y les asigno valores que se diferencien de otros para controlar elementos de mejor manera
@@ -258,12 +263,12 @@ $(document).ready(function () {
 
 
                                 // Creo esta variable para usar como data-bs-parent mas adelante
-                                var id_accordion_materia = "#" + concat_materia;
+                                var id_accordion_body_anio_carrera = "#" + concat_accordion_body_anio_carrera_id;
 
 
                                 // seteo clase y atributos a div_collapse_materia
                                 div_collapse_materia.classList.add("accordion-collapse", "collapse");
-                                div_collapse_materia.setAttribute("data-bs-parent", id_accordion_materia); //cambiar accordionMain por concat_materia (seria el acordion donde va materia)
+                                div_collapse_materia.setAttribute("data-bs-parent", id_accordion_body_anio_carrera); //cambiar accordionMain por concat_materia (seria el acordion donde va materia)
 
                                 // Creo una variable accordion_body_materia para luego insertrla en div_collapse_materia dandole clase e id
                                 var accordion_body_materia = document.createElement("div");
@@ -279,7 +284,7 @@ $(document).ready(function () {
 
 
 
-                        
+
 
 
 
@@ -308,7 +313,7 @@ $(document).ready(function () {
                                 // creo button y le asigno la respectiva clase y atrubutos de bootstrap
                                 var button_comision = document.createElement("button");
                                 button_comision.classList.add("accordion-button", "collapsed");
-                                button_comision.setAttribute("type", "false");
+                                button_comision.setAttribute("type", false);
                                 button_comision.setAttribute("data-bs-toggle", "collapse");
 
                                 // creo variables y les asigno valores que se diferencien de otros para controlar elementos de mejor manera
@@ -341,11 +346,11 @@ $(document).ready(function () {
 
 
                                 // Creo esta variable para usar como data-bs-parent mas adelante
-                                var id_accordion_comision = "#" + concat_comision;
+                                var id_accordion_body_materia = "#" + concat_accordion_body_materia_id;
 
                                 // seteo clase y atributos a div_collapse_comision
                                 div_collapse_comision.classList.add("accordion-collapse", "collapse");
-                                div_collapse_comision.setAttribute("data-bs-parent", id_accordion_comision); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
+                                div_collapse_comision.setAttribute("data-bs-parent", id_accordion_body_materia); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
 
                                 // Creo una variable accordion_body_comision para luego insertrla en div_collapse_comision dandole clase e id
                                 var accordion_body_comision = document.createElement("div");
@@ -365,7 +370,7 @@ $(document).ready(function () {
 
                                 // Comparar el elemento actual con el anterior
                                 if (relacion.carrera === carreraAnterior) {
-                        
+
                                     console.log("La carrera actual es igual a la anterior.");
                                     console.log(relacion.carrera);
 
@@ -383,29 +388,62 @@ $(document).ready(function () {
                                             console.log("La materia actual es igual a la anterior.");
                                             console.log(relacion.materia);
 
+                                            accordion_comison.appendChild(accordion_Item_comision);
+                                            document.getElementById(accordion_body_materia_anterior).appendChild(accordion_comison);
+
 
 
 
                                         } else {
                                             console.log("La materia actual es distinta a la anterior.")
-                         
+
+                                            accordion_materia.appendChild(accordion_Item_materia);
+                                            document.getElementById(accordion_body_anio_carrera_anterior).appendChild(accordion_materia);
+
+                                            // agrego el accordion accordion de comision a accordion body de materia
+                                            accordion_comison.appendChild(accordion_Item_comision);
+                                            document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
+
+
+                                            materiaAnterior = relacion.materia;
+                                            accordion_body_materia_anterior = concat_accordion_body_materia_id;
+
+
                                         };
-                                     
-                                        materiaAnterior = relacion.materia;
-                              
+
 
                                     } else {
-                                    
+
                                         console.log("El año actual es distinto que el anterior.")
+                                        // agrego el accordion de año carrera a accordion body de carrera con valor similar a la anterior
+
+
+                                        // agrego el accordion item de año carrera a el accordion de la = año carrera
+                                        accordion_anio_carrera.appendChild(accordion_Item_anio_Carrera);
+                                        document.getElementById(accordion_body_carrera_anterior).appendChild(accordion_anio_carrera);
+
+                                        // agrego el accordion materia a accordion body de año carrera
+                                        accordion_materia.appendChild(accordion_Item_materia);
+                                        document.getElementById(concat_accordion_body_anio_carrera_id).appendChild(accordion_materia);
+
+                                        // agrego el accordion accordion de comision a accordion body de materia
+                                        accordion_comison.appendChild(accordion_Item_comision);
+                                        document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
+
+
+
+                                        accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
+
+
+                                        // actualizo el valor del año
+                                        console.log(anioAnterior);
+                                        anioAnterior = relacion.anio;
+                                        console.log(anioAnterior);
+
 
                                         // reinicio el valor de materiaAnterior
                                         materiaAnterior = '';
                                     };
-
-                                    console.log(anioAnterior);
-                                    // actualizo el valor del año
-                                    anioAnterior = relacion.anio;
-                                    console.log(anioAnterior);
 
 
                                 } else {
@@ -430,7 +468,7 @@ $(document).ready(function () {
 
                                     // Actualizar el elemento anterior para la próxima iteración
                                     carreraAnterior = relacion.carrera;
-                                    accordion_carrera_anterior = concat_accordion_body_carrera_id;
+                                    accordion_body_carrera_anterior = concat_accordion_body_carrera_id;
 
                                     // reinico el valor de anioAnterior y materiaAnterior
                                     anioAnterior = '';
