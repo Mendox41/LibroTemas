@@ -33,7 +33,7 @@ $(document).ready(function () {
 
                         // alert(data_related_subjects.success)
                         // alert(data_related_subjects.cantidadRelaciones)
-                        var cont = 0;
+                        var primer_accordion = 0;
                         var cant_relaciones = data_related_subjects.cantidadRelaciones;
 
                         var accordionMain = document.getElementById('accordionMain');
@@ -364,29 +364,26 @@ $(document).ready(function () {
                                 accordion_Item_comision.appendChild(div_collapse_comision);
 
 
-
-
-
-
                                 // Comparar el elemento actual con el anterior
                                 if (relacion.carrera === carreraAnterior) {
 
                                     console.log("La carrera actual es igual a la anterior.");
                                     console.log(relacion.carrera);
-
+                                    console.log('-----------');
 
                                     // comparo el año de la carrera actual con el anterior
                                     if (relacion.anio === anioAnterior) {
                                         console.log("El año actual es igual que el anterior.");
                                         console.log(relacion.anio);
-
-
-
+                                        console.log('-----------');
 
                                         // comparo la materia actual con la anterior
                                         if (relacion.materia === materiaAnterior) {
                                             console.log("La materia actual es igual a la anterior.");
                                             console.log(relacion.materia);
+                                            console.log(relacion.comision);
+                                            console.log('-----------');
+
 
                                             accordion_comison.appendChild(accordion_Item_comision);
                                             document.getElementById(accordion_body_materia_anterior).appendChild(accordion_comison);
@@ -396,6 +393,9 @@ $(document).ready(function () {
 
                                         } else {
                                             console.log("La materia actual es distinta a la anterior.")
+                                            console.log(relacion.materia)
+                                            console.log(relacion.comision);
+                                            console.log('-----------');
 
                                             accordion_materia.appendChild(accordion_Item_materia);
                                             document.getElementById(accordion_body_anio_carrera_anterior).appendChild(accordion_materia);
@@ -403,20 +403,18 @@ $(document).ready(function () {
                                             // agrego el accordion accordion de comision a accordion body de materia
                                             accordion_comison.appendChild(accordion_Item_comision);
                                             document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
-
-
+                                            
+                                            // actualizo los valores anteriores con los actuales
                                             materiaAnterior = relacion.materia;
                                             accordion_body_materia_anterior = concat_accordion_body_materia_id;
-
-
                                         };
 
 
                                     } else {
 
                                         console.log("El año actual es distinto que el anterior.")
-                                        // agrego el accordion de año carrera a accordion body de carrera con valor similar a la anterior
-
+                                        console.log(relacion.anio);
+                                        console.log('-----------');
 
                                         // agrego el accordion item de año carrera a el accordion de la = año carrera
                                         accordion_anio_carrera.appendChild(accordion_Item_anio_Carrera);
@@ -431,18 +429,14 @@ $(document).ready(function () {
                                         document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
 
 
-
-                                        accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
-
-
-                                        // actualizo el valor del año
-                                        console.log(anioAnterior);
+                                        // actualizo los valores anteriores con los actuales
                                         anioAnterior = relacion.anio;
-                                        console.log(anioAnterior);
+                                        materiaAnterior = relacion.materia;
 
+                                        // actualizo los accordion body con los valores creado actuales y sus respectivos id
+                                        accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
+                                        accordion_body_materia_anterior = concat_accordion_body_materia_id;
 
-                                        // reinicio el valor de materiaAnterior
-                                        materiaAnterior = '';
                                     };
 
 
@@ -465,28 +459,32 @@ $(document).ready(function () {
                                     document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
 
                                     id_collapse_number += 1;
-
-                                    // Actualizar el elemento anterior para la próxima iteración
+                              
+                                    // Actualizo las variables de control respecto a la carrera, año y materia anterior para la próxima iteración
                                     carreraAnterior = relacion.carrera;
+                                    anioAnterior = relacion.anio;
+                                    materiaAnterior = relacion.materia;
+
+                                    // actualizo los valores de los accordion body para la proxima iteracion agregandoles el id creado de cada uno
                                     accordion_body_carrera_anterior = concat_accordion_body_carrera_id;
-
-                                    // reinico el valor de anioAnterior y materiaAnterior
-                                    anioAnterior = '';
-                                    materiaAnterior = '';
-
+                                    accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
+                                    accordion_body_materia_anterior = concat_accordion_body_materia_id;
 
                                     console.log("La carrera actual es diferente a la anterior.");
+                                    console.log(relacion.carrera);
+                                    console.log(relacion.anio);
+                                    console.log(relacion.materia);
+                                    console.log(relacion.comision);
+                                    console.log('-----------');
+
                                 }
-
-
-
 
                             })
 
 
                         } else {
                             alert('No posee cursos asociados')
-                        }
+                        };
 
 
                     },
