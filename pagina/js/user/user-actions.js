@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // variables para almacenar valores de la sesion
     var id_usuario;
     var usuario;
     var active;
@@ -14,6 +15,7 @@ $(document).ready(function () {
 
             var dataSession = JSON.parse(respuesta);
 
+            // adjunto los datos de las variables de sesion en las variables creadas previamente
             id_usuario = dataSession.id_usuario;
             usuario = dataSession.usuario;
             active = dataSession.active;
@@ -33,13 +35,11 @@ $(document).ready(function () {
 
                         // alert(data_related_subjects.success)
                         // alert(data_related_subjects.cantidadRelaciones)
-                        var primer_accordion = 0;
                         var cant_relaciones = data_related_subjects.cantidadRelaciones;
 
-                        var accordionMain = document.getElementById('accordionMain');
-
-
                         if (data_related_subjects.success == true && data_related_subjects.cantidadRelaciones > 0) {
+
+                            // variables que tomaran valores para comparar en la iteracion mas adelante
 
                             var carreraAnterior;
                             var anioAnterior;
@@ -49,7 +49,6 @@ $(document).ready(function () {
                             var accordion_anios_carrera_anterior; // Va dentro de accordion body de carrera
                             var accordion_materias_anterior; // Va dentro de accordion body de anio
                             var accordion_comisiones_anterior; // Va dentro de accordion body de materia
-
 
                             var accordion_body_carrera_anterior;
                             var accordion_body_anio_carrera_anterior;
@@ -62,7 +61,7 @@ $(document).ready(function () {
 
 
 
-
+                            // Recorro el json para crear los accordion con los datos recolectados de la respuesta del Back
                             data_related_subjects.respuesta.forEach(function (relacion) {
 
                                 // CARRERA ------------------------------------------------------------------------------------------------
@@ -136,7 +135,7 @@ $(document).ready(function () {
                                 // agrego el div_collapse_carrera a accordion_Item_Carrera
                                 accordion_Item_Carrera.appendChild(div_collapse_carrera);
 
-                     
+
 
                                 // AÑO CARRERA ------------------------------------------------------------------------------------------------
 
@@ -182,7 +181,7 @@ $(document).ready(function () {
                                 div_collapse_anio_carrera.id = id_collapse_anio_carrera;
 
                                 id_collapse_number += 1;
-        
+
                                 // seteo clase y atributos a div_collapse_anio_carrera
                                 div_collapse_anio_carrera.classList.add("accordion-collapse", "collapse");
 
@@ -342,18 +341,23 @@ $(document).ready(function () {
                                 // Comparar el elemento actual con el anterior
                                 if (relacion.carrera === carreraAnterior) {
 
+                                    // Muestro en consola para controlar valores y condiciones
                                     console.log("La carrera actual es igual a la anterior.");
                                     console.log(relacion.carrera);
                                     console.log('-----------');
 
                                     // comparo el año de la carrera actual con el anterior
                                     if (relacion.anio === anioAnterior) {
+
+                                        // Muestro en consola para controlar valores y condiciones
                                         console.log("El año actual es igual que el anterior.");
                                         console.log(relacion.anio);
                                         console.log('-----------');
 
                                         // comparo la materia actual con la anterior
                                         if (relacion.materia === materiaAnterior) {
+
+                                            // Muestro en consola para controlar valores y condiciones
                                             console.log("La materia actual es igual a la anterior.");
                                             console.log(relacion.materia);
                                             console.log(relacion.comision);
@@ -377,6 +381,8 @@ $(document).ready(function () {
 
 
                                         } else {
+
+                                            // Muestro en consola para controlar valores y condiciones
                                             console.log("La materia actual es distinta a la anterior.")
                                             console.log(relacion.materia)
                                             console.log(relacion.comision);
@@ -418,6 +424,7 @@ $(document).ready(function () {
 
                                     } else {
 
+                                        // Muestro en consola para controlar valores y condiciones
                                         console.log("El año actual es distinto que el anterior.")
                                         console.log(relacion.anio);
                                         console.log('-----------');
@@ -541,7 +548,8 @@ $(document).ready(function () {
                                     data_bs_parent_materia_anterior = data_bs_parent_concat_accordion_materia_id;
                                     data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
 
-
+                                    
+                                    // Muestro en consola para controlar valores y condiciones
                                     console.log("La carrera actual es diferente a la anterior.");
                                     console.log(relacion.carrera);
                                     console.log(relacion.anio);
