@@ -318,7 +318,6 @@ $(document).ready(function () {
                                 // seteo clase y atributos a div_collapse_comision
                                 div_collapse_comision.classList.add("accordion-collapse", "collapse");
 
-                                // NO VA - div_collapse_comision.setAttribute("data-bs-parent", id_accordion_body_materia); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
 
                                 // Creo una variable accordion_body_comision para luego insertrla en div_collapse_comision dandole clase e id
                                 var accordion_body_comision = document.createElement("div");
@@ -330,6 +329,29 @@ $(document).ready(function () {
                                 div_collapse_comision.appendChild(accordion_body_comision);
                                 // agrego el div_collapse_comision a accordion_Item_comision
                                 accordion_Item_comision.appendChild(div_collapse_comision);
+
+                                // Creo boton para gregar un nuevo tema con id de curcom
+                                var btn_agregar_nuevo_tema = document.createElement("button");
+                                btn_agregar_nuevo_tema.textContent = 'Agregar nuevo Tema';
+                                btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
+                                btn_agregar_nuevo_tema.id = 'btn_nuevo_tema';
+                                btn_agregar_nuevo_tema.setAttribute("id_curso", relacion.id_curcom);
+                                accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
+
+                                // agrego la funcion de hacer visible la ventana para gregar un nuevo tema con los valores recolectados del btn clickeado
+                                btn_agregar_nuevo_tema.onclick = function () {
+                                    alert(relacion.id_curcom);
+            
+                                    $("#footer").addClass("contenedor-pasivo");
+                                    $("#header").addClass("contenedor-pasivo");
+                                    $("#main-conteiner").addClass("contenedor-pasivo");
+                                    $("#ventanaModif").removeClass("modal-hidden");
+                                    fillSelectModi();
+                                    $('#enviarFormModify').prop('disabled', false);
+                                    completarFormAuto(auto.id);
+                                    // todoListoParaModify()
+            
+                                };
 
 
                                 // Comparar el elemento actual con el anterior
@@ -366,16 +388,6 @@ $(document).ready(function () {
 
                                             // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
                                             accordion_comisiones_anterior = concat_accordion_comision_id;
-
-                                            // Creo boton para gregar un nuevo tema con id de curcom
-                                            var btn_agregar_nuevo_tema = document.createElement("button");
-                                            btn_agregar_nuevo_tema.textContent = 'Agregar nuevo Tema';
-                                            btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
-                                            btn_agregar_nuevo_tema.id = relacion.id_curcom;
-                                            accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
-
-
-
 
                                         } else {
 
@@ -415,13 +427,6 @@ $(document).ready(function () {
                                             accordion_comisiones_anterior = concat_accordion_comision_id;
 
                                             data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
-
-                                            // Creo boton para gregar un nuevo tema con id de curcom
-                                            var btn_agregar_nuevo_tema = document.createElement("button");
-                                            btn_agregar_nuevo_tema.textContent = 'Agregar nuevo Tema';
-                                            btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
-                                            btn_agregar_nuevo_tema.id = relacion.id_curcom;
-                                            accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
 
                                         };
 
@@ -482,14 +487,6 @@ $(document).ready(function () {
                                         data_bs_parent_materia_anterior = data_bs_parent_concat_accordion_materia_id;
                                         data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
 
-                                        // Creo boton para gregar un nuevo tema con id de curcom
-                                        var btn_agregar_nuevo_tema = document.createElement("button");
-                                        btn_agregar_nuevo_tema.textContent = 'Agregar nuevo Tema';
-                                        btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
-                                        btn_agregar_nuevo_tema.id = relacion.id_curcom;
-                                        accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
-
-
                                     };
 
 
@@ -535,14 +532,6 @@ $(document).ready(function () {
 
                                     // agrego el accordion item comision al accodion comision
                                     accordion_comison.appendChild(accordion_Item_comision);
-
-                                    // Creo boton para gregar un nuevo tema con id de curcom
-                                    var btn_agregar_nuevo_tema = document.createElement("button");
-                                    btn_agregar_nuevo_tema.textContent = 'Agregar nuevo Tema';
-                                    btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
-                                    btn_agregar_nuevo_tema.id = relacion.id_curcom;
-                                    accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
-
 
                                     // ----------------
 
