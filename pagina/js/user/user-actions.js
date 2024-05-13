@@ -6,7 +6,6 @@ $(document).ready(function () {
     var active;
     var admin;
 
-
     $.ajax({
         url: '../../php/session/get-session.php',
         type: 'GET',
@@ -57,8 +56,6 @@ $(document).ready(function () {
                             var data_bs_parent_anio_carrera_anterior;
                             var data_bs_parent_materia_anterior;
                             var data_bs_parent_comision_anterior;
-
-
 
 
                             // Recorro el json para crear los accordion con los datos recolectados de la respuesta del Back
@@ -128,13 +125,10 @@ $(document).ready(function () {
                                 accordion_anio_carrera.classList.add("accordion");
 
 
-
-
                                 // agrego accordion_body_carrera a div_collapse_carrera
                                 div_collapse_carrera.appendChild(accordion_body_carrera);
                                 // agrego el div_collapse_carrera a accordion_Item_Carrera
                                 accordion_Item_Carrera.appendChild(div_collapse_carrera);
-
 
 
                                 // AÑO CARRERA ------------------------------------------------------------------------------------------------
@@ -363,22 +357,15 @@ $(document).ready(function () {
                                             console.log(relacion.comision);
                                             console.log('-----------');
 
-
                                             // COMISION
                                             // agrego el accordion comision al accordion body de materia
                                             document.getElementById(accordion_comisiones_anterior).appendChild(accordion_Item_comision);
 
-
                                             // le agrego el data-bs-parent correcto a accordion item de comison
                                             div_collapse_comision.setAttribute("data-bs-parent", data_bs_parent_comision_anterior);
 
-
-
                                             // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
                                             accordion_comisiones_anterior = concat_accordion_comision_id;
-
-
-
 
                                         } else {
 
@@ -548,7 +535,7 @@ $(document).ready(function () {
                                     data_bs_parent_materia_anterior = data_bs_parent_concat_accordion_materia_id;
                                     data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
 
-                                    
+
                                     // Muestro en consola para controlar valores y condiciones
                                     console.log("La carrera actual es diferente a la anterior.");
                                     console.log(relacion.carrera);
@@ -573,7 +560,6 @@ $(document).ready(function () {
                 });
 
             }
-
 
         }, error: function (error) {
             console.log(error);
