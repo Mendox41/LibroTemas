@@ -28,10 +28,10 @@ main{
 }
 
 .accordion{
-    --bs-accordion-btn-bg: #ffc0d3;
+    --bs-accordion-btn-bg: #ffdede;
     --bs-accordion-btn-focus-box-shadow: none;
     --bs-accordion-active-color: white;
-    --bs-accordion-active-bg: #ff5c8d;
+    --bs-accordion-active-bg: #7a1616;
 
 
 }
