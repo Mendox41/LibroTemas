@@ -20,7 +20,7 @@ $(document).ready(function () {
             admin = dataSession.admin;
 
             if (dataSession.success == true && id_usuario !== null && id_usuario !== undefined) {
-                alert(id_usuario);
+                // alert(id_usuario);
 
                 $.ajax({
                     url: '../../php/user/related-subjects.php',
@@ -28,7 +28,7 @@ $(document).ready(function () {
                     data: { 'id_usuario': id_usuario },
 
                     success: function (segunda_respuesta) {
-                        alert(segunda_respuesta);
+                        // alert(segunda_respuesta);
                         var data_related_subjects = JSON.parse(segunda_respuesta);
 
                         // alert(data_related_subjects.success)
@@ -46,13 +46,19 @@ $(document).ready(function () {
                             var materiaAnterior;
                             var id_collapse_number = 1;
 
-                            // var accordion_carrera_anterior;
-                            // var accordion_anio_carrera_anterior;
-                            // var accordion_materia_anterior;
+                            var accordion_anios_carrera_anterior; // Va dentro de accordion body de carrera
+                            var accordion_materias_anterior; // Va dentro de accordion body de anio
+                            var accordion_comisiones_anterior; // Va dentro de accordion body de materia
+
 
                             var accordion_body_carrera_anterior;
                             var accordion_body_anio_carrera_anterior;
                             var accordion_body_materia_anterior;
+
+                            var data_bs_parent_anio_carrera_anterior;
+                            var data_bs_parent_materia_anterior;
+                            var data_bs_parent_comision_anterior;
+
 
 
 
@@ -116,29 +122,23 @@ $(document).ready(function () {
                                 var concat_accordion_body_carrera_id = "accordion-body-" + relacion.id_carrera;
                                 accordion_body_carrera.id = concat_accordion_body_carrera_id;
 
+                                // creo un accordion dentro del accordion body de carrera (accordion_body_carrera)
+                                var accordion_anio_carrera = document.createElement("div");
+                                var concat_accordion_anio_carrera_id = "accordion-anio-carrera-" + relacion.id_carrera;
+                                accordion_anio_carrera.id = concat_accordion_anio_carrera_id;
+                                accordion_anio_carrera.classList.add("accordion");
+
+
+
+
                                 // agrego accordion_body_carrera a div_collapse_carrera
                                 div_collapse_carrera.appendChild(accordion_body_carrera);
                                 // agrego el div_collapse_carrera a accordion_Item_Carrera
                                 accordion_Item_Carrera.appendChild(div_collapse_carrera);
 
-
-
-
-
+                     
 
                                 // AÑO CARRERA ------------------------------------------------------------------------------------------------
-
-
-
-
-                                // Creo un nuevo accordion
-
-                                var accordion_anio_carrera = document.createElement("div");
-
-
-                                var concat_anio_carrera = "accordion-" + relacion.anio + "-" + relacion.id_carrera;
-                                accordion_anio_carrera.id = concat_anio_carrera;
-                                accordion_anio_carrera.classList.add("accordion");
 
 
                                 // Creo un nuevo accordion item separado
@@ -182,21 +182,16 @@ $(document).ready(function () {
                                 div_collapse_anio_carrera.id = id_collapse_anio_carrera;
 
                                 id_collapse_number += 1;
-
-
-                                // Creo esta variable para usar como data-bs-parent mas adelante
-
-                                var id_accordion_body_carrera = "#" + concat_accordion_body_carrera_id;
-
+        
                                 // seteo clase y atributos a div_collapse_anio_carrera
                                 div_collapse_anio_carrera.classList.add("accordion-collapse", "collapse");
-                                div_collapse_anio_carrera.setAttribute("data-bs-parent", id_accordion_body_carrera); //cambiar accordionMain por concat_anio_carrera
+
 
                                 // Creo una variable accordion_body_anio_carrera para luego insertrla en div_collapse_anio_carrera dandole clase e id
                                 var accordion_body_anio_carrera = document.createElement("div");
                                 accordion_body_anio_carrera.classList.add("accordion-body");
                                 // agrego id
-                                var concat_accordion_body_anio_carrera_id = "accordion-body-" + relacion.anio + "-" + relacion.id_carrera;
+                                var concat_accordion_body_anio_carrera_id = "accordion-body-" + relacion.id_anio + "-" + relacion.id_carrera;
                                 accordion_body_anio_carrera.id = concat_accordion_body_anio_carrera_id;
 
                                 // agrego accordion_body_anio_carrera a div_collapse_anio_carrera
@@ -204,20 +199,14 @@ $(document).ready(function () {
                                 // agrego el div_collapse_anio_carrera a accordion_Item_anio_Carrera
                                 accordion_Item_anio_Carrera.appendChild(div_collapse_anio_carrera);
 
-
+                                //  creo un accordion para agregar las materias (accordion item materia ) del respectivo año carrera
+                                var accordion_materia = document.createElement("div");
+                                var concat_accordion_materia_id = "accordion-anio-carrera-materia-" + relacion.id_carrera + '-' + relacion.id_anio;
+                                accordion_materia.id = concat_accordion_materia_id;
+                                accordion_materia.classList.add("accordion");
 
 
                                 // Materia> ------------------------------------------------------------------------------------------------
-
-
-                                // Creo un nuevo accordion
-
-                                //  <div class="accordion" id="accordionMateria">
-                                var accordion_materia = document.createElement("div");
-                                var concat_materia = "accordion-" + relacion.carrera + '-' + relacion.id_anio + "-" + relacion.id_materia;
-                                accordion_materia.id = concat_materia;
-                                accordion_materia.classList.add("accordion");
-
 
                                 // Creo un nuevo accordion item separado
 
@@ -262,19 +251,15 @@ $(document).ready(function () {
                                 id_collapse_number += 1;
 
 
-                                // Creo esta variable para usar como data-bs-parent mas adelante
-                                var id_accordion_body_anio_carrera = "#" + concat_accordion_body_anio_carrera_id;
-
-
                                 // seteo clase y atributos a div_collapse_materia
                                 div_collapse_materia.classList.add("accordion-collapse", "collapse");
-                                div_collapse_materia.setAttribute("data-bs-parent", id_accordion_body_anio_carrera); //cambiar accordionMain por concat_materia (seria el acordion donde va materia)
+
 
                                 // Creo una variable accordion_body_materia para luego insertrla en div_collapse_materia dandole clase e id
                                 var accordion_body_materia = document.createElement("div");
                                 accordion_body_materia.classList.add("accordion-body");
                                 // agrego id
-                                var concat_accordion_body_materia_id = "accordion-body-" + relacion.carrera + '-' + relacion.id_anio + "-" + relacion.id_materia;
+                                var concat_accordion_body_materia_id = "accordion-body-" + relacion.id_carrera + '-' + relacion.id_anio + "-" + relacion.id_materia;
                                 accordion_body_materia.id = concat_accordion_body_materia_id;
 
                                 // agrego accordion_body_materia a div_collapse_materia
@@ -284,21 +269,14 @@ $(document).ready(function () {
 
 
 
-
-
+                                //  creo un accordion para agregar las comisiones (accordion item comison ) de la respectiva materia del respectivo año de la carrera
+                                var accordion_comison = document.createElement("div");
+                                var concat_accordion_comision_id = "accordion-anio-carrera-materia-comision-" + relacion.id_carrera + '-' + relacion.id_anio + "-" + relacion.id_materia;
+                                accordion_comison.id = concat_accordion_comision_id;
+                                accordion_comison.classList.add("accordion");
 
 
                                 // Comision  ------------------------------------------------------------------------------------------------
-
-
-                                // Creo un nuevo accordion
-
-                                //  <div class="accordion" id="accordionMateria">
-                                var accordion_comison = document.createElement("div");
-                                var concat_comision = "accordion-" + relacion.id_carrera + '-' + relacion.id_anio + "-" + relacion.id_materia + '-' + relacion.id_comison + '-' + relacion.id_turno;
-                                accordion_comison.id = concat_comision;
-                                accordion_comison.classList.add("accordion");
-
 
                                 // Creo un nuevo accordion item separado
 
@@ -344,19 +322,16 @@ $(document).ready(function () {
 
                                 id_collapse_number += 1;
 
-
-                                // Creo esta variable para usar como data-bs-parent mas adelante
-                                var id_accordion_body_materia = "#" + concat_accordion_body_materia_id;
-
                                 // seteo clase y atributos a div_collapse_comision
                                 div_collapse_comision.classList.add("accordion-collapse", "collapse");
-                                div_collapse_comision.setAttribute("data-bs-parent", id_accordion_body_materia); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
+
+                                // NO VA - div_collapse_comision.setAttribute("data-bs-parent", id_accordion_body_materia); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
 
                                 // Creo una variable accordion_body_comision para luego insertrla en div_collapse_comision dandole clase e id
                                 var accordion_body_comision = document.createElement("div");
                                 accordion_body_comision.classList.add("accordion-body");
                                 // agrego id
-                                accordion_body_comision.id = "accordion-body-" + relacion.carrera + '-' + relacion.id_anio + "-" + relacion.id_materia + "-" + relacion.id_comision + '-' + relacion.id_turno;
+                                accordion_body_comision.id = "accordion-body-" + relacion.id_carrera + '-' + relacion.id_anio + "-" + relacion.id_materia + "-" + relacion.id_comision + '-' + relacion.id_turno;
 
                                 // agrego accordion_body_comision a div_collapse_comision
                                 div_collapse_comision.appendChild(accordion_body_comision);
@@ -385,8 +360,18 @@ $(document).ready(function () {
                                             console.log('-----------');
 
 
-                                            accordion_comison.appendChild(accordion_Item_comision);
-                                            document.getElementById(accordion_body_materia_anterior).appendChild(accordion_comison);
+                                            // COMISION
+                                            // agrego el accordion comision al accordion body de materia
+                                            document.getElementById(accordion_comisiones_anterior).appendChild(accordion_Item_comision);
+
+
+                                            // le agrego el data-bs-parent correcto a accordion item de comison
+                                            div_collapse_comision.setAttribute("data-bs-parent", data_bs_parent_comision_anterior);
+
+
+
+                                            // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
+                                            accordion_comisiones_anterior = concat_accordion_comision_id;
 
 
 
@@ -397,16 +382,37 @@ $(document).ready(function () {
                                             console.log(relacion.comision);
                                             console.log('-----------');
 
-                                            accordion_materia.appendChild(accordion_Item_materia);
-                                            document.getElementById(accordion_body_anio_carrera_anterior).appendChild(accordion_materia);
+                                            // MATERIA
+                                            // agrego el accordion materia al accordion body de anio carrera
+                                            // document.getElementById(concat_accordion_body_anio_carrera_id).appendChild(accordion_materia);
+                                            document.getElementById(accordion_materias_anterior).appendChild(accordion_Item_materia);
 
-                                            // agrego el accordion accordion de comision a accordion body de materia
-                                            accordion_comison.appendChild(accordion_Item_comision);
+
+                                            // le agrego el data-bs-parent correcto a accordion item de materia
+                                            div_collapse_materia.setAttribute("data-bs-parent", data_bs_parent_materia_anterior);
+
+
+                                            // COMISION
+                                            // agrego el accordion comision al accordion body de materia
                                             document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
-                                            
+
+                                            // le agrego el data-bs-parent correcto a accordion item de comison
+                                            var data_bs_parent_concat_accordion_comision_id = "#" + concat_accordion_comision_id;
+                                            div_collapse_comision.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_comision_id); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
+
+
+                                            // agrego el accordion item comision al accodion comision
+                                            accordion_comison.appendChild(accordion_Item_comision);
+
                                             // actualizo los valores anteriores con los actuales
                                             materiaAnterior = relacion.materia;
                                             accordion_body_materia_anterior = concat_accordion_body_materia_id;
+
+                                            // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
+                                            accordion_comisiones_anterior = concat_accordion_comision_id;
+
+                                            data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
+
                                         };
 
 
@@ -417,17 +423,37 @@ $(document).ready(function () {
                                         console.log('-----------');
 
                                         // agrego el accordion item de año carrera a el accordion de la = año carrera
-                                        accordion_anio_carrera.appendChild(accordion_Item_anio_Carrera);
-                                        document.getElementById(accordion_body_carrera_anterior).appendChild(accordion_anio_carrera);
+                                        // AÑO CARRERA
+                                        // Agrego el item año carrera al accordion de la misma carrera anterior (cuando el año es distinto al anterior)
+                                        document.getElementById(accordion_anios_carrera_anterior).appendChild(accordion_Item_anio_Carrera);
 
-                                        // agrego el accordion materia a accordion body de año carrera
-                                        accordion_materia.appendChild(accordion_Item_materia);
+                                        // le agrego el data-bs-parent correcto a accordion item de anio_carrera anterior
+                                        div_collapse_anio_carrera.setAttribute("data-bs-parent", data_bs_parent_anio_carrera_anterior);
+
+
+                                        // MATERIA
+                                        // agrego el accordion materia al accordion body de anio carrera
                                         document.getElementById(concat_accordion_body_anio_carrera_id).appendChild(accordion_materia);
 
-                                        // agrego el accordion accordion de comision a accordion body de materia
-                                        accordion_comison.appendChild(accordion_Item_comision);
+                                        // le agrego el data-bs-parent correcto a accordion item de materia
+                                        var data_bs_parent_concat_accordion_materia_id = "#" + concat_accordion_materia_id;
+                                        div_collapse_materia.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_materia_id);
+
+                                        // agrego el accordion item materia al accodion materia
+                                        accordion_materia.appendChild(accordion_Item_materia);
+
+
+                                        // COMISION
+                                        // agrego el accordion comision al accordion body de materia
                                         document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
 
+                                        // le agrego el data-bs-parent correcto a accordion item de comison
+                                        var data_bs_parent_concat_accordion_comision_id = "#" + concat_accordion_comision_id;
+                                        div_collapse_comision.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_comision_id); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
+
+
+                                        // agrego el accordion item comision al accodion comision
+                                        accordion_comison.appendChild(accordion_Item_comision);
 
                                         // actualizo los valores anteriores con los actuales
                                         anioAnterior = relacion.anio;
@@ -437,29 +463,64 @@ $(document).ready(function () {
                                         accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
                                         accordion_body_materia_anterior = concat_accordion_body_materia_id;
 
+                                        // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
+                                        accordion_materias_anterior = concat_accordion_materia_id;
+                                        accordion_comisiones_anterior = concat_accordion_comision_id;
+
+                                        // actualizo los valores de los data_bs_parent para la proxima iteracion agregandoles el id creado de cada uno
+                                        data_bs_parent_materia_anterior = data_bs_parent_concat_accordion_materia_id;
+                                        data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
+
                                     };
 
 
                                 } else {
 
+                                    // CARRERA
                                     // agrego accordion_Item_Carrera con todos los elementos a accordionMain
                                     document.getElementById("accordionMain").appendChild(accordion_Item_Carrera);
 
-                                    // agrego el accordion de año carrera a accordion body de carrera
-                                    accordion_anio_carrera.appendChild(accordion_Item_anio_Carrera);
+
+                                    // AÑO CARRERA
+                                    // agrego el accordion anio carrera al accordion body de carrera
                                     document.getElementById(concat_accordion_body_carrera_id).appendChild(accordion_anio_carrera);
 
-                                    // agrego el accordion materia a accordion body de año carrera
-                                    accordion_materia.appendChild(accordion_Item_materia);
+                                    // le agrego el data-bs-parent correcto a accordion item de anio_carrera
+                                    var data_bs_parent_concat_accordion_anio_carrera_id = '#' + concat_accordion_anio_carrera_id;
+                                    div_collapse_anio_carrera.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_anio_carrera_id);
+
+                                    // agrego el accordion item anio carrera al accodion anio carrera
+                                    accordion_anio_carrera.appendChild(accordion_Item_anio_Carrera);
+
+
+                                    // MATERIA
+                                    // agrego el accordion materia al accordion body de anio carrera
                                     document.getElementById(concat_accordion_body_anio_carrera_id).appendChild(accordion_materia);
 
+                                    // le agrego el data-bs-parent correcto a accordion item de materia
+                                    var data_bs_parent_concat_accordion_materia_id = "#" + concat_accordion_materia_id;
+                                    div_collapse_materia.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_materia_id);
 
-                                    // agrego el accordion accordion de comision a accordion body de materia
-                                    accordion_comison.appendChild(accordion_Item_comision);
+                                    // agrego el accordion item materia al accodion materia
+                                    accordion_materia.appendChild(accordion_Item_materia);
+
+
+                                    // COMISION
+                                    // agrego el accordion comision al accordion body de materia
                                     document.getElementById(concat_accordion_body_materia_id).appendChild(accordion_comison);
 
+                                    // le agrego el data-bs-parent correcto a accordion item de comison
+                                    var data_bs_parent_concat_accordion_comision_id = "#" + concat_accordion_comision_id;
+                                    div_collapse_comision.setAttribute("data-bs-parent", data_bs_parent_concat_accordion_comision_id); //cambiar accordionMain por concat_comision (seria el acordion donde va comision)
+
+
+                                    // agrego el accordion item comision al accodion comision
+                                    accordion_comison.appendChild(accordion_Item_comision);
+
+                                    // ----------------
+
                                     id_collapse_number += 1;
-                              
+
                                     // Actualizo las variables de control respecto a la carrera, año y materia anterior para la próxima iteración
                                     carreraAnterior = relacion.carrera;
                                     anioAnterior = relacion.anio;
@@ -469,6 +530,17 @@ $(document).ready(function () {
                                     accordion_body_carrera_anterior = concat_accordion_body_carrera_id;
                                     accordion_body_anio_carrera_anterior = concat_accordion_body_anio_carrera_id;
                                     accordion_body_materia_anterior = concat_accordion_body_materia_id;
+
+                                    // actualizo los valores de los accordion para la proxima iteracion agregandoles el id creado de cada uno
+                                    accordion_anios_carrera_anterior = concat_accordion_anio_carrera_id;
+                                    accordion_materias_anterior = concat_accordion_materia_id;
+                                    accordion_comisiones_anterior = concat_accordion_comision_id;
+
+                                    // actualizo los valores de los data_bs_parent para la proxima iteracion agregandoles el id creado de cada uno
+                                    data_bs_parent_anio_carrera_anterior = data_bs_parent_concat_accordion_anio_carrera_id;
+                                    data_bs_parent_materia_anterior = data_bs_parent_concat_accordion_materia_id;
+                                    data_bs_parent_comision_anterior = data_bs_parent_concat_accordion_comision_id;
+
 
                                     console.log("La carrera actual es diferente a la anterior.");
                                     console.log(relacion.carrera);
@@ -481,7 +553,6 @@ $(document).ready(function () {
 
                             })
 
-
                         } else {
                             alert('No posee cursos asociados')
                         };
@@ -493,15 +564,7 @@ $(document).ready(function () {
                     }
                 });
 
-
             }
-
-
-
-
-
-
-
 
 
         }, error: function (error) {
