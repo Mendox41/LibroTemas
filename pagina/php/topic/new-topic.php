@@ -10,9 +10,9 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $new_id_curcom =  isset($_POST['new_id_curcom']) ? $_POST['new_id_curcom'] : null;
-$new_tema = isset($_POST['new_tema']) ? $_POST['new_tema'] : null;
-$new_descripcion = isset($_POST['new_descripcion']) ? $_POST['new_descripcion'] : null;
-$new_time =  isset($_POST['new_time']) ? $_POST['new_time'] : null;
+$new_tema = isset($_POST['titulo-tema']) ? $_POST['titulo-tema'] : null;
+$new_descripcion = isset($_POST['descripcion-tema']) ? $_POST['descripcion-tema'] : null;
+$new_time =  isset($_POST['fecha-tema']) ? $_POST['fecha-tema'] : null;
 
 
 $result = new stdClass();

@@ -23,7 +23,7 @@ main{
 }
 
 .main-container{
-     margin: 10%;
+     margin: 10% 3%;
      width: 100%;
      
 }
@@ -34,5 +34,34 @@ main{
     --bs-accordion-active-color: white;
     --bs-accordion-active-bg: #7a1616;
 
+
+}
+
+.modal-content {
+    background-color: rgb(209, 209, 209);
+
+}
+
+.titulo-confirm{
+    color: white;
+}
+
+.modal-hidden {
+    display: none;
+}
+
+.prueba{
+    position: fixed;
+    top: 50%;
+    /* Centra verticalmente en relación con el viewport */
+    left: 50%;
+    /* Centra horizontalmente en relación con el viewport */
+    transform: translate(-50%, -50%);
+    background-color: rgb(100, 150, 150);
+
+}
+
+.prueba-back {
+    background-color: #332c2c;
 
 }

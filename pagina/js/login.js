@@ -36,7 +36,7 @@ $(document).ready(function () {
             success: function (respuesta) {
                 var data = JSON.parse(respuesta);
                 if (data.success == true) {
-                    alert("ENTRAMOSSSS");
+                    // alert("ENTRAMOSSSS");
                     window.location.href = "../templates/user/home.php";
                 } else {
                     $("#errorMessage").empty();

@@ -29,7 +29,7 @@ $(document).ready(function () {
                     data: { 'id_usuario': id_usuario },
 
                     success: function (segunda_respuesta) {
-                        alert(segunda_respuesta);
+                        // alert(segunda_respuesta); //RESPUESTA DE LAS RELACIONES ASOCIADAS AL PROFESOR
                         var data_related_subjects = JSON.parse(segunda_respuesta);
 
                         // alert(data_related_subjects.success)
@@ -336,25 +336,40 @@ $(document).ready(function () {
                                 btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
                                 btn_agregar_nuevo_tema.id = 'btn_nuevo_tema';
                                 btn_agregar_nuevo_tema.setAttribute("id_curso", relacion.id_curcom);
-                                accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
+                                btn_agregar_nuevo_tema.setAttribute("data-bs-toggle", 'modal');
+                                btn_agregar_nuevo_tema.setAttribute("data-bs-target", "#staticBackdrop");
+                                btn_agregar_nuevo_tema.setAttribute('type', "button");
 
-                                // agrego la funcion de hacer visible la ventana para gregar un nuevo tema con los valores recolectados del btn clickeado
+
+                                // agrego la funcion de hacer visible la ventana para 
+                                // gregar un nuevo tema con los valores recolectados del btn clickeado
                                 btn_agregar_nuevo_tema.onclick = function () {
-                                    alert(relacion.id_curcom);
-            
-                                    $("#footer").addClass("contenedor-pasivo");
-                                    $("#header").addClass("contenedor-pasivo");
-                                    $("#main-conteiner").addClass("contenedor-pasivo");
-                                    $("#ventanaModif").removeClass("modal-hidden");
-                                    fillSelectModi();
-                                    $('#enviarFormModify').prop('disabled', false);
-                                    completarFormAuto(auto.id);
-                                    // todoListoParaModify()
-            
+                                   
+                                   
+                                    // alert(relacion.id_curcom);
+                                    // $("#footer").addClass("contenedor-pasivo");
+                                    // $("#header").addClass("contenedor-pasivo");
+                                    // $("#main-conteiner").addClass("contenedor-pasivo");
+                                    // $("#ventanaModif").removeClass("modal-hidden");
+                                    // fillSelectModi();
+                                    // $('#enviarFormModify').prop('disabled', false);
+                                    // completarFormAuto(auto.id);
+                                    // // todoListoParaModify()
+
+                                    //Vacia los campos del modal de form ingreso de nuevo tema si ya previamente tenia datos
+                                    $("#fecha-tema").val(0);
+                                    $("#titulo-tema").val("");
+                                    $("#descripcion-tema").val("");
+
+                                    // completo los input con los datos que tenia
+                                    $("#id-curso").val(relacion.id_curcom);
+                                    // fill_form(relacion.id_curcom);
                                 };
 
+                                accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
 
-                                // Comparar el elemento actual con el anterior
+
+                                // Comparar el elemento actual con el anterior respecto a la carrera
                                 if (relacion.carrera === carreraAnterior) {
 
                                     // Muestro en consola para controlar valores y condiciones
@@ -586,27 +601,5 @@ $(document).ready(function () {
             console.log(error);
         }
     });
-
-
-    // Fx de Btn para agregar nuevo tema
-    // $("#btnAltaNuevoTema").click(function () {
-    //     $("#footer").addClass("contenedor-pasivo");
-    //     $("#header").addClass("contenedor-pasivo");
-    //     $("#main-conteiner").addClass("contenedor-pasivo");
-    //     fillSelectAlta();
-
-    //     $('#newMarca').val(0);
-    //     $('#newModelo').val("");
-    //     $('#newDescrip').val("");
-    //     $('#newAno').val("");
-    //     $('#newValor').val(0);
-
-    //     $("#ventanaAltaRegistro").removeClass("modal-hidden");
-    // });
-
-
-
-
-
 
 });
