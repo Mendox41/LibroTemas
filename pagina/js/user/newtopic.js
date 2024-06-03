@@ -22,11 +22,11 @@ $(document).ready(function () {
 
         } else {
             // si todos los campos estan completos entra aca
-            $("#header").addClass("opacity-25");
-            $("#main-container").addClass("opacity-25");
-            $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            $("#body").addClass("prueba-back");
-
+            // $("#header").addClass("opacity-25");
+            // $("#main-container").addClass("opacity-25");
+            // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
+            // $("#body").addClass("prueba-back");
+            $("#modal-form").removeClass("d-block");
             $("#modal-container-confirm-ingreso-tema").addClass("d-block");
         };
 
@@ -34,42 +34,37 @@ $(document).ready(function () {
 
 
     $("#btn-confirm-ingreso-tema").click(function () {
-        event.preventDefault();
-        var id_curso = $("#btn-confirm-ingreso-tema").id();
-        var datos_form_nuevo_tema = $('#form-nuevo-tema').serialize();
-        alert(datos_form_nuevo_tema);
-        alert(id_curso);
+        var id_curso = $("#id-curso").val();
+        var titulo_tema = $("#titulo-tema").val();
+        var descripcion_tema = $("#descripcion-tema").val();
+        var fecha_tema = $("#fecha-tema").val();
 
 
-        // var objAjax = $.ajax({
-        //     type: "post",
-        //     url: "",
-        //     data: {
-        //        id_profesor,
-        //id_curso,
-        //titulo_tema,
-        //descripcion_tema,
-        //fecha_tema,
-        //id_relacion,
-        //fecha_ingreso
+        var objAjax = $.ajax({
+            type: "post",
+            url: "",
+            data: {
+                id_curso: id_curso,
+                titulo_tema: titulo_tema,
+                descripcion_tema: descripcion_tema,
+                fecha_tema: fecha_tema
 
-        //     },
-        //     success: function (respuesta) {
-        //         var data = JSON.parse(respuesta);
-        //         if (data.success == true) {
+            },
+            success: function (respuesta) {
+                var data = JSON.parse(respuesta);
+                if (data.success == true) {
 
-        //         } else {
-        //             $("#errorMessage").empty();
-        //             $("#errorMessage").text(data.message);
-        //             $("#errorMessage").removeClass("oculto");
-        //         }
+                } else {
 
-        //     }, error: function (error) {
-        //         console.log(error);
-        //     }
+                }
+
+            }, error: function (error) {
+                console.log(error);
+            }
 
 
-        // });
+        });
+
     });
 
 
@@ -89,6 +84,11 @@ $(document).ready(function () {
 
     //     $("#ventanaAltaRegistro").removeClass("modal-hidden");
     // });
+
+
+
+
+
 
     function fill_form(idCurso) {
         $.ajax({
@@ -112,6 +112,8 @@ $(document).ready(function () {
 
         });
     }
+
+
 
 
 

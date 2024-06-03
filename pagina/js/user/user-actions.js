@@ -336,8 +336,8 @@ $(document).ready(function () {
                                 btn_agregar_nuevo_tema.classList.add("btn", "btn-primary");
                                 btn_agregar_nuevo_tema.id = 'btn_nuevo_tema';
                                 btn_agregar_nuevo_tema.setAttribute("id_curso", relacion.id_curcom);
-                                btn_agregar_nuevo_tema.setAttribute("data-bs-toggle", 'modal');
-                                btn_agregar_nuevo_tema.setAttribute("data-bs-target", "#staticBackdrop");
+                                // btn_agregar_nuevo_tema.setAttribute("data-bs-toggle", 'modal');
+                                // btn_agregar_nuevo_tema.setAttribute("data-bs-target", "#staticBackdrop");
                                 btn_agregar_nuevo_tema.setAttribute('type', "button");
 
 
@@ -364,6 +364,14 @@ $(document).ready(function () {
                                     // completo los input con los datos que tenia
                                     $("#id-curso").val(relacion.id_curcom);
                                     // fill_form(relacion.id_curcom);
+                                    $("#modal-form").addClass("d-block");
+                                    $("#header").addClass("opacity-25");
+                                    $("#main-container").addClass("opacity-25");
+                                    $("#body").addClass("prueba-back");
+                        
+
+
+                                    
                                 };
 
                                 accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
