@@ -344,8 +344,8 @@ $(document).ready(function () {
                                 // agrego la funcion de hacer visible la ventana para 
                                 // gregar un nuevo tema con los valores recolectados del btn clickeado
                                 btn_agregar_nuevo_tema.onclick = function () {
-                                   
-                                   
+
+
                                     // alert(relacion.id_curcom);
                                     // $("#footer").addClass("contenedor-pasivo");
                                     // $("#header").addClass("contenedor-pasivo");
@@ -360,18 +360,24 @@ $(document).ready(function () {
                                     $("#fecha-tema").val(0);
                                     $("#titulo-tema").val("");
                                     $("#descripcion-tema").val("");
+                                    $("#errorMessage").addClass("oculto");
+
 
                                     // completo los input con los datos que tenia
                                     $("#id-curso").val(relacion.id_curcom);
-                                    // fill_form(relacion.id_curcom);
+
+                                    // se llenan los campos con valores seleccionados (Fx en modals-actions.js)
+                                    //fill_form(relacion.id_curcom); // tomi falta que haga php
+
+                                    // manejo de clases para mostrar modal del form 
                                     $("#modal-form").addClass("d-block");
                                     $("#header").addClass("opacity-25");
                                     $("#main-container").addClass("opacity-25");
                                     $("#body").addClass("prueba-back");
-                        
 
 
-                                    
+
+
                                 };
 
                                 accordion_body_comision.appendChild(btn_agregar_nuevo_tema);
@@ -609,5 +615,30 @@ $(document).ready(function () {
             console.log(error);
         }
     });
+
+
+
+    // Funcion llenar form con datos seleccionados
+    function fill_form(idCurso) {
+        $.ajax({
+            type: "get",
+            url: "", // url de destino
+            data: {
+                id_curcom: idCurso // ver que no cambie nombre de variables en el php de destino
+            },
+            success: function (respuestaDelServer) {
+                // alert(respuestaDelServer);
+                var objJson = JSON.parse(respuestaDelServer);
+                $('#carrera-selec').val(objJson.carrera);
+                $('#anio-carrera-selec').val(objJson.anio);
+                $('#materia-selec').val(objJson.materia);
+                $('#comision-selec').val(objJson.comision);
+                $('#turno-com-selec').val(objJson.turno);
+                $('#fecha-actual').val(objJson.fecha_actual);
+
+            }
+
+        });
+    };
 
 });

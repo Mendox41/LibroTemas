@@ -3,7 +3,8 @@ body {
 }
 
 .navbar {
-    background-color: white;
+    background-color: #ffffff;
+
 }
 
 main{
@@ -23,7 +24,7 @@ main{
 }
 
 .main-container{
-     margin: 10% 3%;
+     margin: 3% 3%;
      width: 100%;
      
 }
@@ -64,4 +65,17 @@ main{
 .prueba-back {
     background-color: #332c2c;
 
+}
+
+
+#errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 93, 93);
+    border-radius: 4px;
+    color: white;
+}
+
+.oculto {
+    display: none;
 }

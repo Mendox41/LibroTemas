@@ -9,16 +9,21 @@ $(document).ready(function () {
 
         // si uno de los campos esta vacio entra aca
         if (fecha_tema == 0 || titulo_tema == "" || descripcion_tema == "") {
-            $("#modal-title-respuesta").empty();
-            $("#modal-title-respuesta").text("Todos los campos deben ser completados");
-            $("#modal-title-respuesta").addClass("text-danger");
 
-            $("#header").addClass("opacity-25");
-            $("#main-container").addClass("opacity-25");
-            $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            $("#body").addClass("prueba-back");
+            $("#errorMessage").empty();
+            $("#errorMessage").text('Todos los campos deben ser completados');
+            $("#errorMessage").removeClass("oculto");
 
-            $("#modal-container-respuesta").addClass("d-block");
+            // $("#modal-title-respuesta").empty();
+            // $("#modal-title-respuesta").text("Todos los campos deben ser completados");
+            // $("#modal-title-respuesta").addClass("text-danger");
+
+            // $("#header").addClass("opacity-25");
+            // $("#main-container").addClass("opacity-25");
+            // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
+            // $("#body").addClass("prueba-back");
+
+            // $("#modal-container-respuesta").addClass("d-block");
 
         } else {
             // si todos los campos estan completos entra aca
@@ -26,8 +31,10 @@ $(document).ready(function () {
             // $("#main-container").addClass("opacity-25");
             // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
             // $("#body").addClass("prueba-back");
+            
             $("#modal-form").removeClass("d-block");
             $("#modal-container-confirm-ingreso-tema").addClass("d-block");
+
         };
 
     });
@@ -42,21 +49,34 @@ $(document).ready(function () {
 
         var objAjax = $.ajax({
             type: "post",
-            url: "",
+            url: "../../php/topic/new-topic.php",
             data: {
-                id_curso: id_curso,
-                titulo_tema: titulo_tema,
-                descripcion_tema: descripcion_tema,
-                fecha_tema: fecha_tema
+                new_id_curcom: id_curso,
+                new_tema: titulo_tema,
+                new_descripcion: descripcion_tema,
+                new_time: fecha_tema
 
             },
             success: function (respuesta) {
                 var data = JSON.parse(respuesta);
-                if (data.success == true) {
 
-                } else {
+                // oculto el modal del formy del de confirmar ingreso de un nuevo tema
+                $("#modal-form").removeClass("d-block");
+                $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
 
-                }
+                // agrego el mensaje de respuesta del servidor
+                $("#modal-title-respuesta").empty();
+                $("#modal-title-respuesta").text(data.messaje);
+                // $("#modal-title-respuesta").addClass("text-danger");
+
+                // hago visible el modal de respuesta
+                $("#modal-container-respuesta").addClass("d-block");
+
+                // if (data.success == true) {
+
+                // } else {
+
+                // }
 
             }, error: function (error) {
                 console.log(error);
@@ -90,28 +110,7 @@ $(document).ready(function () {
 
 
 
-    function fill_form(idCurso) {
-        $.ajax({
-            type: "get",
-            url: "php/get-json-auto.php",
-            data: {
-                idCurso: idCurso
-            },
-            success: function (respuestaDelServer) {
-                // alert(respuestaDelServer);
-                var objJson = JSON.parse(respuestaDelServer);
-                $('#idModAuto').val(objJson.id);
-                $('#inputMarca-modal-modif').val(objJson.marca);
-                $('#modeloMod').val(objJson.modelo);
-                $('#descripMod').val(objJson.descripcion);
-                $('#anoMod').val(objJson.anio);
-                $('#valorMod').val(objJson.valor);
-                // $('#pdfMod').val(objJson.archivo_binario);   
 
-            }
-
-        });
-    }
 
 
 
