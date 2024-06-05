@@ -29,7 +29,19 @@ include ('../../php/session/validate-admin.php');
 
     <main>
         <div class="main-container">
-
+            <div class="container text-center bg-white text-dark container-lg">
+                <div class="row mb-3">
+                    <div class="col">
+                        1 of 3
+                    </div>
+                    <div class="col">
+                        2 of 3
+                    </div>
+                    <div class="col">
+                        3 of 3
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
