@@ -39,7 +39,7 @@ include ('../../php/session/validate-session.php');
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../php/session/destroy-session.php">Cerrar Sesión</a>
+                            <a class="nav-link btn btn-danger" href="../../php/session/destroy-session.php">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -96,46 +96,37 @@ include ('../../php/session/validate-session.php');
                                         <input type="text" class="form-control" placeholder="Turno comm Selecc"
                                             aria-label="Turno comm Selecc" id="turno-com-selec" disabled>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <input type="text" class="form-control" placeholder="Fecha actual"
                                             aria-label="Fecha actual" id="fecha-actual" disabled>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>
                         </div>
 
                         <div class="modal-body">
-                            <form class="row g-3 needs-validation" id="form-nuevo-tema" novalidate>
+                            <form class="row g-3" id="form-nuevo-tema">
 
                                 <div class="md-3">
                                     <input type="date" class="form-control" id="fecha-tema" required>
-                                    <div class="invalid-feedback">
-                                        Ingresar fecha
-                                    </div>
                                 </div>
 
                                 <div class="md-3">
                                     <input placeholder="Titulo del tema" type="text" class="form-control"
                                         id="titulo-tema" required>
-                                    <div class="invalid-feedback">
-                                        Ingresar titulo del tema
-                                    </div>
-
                                 </div>
 
                                 <div class="mb-3">
                                     <textarea class="form-control" id="descripcion-tema"
                                         placeholder="Descripcion del tema" required></textarea>
-                                    <div class="invalid-feedback">
-                                        Ingresar descripcion del tema
-                                    </div>
                                 </div>
 
                                 <div class="mb-3">
+                                    
                                     <label for="errorMessage" id="errorMessage" class="oculto"></label>
                                 </div>
-
+                                
                             </form>
                         </div>
 

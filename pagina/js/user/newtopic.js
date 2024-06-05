@@ -1,11 +1,9 @@
 $(document).ready(function () {
 
-
     $("#btn-ingreso-tema").click(function () {
         var fecha_tema = $("#fecha-tema").val();
         var titulo_tema = $("#titulo-tema").val();
         var descripcion_tema = $("#descripcion-tema").val();
-
 
         // si uno de los campos esta vacio entra aca
         if (fecha_tema == 0 || titulo_tema == "" || descripcion_tema == "") {

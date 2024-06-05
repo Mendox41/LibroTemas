@@ -17,49 +17,19 @@ include ('../../php/session/validate-admin.php');
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
     <!-- css -->
-    <link rel="stylesheet" href="../../css/user/style-home.css">
+    <link rel="stylesheet" href="../../css/admin/style-home.css">
 
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" id="logo-ub" href="#"><img src="../../img/logo-ub/logo-ub.jpg"
-                        alt="logo-ub"></a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-danger" href="../../php/session/destroy-session.php">Cerrar
-                                Sesión</a>
-                        </li>
-                    </ul>
-                </div>
-
-
-
-            </div>
-        </nav>
-
-    </header>
+    <?php
+    include ('header.php');
+    ?>
 
     <main>
         <div class="main-container">
-
+        <h1>ADMIN HOME</h1>
         </div>
 
     </main>
