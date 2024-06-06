@@ -19,28 +19,46 @@ $result = new stdClass();
 $result->success = false;
 
 if (($new_tema === null) || ($new_descripcion === null) || ($new_time === null) || ($new_id_curcom === null)) {
-    error_request($result, "Algunos de los campos ingresados esta vacio: $id_usuario, $new_descripcion, $new_time, $new_prof, $new_rel");
-}
+    $result->message = 'Todos los datos estan vacios';
+    $result->success = false;
+    
+} elseif ($new_tema === '') {
+    $result->message = 'El tema esta vacio';
+    $result->success = false;
 
-$db_name = "300hs_laborales";
-mysqli_select_db($conn, $db_name);
+} elseif ($new_descripcion === '') {
+    $result->message = 'La descripcion esta vacia';
+    $result->success = false;
 
-// Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL insertar_libro_tema(?,?,?,?)");
-if (!$stmt) {
-    error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
-}
+} elseif ($new_time === '') {
+    $result->message = 'El tiempo esta vacio';
+    $result->success = false;
+    
+} elseif ($new_id_curcom === '') {
+    $result->message = 'El ID del curso/comision esta vacio';
+    $result->success = false;
+}else{
+    $db_name = "300hs_laborales";
+    mysqli_select_db($conn, $db_name);
 
-$stmt->bind_param("isss", $new_id_curcom, $new_tema, $new_descripcion, $new_time);
+    // Llamada al procedimiento almacenado
+    $stmt = $conn->prepare("CALL insertar_libro_tema(?,?,?,?)");
+    if (!$stmt) {
+        error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
+    }
 
-if (!$stmt->execute()) {
-    error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
-}
+    $stmt->bind_param("isss", $new_id_curcom, $new_tema, $new_descripcion, $new_time);
 
-$stmt->close();
-$conn ->close();
+    if (!$stmt->execute()) {
+        error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
+    }
 
-$result -> success = true;
+    $stmt->close();
+    $conn ->close();
+
+    $result->message = 'El tema fue ingresado de manera correcta';
+    $result -> success = true;
+};
 
 echo json_encode($result);
 
