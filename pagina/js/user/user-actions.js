@@ -363,6 +363,11 @@ $(document).ready(function () {
                                     $("#errorMessage").addClass("oculto");
 
 
+                                    $("#fecha-tema").removeClass('bg-danger-subtle');
+                                    $("#fecha-tema").removeClass("text-danger-emphasis");
+                                    $("#fecha-tema").removeClass("border-danger");
+
+
                                     // completo los input con los datos que tenia
                                     $("#id-curso").val(relacion.id_curcom);
 

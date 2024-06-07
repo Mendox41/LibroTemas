@@ -39,7 +39,8 @@ include ('../../php/session/validate-session.php');
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-danger" href="../../php/session/destroy-session.php">Cerrar Sesión</a>
+                            <a class="nav-link btn btn-danger" href="../../php/session/destroy-session.php">Cerrar
+                                Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -57,8 +58,8 @@ include ('../../php/session/validate-session.php');
             </div>
         </div>
 
+        <!-- Modal ingreso de nuevo tema-->
         <div class="modal-container-ingreso-nuevo-tema" id="modal-container-ingreso-nuevo-tema">
-            <!-- Modal ingreso de nuevo tema-->
             <div class="modal modal-lg" id="modal-form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -123,10 +124,10 @@ include ('../../php/session/validate-session.php');
                                 </div>
 
                                 <div class="mb-3">
-                                    
+
                                     <label for="errorMessage" id="errorMessage" class="oculto"></label>
                                 </div>
-                                
+
                             </form>
                         </div>
 
