@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2024 a las 21:46:33
+-- Tiempo de generación: 10-06-2024 a las 21:27:40
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -17,17 +17,26 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-
 CREATE DATABASE IF NOT EXISTS 300hs_laborales;
 
-
---
 USE 300hs_laborales;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso` ()   BEGIN
+	SELECT T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
+	FROM cursos AS T1
+	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
+	INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
+	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
+	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
+	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
+	ORDER BY T2.id_carrera;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_libro_tema` ()   BEGIN
     SELECT T1.tema, T1.descripcion, T1.fecha, T1.id_profesor, T3.apellido_nombre, T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
     FROM libro_temas AS T1
@@ -46,6 +55,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_relacion` ()   BEGIN
     INNER JOIN semestres AS T4 ON T4.id_semestre = T1.id_semestre
     INNER JOIN materias AS T5 ON T5.id_materia = T1.id_materia
     ORDER BY T1.id_carrera;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_usuarios` ()   BEGIN
+SELECT 
+		U.id_usuario, 
+        U.usuario, 
+        U.isActive, 
+        U.isAdmin, 
+        P.id_profesor, 
+        P.legajo, 
+        P.apellido_nombre, 
+        P.grado, 
+        P.carrera
+	FROM usuarios AS U
+	INNER JOIN profesores AS P ON U.id_usuario = P.id_usuario
+	ORDER BY  P.apellido_nombre;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_libro_tema` (IN `p_id_curso` INT, IN `p_tema` NVARCHAR(255), IN `p_descripcion` NVARCHAR(255), IN `p_fecha` DATE)   BEGIN
@@ -406,9 +431,6 @@ CREATE TABLE `profesores` (
   `apellido_nombre` varchar(200) DEFAULT NULL,
   `grado` varchar(50) DEFAULT NULL,
   `carrera` varchar(50) DEFAULT NULL,
-  `telefono_1` varchar(45) DEFAULT NULL,
-  `telefono_2` varchar(45) DEFAULT NULL,
-  `celular` varchar(45) DEFAULT NULL,
   `mail_comunidad` varchar(45) DEFAULT NULL,
   `mail_secundario` varchar(45) DEFAULT NULL,
   `id_usuario` varchar(45) DEFAULT NULL
@@ -418,46 +440,46 @@ CREATE TABLE `profesores` (
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `carrera`, `telefono_1`, `telefono_2`, `celular`, `mail_comunidad`, `mail_secundario`, `id_usuario`) VALUES
-(1, 8738, 'AGUILERA, Sergio', 'Titular', 'IT', '', '4511-4716/07', '15-5993-4982', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2'),
-(2, 8827, 'ALDEGANI, Gustavo', 'Adjunto I', 'IT', '4953-6711', '', '15-4430-0728', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL),
-(3, 8744, 'ANGELERI, Paula María', 'Titular', 'IT', '4796-4207', '', '15-6262-2423', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL),
-(4, 16069, 'ARGOTA BICHARA, Maria Patricia', 'Coord. Doc.', 'IT', '', '', '15-3792-2490      ', 'patricia.argota', '', NULL),
-(5, 8944, 'BLANCO, Miguel Angel', 'Asociado', 'IT', '', '', '15-3067-4547      ', 'miguel.blanco', '', NULL),
-(6, 8943, 'BOCCATONDA, Carmen', 'Coord. Doc.', 'IT', '', '2914029490', '', 'carmen.boccatonda', '', NULL),
-(7, 8935, 'BREST, Pedro', 'Coord. Doc.', 'IT', '', '', '', 'pedro.brest', 'pbrest@hotmail.com', NULL),
-(8, 8862, 'CEBALLOS, Jorge Luis', 'Titular', 'IT', '4703-1421', '', '15-4085-9312', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL),
-(9, 30253, 'CERDA, Natalia Soledad', 'JTP', 'IT', '', '', '15-4578-9761', 'natalia.cerda', '', NULL),
-(10, 8410, 'CICINELLI, Diana', 'Asociado', 'IT', '4901-7717', '', '15-3271-8062', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL),
-(11, 8902, 'COCENTINO, Mariano', 'Titular', 'IT', '490-21413', '', ' 6006-2516', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL),
-(12, 8937, 'DAITTER, Patricia', 'Coord. Doc.', 'IT', '', '', '', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL),
-(13, 14469, 'DALLOCCHIO, Estefanía', 'JTP', 'IT', '4632-9684', '4632-9684', '15-4175-0886', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL),
-(14, 8942, 'DI FAZIO, Karina', 'Adj.III de Grado ', 'IT', '', '', '15-3227-5847      ', 'karina.difazio', '', NULL),
-(15, 8866, 'DURÁN, José', 'Asociado', 'IT', '4772-4675', '', '15-4496-8255', 'jose.duran', 'jedo370@gmail.com', NULL),
-(16, 8938, 'ESTEVES, Carlos', 'Coord. Doc.', 'IT', '', '', '', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL),
-(17, 14435, 'FERNANDEZ CROCCO, Gabriel', 'Adjunto I', 'IT', '', '5274-6262', '15-5937-1045', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL),
-(18, 8239, 'GREINER, Laura C', 'Asociado', 'IT', '4797-3511', '4015-1851', '15-3001-4542', 'laura.greiner', 'lgreiner@anses.gov.ar', '3'),
-(19, 8628, 'HADAD, Graciela', 'Titular', 'IT', '4786-6363', '', '15-5960-6941', 'graciela.hadad', 'gracielahadad@gmail.com', NULL),
-(20, 8946, 'MARCHINI, jorge', 'Coord. Doc.', 'IT', '', '', '15-4085-1988      ', 'jorge.marchini', '', NULL),
-(21, 14402, 'KLEINER, Roberto', 'Titular', 'I', '4862-0352', '', '15-5114-0062', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL),
-(22, 8918, 'MENAL, Claudio Marcelo', 'Adjunto II', 'IT', '4758-2246', '4758-2246', '15-6895-0786', 'claudio.menal', 'marcelomenal@gmail.com', NULL),
-(23, 8849, 'MENGIDE, Juán Pablo', 'Adjunto II', 'IT', '4782-0622', '', '15-5798-6081', 'juanpablo.mengide', '', NULL),
-(24, 8873, 'MITARITONNA, Alejandro', 'Asociado', 'IT', '4796-4046', '', '15-3057-5049', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL),
-(25, 8915, 'MOSCUZZA GUIDONI, Marcelo', 'Adjunto II', 'IT', '4210-3493', '4210-3493', '15-3098-3099', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL),
-(26, 8840, 'PICCIN, Ana María', 'Titular', 'IT', '4805-8264', '', '15-3124-1678', 'ana.piccin', 'anapiccin@yahoo.com', NULL),
-(27, 8158, 'PICCIRILLI, Darío', 'Titular', 'IT', '4805-2284', '', '15-4446-0765', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL),
-(28, 14503, 'PUYOL, Orlando', 'Asociado', 'IT', '4861-4553', '4000-7600', 'NO USA', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL),
-(29, 21092, 'RAFFO, Daniela', 'JTP', 'IT', '4502-6164', '', '15-5008-6957', 'daniela.raffo', 'madaraf123@hotmail.com', NULL),
-(30, 8914, 'REINOSA, Enrique José', 'Titular', 'IT', '4555-7382', '4342-0199', '', 'enrique.reinosa', 'ereinosa@gmail.com', NULL),
-(31, 8901, 'SEBASTIAN, Alberto', 'Adjunto III', 'IT', '4524-9176', '', '15-4147-9251', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL),
-(32, 8947, 'SECATORE, Miguel', 'Coord. Doc.', 'IT', '', '', '15-2252-6556', 'miguela.secatore', '', NULL),
-(33, 8809, 'TITIOSKY, Rolando', 'Titular', 'IT', '', '', '15-6478-9926', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL),
-(34, 8871, 'TORO, Juán Roberto', 'Adjunto III', 'IT', '', '1124094170', '15-5513-0176', 'juan.toro', 'j_r_toro@hotmail.com', NULL),
-(35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', '3526-0409', '', '15-3153-2216', 'adrian.tozzi', '', NULL),
-(36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', '', '', '15-4427-2000/4551-5899', 'guillermina.zambrana', '', NULL),
-(37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', '', '', '1553183221', 'macarena.gorgal', '', NULL),
-(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', '4701-4011', '', '15-5425-7993', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL),
-(99, 410, 'Mendoza, Tomas', 'Estudiante', 'IT', '1111-1111', '11-1111-1111', '11-1111-1111', 'mendoza.tomas', 'tgmendoza@outlook.com', '99');
+INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `carrera`, `mail_comunidad`, `mail_secundario`, `id_usuario`) VALUES
+(1, 8738, 'AGUILERA, Sergio', 'Titular', 'IT', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2'),
+(2, 8827, 'ALDEGANI, Gustavo', 'Adjunto I', 'IT', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL),
+(3, 8744, 'ANGELERI, Paula María', 'Titular', 'IT', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL),
+(4, 16069, 'ARGOTA BICHARA, Maria Patricia', 'Coord. Doc.', 'IT', 'patricia.argota', '', NULL),
+(5, 8944, 'BLANCO, Miguel Angel', 'Asociado', 'IT', 'miguel.blanco', '', NULL),
+(6, 8943, 'BOCCATONDA, Carmen', 'Coord. Doc.', 'IT', 'carmen.boccatonda', '', NULL),
+(7, 8935, 'BREST, Pedro', 'Coord. Doc.', 'IT', 'pedro.brest', 'pbrest@hotmail.com', NULL),
+(8, 8862, 'CEBALLOS, Jorge Luis', 'Titular', 'IT', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL),
+(9, 30253, 'CERDA, Natalia Soledad', 'JTP', 'IT', 'natalia.cerda', '', NULL),
+(10, 8410, 'CICINELLI, Diana', 'Asociado', 'IT', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL),
+(11, 8902, 'COCENTINO, Mariano', 'Titular', 'IT', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL),
+(12, 8937, 'DAITTER, Patricia', 'Coord. Doc.', 'IT', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL),
+(13, 14469, 'DALLOCCHIO, Estefanía', 'JTP', 'IT', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL),
+(14, 8942, 'DI FAZIO, Karina', 'Adj.III de Grado ', 'IT', 'karina.difazio', '', NULL),
+(15, 8866, 'DURÁN, José', 'Asociado', 'IT', 'jose.duran', 'jedo370@gmail.com', NULL),
+(16, 8938, 'ESTEVES, Carlos', 'Coord. Doc.', 'IT', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL),
+(17, 14435, 'FERNANDEZ CROCCO, Gabriel', 'Adjunto I', 'IT', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL),
+(18, 8239, 'GREINER, Laura C', 'Asociado', 'IT', 'laura.greiner', 'lgreiner@anses.gov.ar', '3'),
+(19, 8628, 'HADAD, Graciela', 'Titular', 'IT', 'graciela.hadad', 'gracielahadad@gmail.com', NULL),
+(20, 8946, 'MARCHINI, jorge', 'Coord. Doc.', 'IT', 'jorge.marchini', '', NULL),
+(21, 14402, 'KLEINER, Roberto', 'Titular', 'I', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL),
+(22, 8918, 'MENAL, Claudio Marcelo', 'Adjunto II', 'IT', 'claudio.menal', 'marcelomenal@gmail.com', NULL),
+(23, 8849, 'MENGIDE, Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL),
+(24, 8873, 'MITARITONNA, Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL),
+(25, 8915, 'MOSCUZZA GUIDONI, Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL),
+(26, 8840, 'PICCIN, Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', NULL),
+(27, 8158, 'PICCIRILLI, Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL),
+(28, 14503, 'PUYOL, Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL),
+(29, 21092, 'RAFFO, Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL),
+(30, 8914, 'REINOSA, Enrique José', 'Titular', 'IT', 'enrique.reinosa', 'ereinosa@gmail.com', NULL),
+(31, 8901, 'SEBASTIAN, Alberto', 'Adjunto III', 'IT', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL),
+(32, 8947, 'SECATORE, Miguel', 'Coord. Doc.', 'IT', 'miguela.secatore', '', NULL),
+(33, 8809, 'TITIOSKY, Rolando', 'Titular', 'IT', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL),
+(34, 8871, 'TORO, Juán Roberto', 'Adjunto III', 'IT', 'juan.toro', 'j_r_toro@hotmail.com', NULL),
+(35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', 'adrian.tozzi', '', NULL),
+(36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL),
+(37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL),
+(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL),
+(99, 410, 'Mendoza, Tomas', 'Estudiante', 'IT', 'mendoza.tomas', 'tgmendoza@outlook.com', '99');
 
 -- --------------------------------------------------------
 
