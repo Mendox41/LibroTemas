@@ -24,7 +24,7 @@ mysqli_select_db($conn, $db_name);
 // $conn->set_charset("utf8");
 
 // Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL materia_profesor(?)");
+$stmt = $conn->prepare("CALL get_materia_profesor_cursos(?)");
 if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
 }
