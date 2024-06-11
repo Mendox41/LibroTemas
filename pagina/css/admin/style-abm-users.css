@@ -5,3 +5,129 @@ body {
 .navbar {
     background-color: #ffffff;
 }
+
+.main-container{
+    margin: 2% 1%;
+}
+
+.abm-usuarios {
+    border-radius: 10px;
+}
+
+.div-botones{
+    margin: 1% 0%;
+}
+
+.fondo-desactivado {
+    background-color: #332c2c;
+
+}
+
+
+.modal-content {
+    background-color: rgb(209, 209, 209);
+
+}
+
+.checkbox-admin{
+    margin: 1%;
+    padding: 4% 1%;
+}
+
+
+/* columna de botones */
+td:nth-child(8) button {
+    margin: 0 0.5%;
+}
+
+
+
+/* .form-floating{
+    margin: 1% 0%;
+} */
+
+/* .col-sm-3, .col-sm{
+    padding: 1%;
+    border: 0.5px solid black;
+
+ 
+} */
+
+/* .btn-group{
+    padding: 1% 5%;
+    width: 100%;
+} */
+
+/* 
+@media screen and (max-width: 550px) {
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        display: none;
+    }
+
+   
+} */
+
+/* @media screen and (max-width: 600px) {
+
+    .col2{
+        display: none;
+    }
+}  */
+
+
+@media (max-width: 1350px) {
+
+    th:nth-child(5),
+    td:nth-child(5) {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 1050px) {
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    th:nth-child(1),
+    td:nth-child(1) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 750px) {
+
+    th:nth-child(7),
+    td:nth-child(7) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 610px) {
+
+    th:nth-child(6),
+    td:nth-child(6) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    th:nth-child(3),
+    td:nth-child(3) {
+        display: none;
+    }
+    td:nth-child(8) .btn-warning, td:nth-child(8) .btn-danger,td:nth-child(8) .btn-success{
+        display: none;
+        
+    }
+
+
+}

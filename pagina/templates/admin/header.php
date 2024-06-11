@@ -1,4 +1,4 @@
-<header>
+<header id="header">
         <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
                 <a class="navbar-brand" id="logo-ub" href="home.php"><img src="../../img/logo-ub/logo-ub.jpg"
