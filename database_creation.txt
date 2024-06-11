@@ -101,7 +101,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150)
     WHERE usuario = log_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `materia_profesor` (IN `id_user` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materia_profesor_cursos` (IN `id_user` INT)   BEGIN
 SELECT 
         T1.id_curso, 
         T1.id_profesor,
