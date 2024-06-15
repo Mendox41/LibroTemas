@@ -38,7 +38,8 @@ $(document).ready(function () {
 
                             // creo dinamicamente la tabla del ABM de usuarios
                             var tabla_abm = document.createElement('table');
-                            tabla_abm.classList.add('table');
+                            tabla_abm.id = 'tabla-abm-usuarios';
+                            tabla_abm.classList.add('table', 'tabla-abm-usuarios');
 
                             // creo el thead de la tabla
                             var thead_tabla = document.createElement('thead');
@@ -103,24 +104,102 @@ $(document).ready(function () {
                                         ver_usuario.setAttribute('type', "button");
 
                                         ver_usuario.onclick = function () {
-                                            // fn modificar usuario
-                                            alert(valor);
+                                            // fn carga de datos de usuario en tabla del modal
+
+                                            // fill_form_ver_datos_usuario(valor);
+
+                                            // alert(valor);
+                                            $("#modal-form-ver-usuario").addClass("d-block");
+                                            $("#header").addClass("opacity-25");
+                                            $("#main-container").addClass("opacity-25");
+                                            $("#body").addClass("fondo-desactivado");
 
                                         };
 
                                         // BTN modificar usuario
-                                        var btn_modif_usuario = document.createElement("button");
-                                        btn_modif_usuario.textContent = 'Modificar';
-                                        btn_modif_usuario.classList.add("btn", "btn-warning");
-                                        btn_modif_usuario.id = 'btn_modif_usuario';
-                                        btn_modif_usuario.setAttribute("id_usuario", valor);
-                                        btn_modif_usuario.setAttribute('type', "button");
 
-                                        btn_modif_usuario.onclick = function () {
-                                            // fn modificar usuario
+                                        // div dropdown
+                                        var div_dropdown_modif_usuario = document.createElement("div");
+                                        div_dropdown_modif_usuario.classList.add("dropdown");
+
+                                        // btn dropdown
+                                        var btn_dropdown = document.createElement("button");
+                                        btn_dropdown.classList.add("btn", "btn-warning", "dropdown-toggle");
+                                        btn_dropdown.setAttribute("type", 'button');
+                                        btn_dropdown.setAttribute("data-bs-toggle", 'dropdown');
+                                        btn_dropdown.setAttribute("aria-expanded", false);
+                                        btn_dropdown.textContent = 'Modificar';
+
+                                        // agrego btn_dropdown a div_dropdown_modif_usuario
+                                        div_dropdown_modif_usuario.appendChild(btn_dropdown);
+
+                                        // ul_dropdown
+                                        var ul_dropdown = document.createElement("ul");
+                                        ul_dropdown.classList.add("dropdown-menu", "bg-warning-subtle");
+
+                                        // li_datos_dropdown
+                                        var li_datos_dropdown = document.createElement("li");
+
+                                        // a_datos_dropdown
+                                        var a_datos_dropdown = document.createElement("a");
+                                        a_datos_dropdown.classList.add("dropdown-item");
+                                        a_datos_dropdown.id = 'btn-modif-datos-usuario';
+                                        a_datos_dropdown.setAttribute("id_usuario", valor);
+                                        a_datos_dropdown.textContent = 'Datos';
+
+                                        a_datos_dropdown.onclick = function () {
+                                            // fn mostrar modal de modificacion de datos de usuario
                                             alert(valor);
 
                                         };
+
+                                        // agrego a_datos_dropdown a li_datos_dropdown
+                                        li_datos_dropdown.appendChild(a_datos_dropdown);
+
+                                        // li_contra_dropdown
+                                        var li_contra_dropdown = document.createElement("li");
+
+                                        // a_contra_dropdown
+                                        var a_contra_dropdown = document.createElement("a");
+                                        a_contra_dropdown.classList.add("dropdown-item");
+                                        a_contra_dropdown.id = 'btn-modif-contrasena-usuario';
+                                        a_contra_dropdown.textContent = 'Contraseña';
+                                        a_contra_dropdown.setAttribute("id_usuario", valor);
+
+
+                                        a_contra_dropdown.onclick = function () {
+                                            // fn mostrar modal de modificacion de contraseña de usuario
+                                            alert(valor);
+
+                                        };
+
+
+                                        // agrego a_contra_dropdown  a li_contra_dropdown
+                                        li_contra_dropdown.appendChild(a_contra_dropdown);
+
+                                        // agrego li_datos_dropdown a ul_dropdown
+                                        ul_dropdown.appendChild(li_datos_dropdown);
+                                        // agrego li_contra_dropdown a ul_dropdown
+                                        ul_dropdown.appendChild(li_contra_dropdown);
+
+                                        // agrego ul_dropdown a div_dropdown_modif_usuario
+                                        div_dropdown_modif_usuario.appendChild(ul_dropdown);
+
+
+                                        // ------------
+                                        // btn modificar viejo
+                                        // var btn_modif_usuario = document.createElement("button");
+                                        // btn_modif_usuario.textContent = 'Modificar';
+                                        // btn_modif_usuario.classList.add("btn", "btn-warning");
+                                        // btn_modif_usuario.id = 'btn_modif_usuario';
+                                        // btn_modif_usuario.setAttribute("id_usuario", valor);
+                                        // btn_modif_usuario.setAttribute('type', "button");
+
+                                        // btn_modif_usuario.onclick = function () {
+                                        //     // fn modificar usuario
+                                        //     alert(valor);
+
+                                        // };
 
                                         // Btn desactivar/activar usuario
                                         var btn_activar_desactivar_usuario = document.createElement("button");
@@ -152,7 +231,8 @@ $(document).ready(function () {
 
 
                                         td_tbody_tabla.appendChild(ver_usuario);
-                                        td_tbody_tabla.appendChild(btn_modif_usuario);
+                                        td_tbody_tabla.appendChild(div_dropdown_modif_usuario);
+                                        // td_tbody_tabla.appendChild(btn_modif_usuario);
                                         td_tbody_tabla.appendChild(btn_activar_desactivar_usuario);
 
                                         tr_tbody_tabla.appendChild(td_tbody_tabla);
@@ -192,9 +272,6 @@ $(document).ready(function () {
                             });
 
 
-
-
-
                             // creo el tbody de la tabla con los datos obtenidos de la respuesta ajax
 
 
@@ -208,8 +285,6 @@ $(document).ready(function () {
 
                             // Inserto la tabla con elementos creados en el contenedor
                             document.getElementById("contenedor-tabla-abm-usuarios").appendChild(tabla_abm);
-
-
 
 
 
@@ -239,6 +314,8 @@ $(document).ready(function () {
     // FUNCION MODIFICAR USUARIO
 
     // FUNCION VER DATOS DE UN USUARIO
+    // function fill_form_ver_datos_usuario(valor);
+
 
     // FUNCION DESACTIVAR UN USUARIO
 
