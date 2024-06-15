@@ -209,9 +209,9 @@ include ('../../php/session/validate-session.php');
 
 
     <!-- js -->
-    <script src="../../js/user/user-actions.js"></script>
-    <script src="../../js/user/newtopic.js"></script>
-    <script src="../../js/user/modals-actions.js"></script>
+    <script src="../../js/structure/user-home-structure.js"></script>
+    <script src="../../js/topic/new-topic-user.js"></script>
+    <script src="../../js/modals-actions/modals-user.js"></script>
 
 </body>
 

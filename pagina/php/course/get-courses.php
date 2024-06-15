@@ -48,6 +48,14 @@ while ($stmt->fetch()) {
     $datoCurso->id_turno = $id_turno;  
     $datoCurso->turno = $turno;       
 
+    /* agregar:
+        -id profesor y nombre profe
+        -estado activo de la relacion
+        
+
+
+    */   
+
     array_push($curso, $datoCurso);
 }
 

@@ -6,7 +6,7 @@ body {
     background-color: #ffffff;
 }
 
-.main-container{
+.main-container {
     margin: 2% 1%;
 }
 
@@ -14,7 +14,7 @@ body {
     border-radius: 10px;
 }
 
-.div-botones{
+.div-botones {
     margin: 1% 0%;
 }
 
@@ -29,7 +29,7 @@ body {
 
 }
 
-.checkbox-admin{
+.checkbox-admin {
     margin: 1%;
     padding: 4% 1%;
 }
@@ -41,6 +41,19 @@ td:nth-child(8) button {
 }
 
 
+/* tabla del modal de muestra de datos */
+
+
+.tabla-datos-usuario th:nth-child(1),
+.tabla-datos-usuario td:nth-child(1) {
+    width: 30%;
+    background-color: #bfc2c2;
+}
+
+.modal-footer-ver-usuario {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* .form-floating{
     margin: 1% 0%;
@@ -79,8 +92,8 @@ td:nth-child(8) button {
 
 @media (max-width: 1350px) {
 
-    th:nth-child(5),
-    td:nth-child(5) {
+    .tabla-abm-usuarios th:nth-child(5),
+    .tabla-abm-usuarios td:nth-child(5) {
         display: none;
     }
 
@@ -88,46 +101,64 @@ td:nth-child(8) button {
 
 @media screen and (max-width: 1050px) {
 
-    th:nth-child(4),
-    td:nth-child(4) {
+    .tabla-abm-usuarios th:nth-child(4),
+    .tabla-abm-usuarios td:nth-child(4) {
         display: none;
     }
 }
 
 @media screen and (max-width: 900px) {
 
-    th:nth-child(1),
-    td:nth-child(1) {
+    .tabla-abm-usuarios th:nth-child(1),
+    .tabla-abm-usuarios td:nth-child(1) {
         display: none;
     }
 }
 
 @media screen and (max-width: 750px) {
 
-    th:nth-child(7),
-    td:nth-child(7) {
+    .tabla-abm-usuarios th:nth-child(7),
+    .tabla-abm-usuarios td:nth-child(7) {
         display: none;
     }
 }
 
 @media screen and (max-width: 610px) {
 
-    th:nth-child(6),
-    td:nth-child(6) {
+    .tabla-abm-usuarios th:nth-child(6),
+    .tabla-abm-usuarios td:nth-child(6) {
         display: none;
     }
 }
 
 @media screen and (max-width: 550px) {
 
-    th:nth-child(3),
-    td:nth-child(3) {
+    .tabla-abm-usuarios th:nth-child(3),
+    .tabla-abm-usuarios td:nth-child(3) {
         display: none;
     }
-    td:nth-child(8) .btn-warning, td:nth-child(8) .btn-danger,td:nth-child(8) .btn-success{
+
+    .tabla-abm-usuarios td:nth-child(8) .btn-warning,
+    td:nth-child(8) .btn-danger,
+    td:nth-child(8) .btn-success {
         display: none;
-        
+
     }
+
+
+}
+
+
+@media screen and (max-width: 450px) {
+
+    .modal-footer {
+      
+        justify-content: center;
+    }
+    /* .btns-modificar button{
+        margin: 5%;
+        padding: 1%;
+    } */
 
 
 }

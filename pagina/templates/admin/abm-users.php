@@ -48,6 +48,19 @@ include ('../../php/session/validate-admin.php');
                         Filtro
                     </button>
                 </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Modificar
+                    </button>
+                    <ul class="dropdown-menu bg-warning-subtle ">
+                        <li><a class="dropdown-item" id="btn-modif-datos-usuario">Datos</a></li>
+                        <li><a class="dropdown-item" id="btn-modif-contrasena-usuario">Contraseña</a></li>
+                    </ul>
+                </div>
+          
+
             </div>
 
 
@@ -111,13 +124,13 @@ include ('../../php/session/validate-admin.php');
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
-                            <div class="modal-body">
+                            <div class="modal-body" id="modal-body">
                                 <div class="mb-3">
-                                    <div class="row g-3">
-                                        <div class="">
+                                    <form class="row g-3" id="form-ingreso-nuevo-usuario">
+                                        <!-- <div class="">
                                             <input type="text" class="form-control" placeholder="ID Usuario"
-                                                aria-label="ID Usuario" id="id-usuario" disabled>
-                                        </div>
+                                                aria-label="ID Usuario" id="id-usuario" disabled hidden>
+                                        </div> -->
 
 
                                         <div class="col-md-6 form-floating">
@@ -130,6 +143,10 @@ include ('../../php/session/validate-admin.php');
                                             <select class="form-select" id="select-profesor-asociado"
                                                 aria-label="Floating label select example">
                                                 <option selected value="0">Seleccionar profesor</option>
+                                                <option value="1">Aguilera</option>
+                                                <option value="2">Greiner</option>
+                                                <option value="3">Witbeker</option>
+
                                             </select>
                                             <label for="floatingSelect">Profesor asociado</label>
                                         </div>
@@ -147,14 +164,14 @@ include ('../../php/session/validate-admin.php');
                                         </div>
 
 
-                                        <div class="col-8 form-label-lg checkbox-admin">
-                                            <input class="form-check-input" type="checkbox" value="" id="Admin-check">
+                                        <div class="col-8 form-label-lg checkbox-admin" id="div-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="Admin-check">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 Administrador
                                             </label>
                                         </div>
 
-                                    </div>
+                                    </form>
 
                                 </div>
 
@@ -172,12 +189,13 @@ include ('../../php/session/validate-admin.php');
 
             </div>
 
-            <!-- modal confirm ingreso -->
+            <!-- modal confirm ingreso nuevo usuario-->
             <div class="modal" tabindex="-1" id="modal-container-confirm-ingreso-usuario">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h7 class="modal-title fs-7 titulo-confirm" id="modal-title-header-confirm">Confirmacion de nuevo
+                            <h7 class="modal-title fs-7 titulo-confirm" id="modal-title-header-confirm">Confirmacion de
+                                nuevo
                                 Registro
                             </h7>
                             <button id="btn-close-modal-confirm" type="button" class="btn-close" data-bs-dismiss="modal"
@@ -196,6 +214,207 @@ include ('../../php/session/validate-admin.php');
                 </div>
             </div>
 
+            <!-- Modal modificacion de datos de usuario -->
+            <div class="modal-container-ingreso-nuevo-usuario" id="modal-container-modif-datos-usuario">
+                <div class="modal modal-lg d-block" id="modal-form-modif-datos-usuario" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificación de datos de usuario</h1>
+                                <button id="btn-close-modal-form-modif-datos-usuario" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="modal-body">
+                                <div class="mb-3">
+                                    <form class="row g-3" id="form-modif-datos-usuario">
+                                        <div class="">
+                                            <input type="text" class="form-control" placeholder="ID Usuario"
+                                                aria-label="ID Usuario" id="id-usuario-modif" disabled>
+                                        </div>
+
+
+                                        <div class="col-md-6 form-floating">
+                                            <input type="text" class="form-control" id="nombre-usuario-modif"
+                                                placeholder="">
+                                            <label for="floatingInputNombreUsuario">Nombre de usuario</label>
+                                        </div>
+
+                                        <div class="col-md-6 form-floating">
+                                            <select class="form-select" id="select-modif-profesor-asociado"
+                                                aria-label="Floating label select example">
+                                                <option selected value="0">Seleccionar profesor</option>
+                                                <option value="1">Aguilera</option>
+                                                <option value="2">Greiner</option>
+                                                <option value="3">Witbeker</option>
+
+                                            </select>
+                                            <label for="floatingSelect">Profesor asociado</label>
+                                        </div>
+                                        <div class="col-8 form-label-lg checkbox-admin" id="div-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="Admin-check-modif">
+                                            <label class="form-check-label" for="Admin-check-modif">
+                                                Administrador
+                                            </label>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-modal-form-modf-datos-usuario">Cancel</button>
+                                <button type="submit" class="btn btn-success" id="btn-modif-datos-usuario">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal modificacion de contraseña -->
+
+
+            <!-- modal confirm modificacion de datos y contraseña de usuario -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-modificacion-datos"> <!-- aca agregar el d-block  -->
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="titulo-modal-confirm-modificacion-datos">
+                                Confirm Desactivar/Activar usuario
+                            </h7>
+                            <button id="close-btn-modal-confirm-modificacion-datos" type="button"
+                                class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="modal-title-confirm-modificacion-datos">Mostrar datos ingresados</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-cancel-modal-confirm-modificacion-datos" type="button"
+                                class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success"
+                                id="btn-confirm-modificacion-datos">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal para ver datos de usuario -->
+            <div class="modal-container-ver-usuario" id="modal-container-ver-usuario">
+                <div class="modal modal-lg " id="modal-form-ver-usuario" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Datos de Usuario registrado</h1>
+                                <button id="btn-close-modal-ver-usuario-usuario" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="table-responsive">
+                                    <table id="tabla-datos-usuario" class="table table-bordered tabla-datos-usuario">
+                                        <!-- <thead>
+                                            <tr>
+                                                <th scope="col">Column 1</th>
+                                                <th scope="col">Column 2</th>
+                                            </tr>
+                                        </thead> -->
+                                        <tbody>
+                                            <tr class="">
+                                                <td scope="row">Legajo</td>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Nombre de usuario</td>
+                                                <td>ElJorgitoXX</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Nombre de profesor asociado</td>
+                                                <td>El peluca sapee</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Grado</td>
+                                                <td>Un maestro</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Carrera</td>
+                                                <td>La que no tenes</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Activo</td>
+                                                <td>Siempre activo pa</td>
+                                            </tr>
+                                            <tr class="">
+                                                <td scope="row">Administrador</td>
+                                                <td>El jefe me dicen</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="modal-footer modal-footer-ver-usuario">
+                                <div id="btns-modificar" class="">
+                                    <button type="submit" class="btn btn-warning" id="btn-modif-datos">Modificar
+                                        Datos</button>
+                                    <button type="submit" class="btn btn-warning" id="btn-modif-contra">Modificar
+                                        Contraseña</button>
+                                    <button type="submit" class="btn btn-danger"
+                                        id="btn-activar-desactivar-usuario">Desactivar/Activar</button>
+                                    <button type="submit" class="btn btn-outline-danger"
+                                        id="btn-eliminar-usuario">Eliminar</button>
+
+                                </div>
+                                <div id="otros-btns">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                        id="btn-volver-modal-ver-usuario">Volver</button>
+                                    <!-- <button type="submit" class="btn btn-success"
+                                        id="btn-ingreso-usuario">Ingresar</button> -->
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- modal confirm activar/desactivar usuario -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-desactivar-activar-usuario"> <!-- aca agregar el d-block  -->
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="titulo-modal-desactivar-activar-usuario">
+                                Confirm Desactivar/Activar usuario
+                            </h7>
+                            <button id="close-btn-modal-confirm-desactivar-activar-usuario" type="button"
+                                class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="modal-title-confirm-desactivar-activar-usuario"></h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-cancel-modal-confirm-desactivar-activar-usuario" type="button"
+                                class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success"
+                                id="btn-confirm-desactivar-activar-usuario">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- modal respuesta -->
             <div class="modal" tabindex="-1" id="modal-container-respuesta">
@@ -238,7 +457,7 @@ include ('../../php/session/validate-admin.php');
 
     <!-- js -->
     <script src="../../js/admin/abm-users.js"></script>
-    <script src="../../js/admin/modals-actions.js"></script>
+    <script src="../../js/modals-actions/modals-abm-users.js"></script>
 
 
 
