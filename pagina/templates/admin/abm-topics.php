@@ -39,7 +39,7 @@ include ('../../php/session/validate-admin.php');
                 </div>
 
                 <div class="p-2">
-                    <button type="button" name="" id="filtro-tema" class="btn btn-primary" disabled>
+                    <button type="button" name="" id="btn-filtro-tema" class="btn btn-primary" disabled>
                         Filtro
                     </button>
                 </div>
@@ -47,9 +47,9 @@ include ('../../php/session/validate-admin.php');
             </div>
 
             <!-- filtro inicial -->
-            
-            <div class="filtro container-md bg-secondary-subtle">
-                <form class="row g-3 form-filtro" id="form-filtro-tema" >
+
+            <div class="filtro container-md bg-secondary-subtle" id="container-filtro-temas">
+                <form class="row g-3 form-filtro" id="form-filtro-tema">
                     <h3 id="titulo-filtro">Filtro de busqueda de Tema</h3>
                     <div class="col-sm-3">
                         <label for="nombre-carrera" class="form-label">Carrera</label>
@@ -80,20 +80,24 @@ include ('../../php/session/validate-admin.php');
                         <input type="text" class="form-control" id="nombre-profesor">
                     </div>
                     <div class="col-sm-3">
+                        <label for="nombre-profesor" class="form-label">Apellido Profesor</label>
+                        <input type="text" class="form-control" id="apellido-profesor">
+                    </div>
+                    <div class="col-sm-3">
                         <label for="fecha-tema" class="form-label">Fecha</label>
                         <input type="date" class="form-control" id="fecha-tema">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label for="titulo-tema" class="form-label">Titulo</label>
                         <input type="text" class="form-control" id="titulo-tema">
                     </div>
-                    
-                    <div class="col-md-6">
+
+                    <div class="col-md-12">
                         <label for="descripcion-tema" class="form-label">Descripcion</label>
                         <textarea class="form-control" id="descripcion-tema" rows="1"></textarea>
                     </div>
                     <div class="d-flex flex-row-reverse">
-                        <button type="" class="btn btn-primary" id="btn-filtro-tema">Buscar</button>
+                        <button class="btn btn-primary" id="btn-buscar-tema">Buscar</button>
 
                     </div>
                 </form>
@@ -101,8 +105,7 @@ include ('../../php/session/validate-admin.php');
 
 
             <!-- tabla abm-->
-            <div id="contenedor-tabla-abm-temas"
-                class="table-responsive text-center bg-white text-dark abm-temas ">
+            <div id="contenedor-tabla-abm-temas" class="table-responsive text-center bg-white text-dark abm-temas ">
 
                 <!-- creo dinamicamente la tabla de abm -->
                 <!-- <table class="table">
@@ -146,6 +149,85 @@ include ('../../php/session/validate-admin.php');
         </div>
 
         <div id="container-modals">
+
+            <!-- Modal filtro tema -->
+            <div class="modal-container-ingreso-nuevo-tema" id="modal-container-filtro-tema">
+                <div class="modal modal-lg " id="modal-form-buscar-tema" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Filtro de Temas</h1>
+                                <button id="btn-close-modal-filtro" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="modal-body">
+
+
+                                <form class="row g-3 form-filtro" id="modal-form-filtro-tema">
+                                    <div class="col-sm-6">
+                                        <label for="nombre-carrera" class="form-label">Carrera</label>
+                                        <input type="text" class="form-control" id="nombre-carrera-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="anio-carrera" class="form-label">Año carrera</label>
+                                        <input type="text" class="form-control" id="anio-carrera-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nombre-materia" class="form-label">Materia</label>
+                                        <input type="text" class="form-control" id="nombre-materia-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="comision" class="form-label">Comision</label>
+                                        <input type="text" class="form-control" id="comision-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="turno" class="form-label">Turno</label>
+                                        <input type="text" class="form-control" id="turno-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nombre-usuario" class="form-label">Usuario</label>
+                                        <input type="text" class="form-control" id="nombre-usuario-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nombre-profesor" class="form-label">Nombre Profesor</label>
+                                        <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nombre-profesor" class="form-label">Apellido Profesor</label>
+                                        <input type="text" class="form-control" id="apellido-profesor-modal-filtro">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="fecha-tema" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="fecha-tema-modal-filtro">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="titulo-tema" class="form-label">Titulo</label>
+                                        <input type="text" class="form-control" id="titulo-tema-modal-filtro">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="descripcion-tema" class="form-label">Descripcion</label>
+                                        <textarea class="form-control" id="descripcion-tema-modal-filtro"
+                                            rows="1"></textarea>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-modal-filtro-tema">Cancel</button>
+                                <button class="btn btn-success" id="btn-modal-buscar-tema">Buscar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <!-- Modal ingreso de nuevo tema-->
             <div class="modal-container-ingreso-nuevo-tema" id="modal-container-ingreso-nuevo-tema">
@@ -314,10 +396,7 @@ include ('../../php/session/validate-admin.php');
 
             </div>
 
-            <!-- Modal modificacion de contraseña -->
-
-
-            <!-- modal confirm modificacion de datos y contraseña de tema -->
+            <!-- modal confirm modificacion de datos de tema -->
             <div class="modal" tabindex="-1" id="modal-container-confirm-modificacion-datos">
                 <!-- aca agregar el d-block  -->
                 <div class="modal-dialog modal-dialog-centered">
@@ -346,8 +425,8 @@ include ('../../php/session/validate-admin.php');
 
             <!-- Modal para ver datos de tema -->
             <div class="modal-container-ver-tema" id="modal-container-ver-tema">
-                <div class="modal modal-lg " id="modal-form-ver-tema" data-bs-backdrop="static"
-                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal modal-lg " id="modal-form-ver-tema" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -440,8 +519,8 @@ include ('../../php/session/validate-admin.php');
                             <h7 class="modal-title fs-7 titulo-confirm" id="titulo-modal-desactivar-activar-tema">
                                 Confirm Desactivar/Activar tema
                             </h7>
-                            <button id="close-btn-modal-confirm-desactivar-activar-tema" type="button"
-                                class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="close-btn-modal-confirm-desactivar-activar-tema" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <h3 class="titulo-confirm" id="modal-title-confirm-desactivar-activar-tema"></h3>
@@ -496,8 +575,10 @@ include ('../../php/session/validate-admin.php');
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- js -->
-    <script src="../../js/admin/abm-topics.js"></script>
+    <!-- <script src="../../js/admin/abm-topics.js"></script> -->
     <script src="../../js/modals-actions/modals-abm-topics.js"></script>
+    <script src="../../js/topic/topic-filter-actions.js"></script>
+
 
 
 
