@@ -16,7 +16,7 @@ $db_name = "300hs_laborales";
 mysqli_select_db($conn, $db_name);
 
 // Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL datos_curso();"); 
+$stmt = $conn->prepare("CALL get_course();"); 
 if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
     echo json_encode($result);
@@ -30,13 +30,14 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $id_comision, $comision, $id_turno, $turno);
+$stmt->bind_result($id_curso, $id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $id_comision, $comision, $id_turno, $turno);
 
 $curso = [];
 
 while ($stmt->fetch()) {
     $datoCurso = new stdClass();
 
+    $datoCurso->id_curso = $id_curso;
     $datoCurso->id_carrera = $id_carrera;
     $datoCurso->carrera = $carrera;
     $datoCurso->id_anio = $id_anio;
@@ -45,16 +46,10 @@ while ($stmt->fetch()) {
     $datoCurso->materia = $materia;
     $datoCurso->id_comision = $id_comision;
     $datoCurso->comision = $comision;
+    $datoCurso->id_profesor = $id_profesor;
+    $datoCurso->ApllidoNombre = $ApellidoNombre;
     $datoCurso->id_turno = $id_turno;  
     $datoCurso->turno = $turno;       
-
-    /* agregar:
-        -id profesor y nombre profe
-        -estado activo de la relacion
-        
-
-
-    */   
 
     array_push($curso, $datoCurso);
 }

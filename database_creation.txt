@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2024 a las 21:27:40
+-- Tiempo de generación: 17-06-2024 a las 22:19:44
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -26,7 +26,7 @@ DELIMITER $$
 -- Procedimientos
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso` ()   BEGIN
-	SELECT T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
+	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
 	FROM cursos AS T1
 	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
 	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
@@ -37,8 +37,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso` ()   BEGIN
 	ORDER BY T2.id_carrera;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` INT)   BEGIN
+	SELECT T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
+	FROM cursos AS T1
+	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
+	INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
+	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
+	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
+	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
+    WHERE T1.id_curso = p_id_curso
+	ORDER BY T2.id_carrera;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_libro_tema` ()   BEGIN
-    SELECT T1.tema, T1.descripcion, T1.fecha, T1.id_profesor, T3.apellido_nombre, T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
+    SELECT T1.tema, T1.descripcion, T1.fecha, T1.id_profesor, T3.apellido, T3.nombre ,T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
     FROM libro_temas AS T1
     INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
     INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
@@ -57,6 +70,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_relacion` ()   BEGIN
     ORDER BY T1.id_carrera;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_course` ()   BEGIN
+	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_profesor, T8.apellido, T8.nombre, T8.isActive, T1.id_turno, T7.turno
+	FROM cursos AS T1
+	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
+	INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
+	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
+	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
+	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
+    INNER JOIN profesores AS T8 ON T8.id_profesor = T1.id_profesor
+    WHERE T8.isActive = 1
+	ORDER BY T2.id_carrera;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_usuarios` ()   BEGIN
 SELECT 
 		U.id_usuario, 
@@ -65,12 +92,13 @@ SELECT
         U.isAdmin, 
         P.id_profesor, 
         P.legajo, 
-        P.apellido_nombre, 
+        P.apellido, 
+        P.nombre,
         P.grado, 
         P.carrera
 	FROM usuarios AS U
 	INNER JOIN profesores AS P ON U.id_usuario = P.id_usuario
-	ORDER BY  P.apellido_nombre;
+	ORDER BY  P.apellido;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_libro_tema` (IN `p_id_curso` INT, IN `p_tema` NVARCHAR(255), IN `p_descripcion` NVARCHAR(255), IN `p_fecha` DATE)   BEGIN
@@ -101,7 +129,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150)
     WHERE usuario = log_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materia_profesor_cursos` (IN `id_user` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `materia_profesor` (IN `id_user` INT)   BEGIN
 SELECT 
         T1.id_curso, 
         T1.id_profesor,
@@ -128,6 +156,50 @@ SELECT
     INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
 	WHERE T3.id_usuario = id_user
     ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
+	DECLARE p_anio INT;
+    DECLARE p_active SMALLINT;
+
+    -- Obtener el año actual
+    SET p_anio = YEAR(NOW());
+
+    -- Obtener el estado actual del curso
+    SELECT isActive INTO p_active
+    FROM cursos
+    WHERE id_curso = p_id_curso;
+
+    -- Actualizar los datos en la tabla cursos
+    UPDATE cursos
+    SET id_carrera = p_id_carrera,
+        id_anio = p_id_anio,
+        id_materia = p_id_materia,
+        id_comision = p_id_comision,
+        id_profesor = p_id_profesor,
+        id_turno = p_id_turno,
+        c_anio = p_anio
+    WHERE id_curso = p_id_curso;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
+    DECLARE p_anio INT;
+    DECLARE p_active SMALLINT DEFAULT 1;
+    DECLARE p_relacion INT;
+
+    -- Obtener el año actual
+    SET p_anio = YEAR(NOW());
+
+    -- Obtener el id_relacion desde la tabla relaciones
+    SELECT id_relacion INTO p_relacion
+    FROM relaciones 
+    WHERE id_carrera = p_id_carrera 
+        AND id_anio = p_id_anio 
+        AND id_materia = p_id_materia;
+
+    -- Insertar los datos en la tabla cursos
+    INSERT INTO cursos (id_relacion, id_comision, id_profesor, id_turno, isActive, c_anio)
+    VALUES (p_relacion, p_id_comision, p_id_profesor, p_id_turno, p_active, p_anio);
 END$$
 
 DELIMITER ;
@@ -428,58 +500,60 @@ INSERT INTO `materias` (`id_materia`, `materia`, `descripcion`, `codigo_materia`
 CREATE TABLE `profesores` (
   `id_profesor` int NOT NULL,
   `legajo` int DEFAULT NULL,
-  `apellido_nombre` varchar(200) DEFAULT NULL,
+  `apellido` varchar(100) DEFAULT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
   `grado` varchar(50) DEFAULT NULL,
   `carrera` varchar(50) DEFAULT NULL,
   `mail_comunidad` varchar(45) DEFAULT NULL,
   `mail_secundario` varchar(45) DEFAULT NULL,
-  `id_usuario` varchar(45) DEFAULT NULL
+  `id_usuario` varchar(45) DEFAULT NULL,
+  `isActive` smallint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido_nombre`, `grado`, `carrera`, `mail_comunidad`, `mail_secundario`, `id_usuario`) VALUES
-(1, 8738, 'AGUILERA, Sergio', 'Titular', 'IT', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2'),
-(2, 8827, 'ALDEGANI, Gustavo', 'Adjunto I', 'IT', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL),
-(3, 8744, 'ANGELERI, Paula María', 'Titular', 'IT', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL),
-(4, 16069, 'ARGOTA BICHARA, Maria Patricia', 'Coord. Doc.', 'IT', 'patricia.argota', '', NULL),
-(5, 8944, 'BLANCO, Miguel Angel', 'Asociado', 'IT', 'miguel.blanco', '', NULL),
-(6, 8943, 'BOCCATONDA, Carmen', 'Coord. Doc.', 'IT', 'carmen.boccatonda', '', NULL),
-(7, 8935, 'BREST, Pedro', 'Coord. Doc.', 'IT', 'pedro.brest', 'pbrest@hotmail.com', NULL),
-(8, 8862, 'CEBALLOS, Jorge Luis', 'Titular', 'IT', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL),
-(9, 30253, 'CERDA, Natalia Soledad', 'JTP', 'IT', 'natalia.cerda', '', NULL),
-(10, 8410, 'CICINELLI, Diana', 'Asociado', 'IT', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL),
-(11, 8902, 'COCENTINO, Mariano', 'Titular', 'IT', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL),
-(12, 8937, 'DAITTER, Patricia', 'Coord. Doc.', 'IT', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL),
-(13, 14469, 'DALLOCCHIO, Estefanía', 'JTP', 'IT', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL),
-(14, 8942, 'DI FAZIO, Karina', 'Adj.III de Grado ', 'IT', 'karina.difazio', '', NULL),
-(15, 8866, 'DURÁN, José', 'Asociado', 'IT', 'jose.duran', 'jedo370@gmail.com', NULL),
-(16, 8938, 'ESTEVES, Carlos', 'Coord. Doc.', 'IT', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL),
-(17, 14435, 'FERNANDEZ CROCCO, Gabriel', 'Adjunto I', 'IT', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL),
-(18, 8239, 'GREINER, Laura C', 'Asociado', 'IT', 'laura.greiner', 'lgreiner@anses.gov.ar', '3'),
-(19, 8628, 'HADAD, Graciela', 'Titular', 'IT', 'graciela.hadad', 'gracielahadad@gmail.com', NULL),
-(20, 8946, 'MARCHINI, jorge', 'Coord. Doc.', 'IT', 'jorge.marchini', '', NULL),
-(21, 14402, 'KLEINER, Roberto', 'Titular', 'I', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL),
-(22, 8918, 'MENAL, Claudio Marcelo', 'Adjunto II', 'IT', 'claudio.menal', 'marcelomenal@gmail.com', NULL),
-(23, 8849, 'MENGIDE, Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL),
-(24, 8873, 'MITARITONNA, Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL),
-(25, 8915, 'MOSCUZZA GUIDONI, Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL),
-(26, 8840, 'PICCIN, Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', NULL),
-(27, 8158, 'PICCIRILLI, Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL),
-(28, 14503, 'PUYOL, Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL),
-(29, 21092, 'RAFFO, Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL),
-(30, 8914, 'REINOSA, Enrique José', 'Titular', 'IT', 'enrique.reinosa', 'ereinosa@gmail.com', NULL),
-(31, 8901, 'SEBASTIAN, Alberto', 'Adjunto III', 'IT', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL),
-(32, 8947, 'SECATORE, Miguel', 'Coord. Doc.', 'IT', 'miguela.secatore', '', NULL),
-(33, 8809, 'TITIOSKY, Rolando', 'Titular', 'IT', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL),
-(34, 8871, 'TORO, Juán Roberto', 'Adjunto III', 'IT', 'juan.toro', 'j_r_toro@hotmail.com', NULL),
-(35, 8843, 'TOZZI, Adrián Horacio', 'Asociado', 'IT', 'adrian.tozzi', '', NULL),
-(36, 30313, 'ZAMBRANA, Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL),
-(37, 14523, 'GORGAL, Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL),
-(38, 21091, 'PRIETO, Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL),
-(99, 410, 'Mendoza, Tomas', 'Estudiante', 'IT', 'mendoza.tomas', 'tgmendoza@outlook.com', '99');
+INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido`, `nombre`, `grado`, `carrera`, `mail_comunidad`, `mail_secundario`, `id_usuario`, `isActive`) VALUES
+(1, 8738, 'AGUILERA', 'Sergio', 'Titular', 'IT', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2', 1),
+(2, 8827, 'ALDEGANI', 'Gustavo', 'Adjunto I', 'IT', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL, NULL),
+(3, 8744, 'ANGELERI', 'Paula María', 'Titular', 'IT', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL, NULL),
+(4, 16069, 'ARGOTA BICHARA', 'Maria Patricia', 'Coord. Doc.', 'IT', 'patricia.argota', '', NULL, NULL),
+(5, 8944, 'BLANCO', 'Miguel Angel', 'Asociado', 'IT', 'miguel.blanco', '', NULL, NULL),
+(6, 8943, 'BOCCATONDA', 'Carmen', 'Coord. Doc.', 'IT', 'carmen.boccatonda', '', NULL, NULL),
+(7, 8935, 'BREST', 'Pedro', 'Coord. Doc.', 'IT', 'pedro.brest', 'pbrest@hotmail.com', NULL, NULL),
+(8, 8862, 'CEBALLOS', 'Jorge Luis', 'Titular', 'IT', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL, NULL),
+(9, 30253, 'CERDA', 'Natalia Soledad', 'JTP', 'IT', 'natalia.cerda', '', NULL, NULL),
+(10, 8410, 'CICINELLI', 'Diana', 'Asociado', 'IT', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL, NULL),
+(11, 8902, 'COCENTINO', 'Mariano', 'Titular', 'IT', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL, NULL),
+(12, 8937, 'DAITTER', 'Patricia', 'Coord. Doc.', 'IT', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL, NULL),
+(13, 14469, 'DALLOCCHIO', 'Estefanía', 'JTP', 'IT', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL, NULL),
+(14, 8942, 'DI FAZIO', 'Karina', 'Adj.III de Grado ', 'IT', 'karina.difazio', '', NULL, NULL),
+(15, 8866, 'DURÁN', 'José', 'Asociado', 'IT', 'jose.duran', 'jedo370@gmail.com', NULL, NULL),
+(16, 8938, 'ESTEVES', 'Carlos', 'Coord. Doc.', 'IT', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL, NULL),
+(17, 14435, 'FERNANDEZ CROCCO', 'Gabriel', 'Adjunto I', 'IT', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL, NULL),
+(18, 8239, 'GREINER', 'Laura C', 'Asociado', 'IT', 'laura.greiner', 'lgreiner@anses.gov.ar', '3', 1),
+(19, 8628, 'HADAD', 'Graciela', 'Titular', 'IT', 'graciela.hadad', 'gracielahadad@gmail.com', NULL, NULL),
+(20, 8946, 'MARCHINI', 'jorge', 'Coord. Doc.', 'IT', 'jorge.marchini', '', NULL, NULL),
+(21, 14402, 'KLEINER', 'Roberto', 'Titular', 'I', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL, NULL),
+(22, 8918, 'MENAL', 'Claudio Marcelo', 'Adjunto II', 'IT', 'claudio.menal', 'marcelomenal@gmail.com', NULL, NULL),
+(23, 8849, 'MENGIDE', 'Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL, NULL),
+(24, 8873, 'MITARITONNA', 'Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL, NULL),
+(25, 8915, 'MOSCUZZA GUIDONI', 'Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL, NULL),
+(26, 8840, 'PICCIN', 'Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', NULL, NULL),
+(27, 8158, 'PICCIRILLI', 'Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL, NULL),
+(28, 14503, 'PUYOL', 'Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL, NULL),
+(29, 21092, 'RAFFO', 'Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL, NULL),
+(30, 8914, 'REINOSA', 'Enrique José', 'Titular', 'IT', 'enrique.reinosa', 'ereinosa@gmail.com', NULL, NULL),
+(31, 8901, 'SEBASTIAN', 'Alberto', 'Adjunto III', 'IT', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL, NULL),
+(32, 8947, 'SECATORE', 'Miguel', 'Coord. Doc.', 'IT', 'miguela.secatore', '', NULL, NULL),
+(33, 8809, 'TITIOSKY', 'Rolando', 'Titular', 'IT', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL, NULL),
+(34, 8871, 'TORO', 'Juán Roberto', 'Adjunto III', 'IT', 'juan.toro', 'j_r_toro@hotmail.com', NULL, NULL),
+(35, 8843, 'TOZZI', 'Adrián Horacio', 'Asociado', 'IT', 'adrian.tozzi', '', NULL, NULL),
+(36, 30313, 'ZAMBRANA', 'Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL, NULL),
+(37, 14523, 'GORGAL', 'Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL, NULL),
+(38, 21091, 'PRIETO', 'Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL, NULL),
+(99, 410, 'Mendoza', 'Tomas', 'Estudiante', 'IT', 'mendoza.tomas', 'tgmendoza@outlook.com', '99', 1);
 
 -- --------------------------------------------------------
 
@@ -672,21 +746,22 @@ CREATE TABLE `usuarios` (
   `usuario` varchar(200) DEFAULT NULL,
   `pass` varchar(250) DEFAULT NULL,
   `isActive` smallint DEFAULT NULL,
-  `isAdmin` smallint DEFAULT NULL
+  `isAdmin` smallint DEFAULT NULL,
+  `id_profesor` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`) VALUES
-(1, 'admin', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 1),
-(2, 'sergio', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0),
-(3, 'laura', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0),
-(4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0),
-(5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0),
-(6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0),
-(99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0);
+INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`, `id_profesor`) VALUES
+(1, 'admin', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 1, NULL),
+(2, 'sergio', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
+(3, 'laura', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
+(4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0, NULL),
+(5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0, NULL),
+(6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
+(99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL);
 
 --
 -- Índices para tablas volcadas
