@@ -12,7 +12,7 @@ $id_turno = !empty($_POST['id_turno']) ? $_POST['id_turno'] : null;
 
 $result = new stdClass();
 $result->success = false;
-|
+
 if ($id_carrera === null) {
     error_request($result, "Falta el campo id_carrera");
     echo json_encode($result);
