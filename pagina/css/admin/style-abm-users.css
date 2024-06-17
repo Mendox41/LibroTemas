@@ -55,6 +55,21 @@ td:nth-child(8) button {
     justify-content: space-between;
 }
 
+.filtro-usuarios {
+border-radius: 10px;
+}
+
+.form-filtro-usuarios{
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    padding: 2%;
+}
+
+#titulo-filto-buscqueda-usuario{
+    margin-bottom: 2%;
+}
+
 /* .form-floating{
     margin: 1% 0%;
 } */
