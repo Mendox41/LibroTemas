@@ -37,19 +37,14 @@ include ('../../php/session/validate-admin.php');
                         Nuevo Usuario
                     </button>
                 </div>
+
                 <div class="p-2">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-                <div class="p-2">
-                    <button type="button" name="" id="" class="btn btn-primary">
+                    <button type="button" name="" id="" class="btn btn-primary" disabled>
                         Filtro
                     </button>
                 </div>
 
-                <div class="dropdown">
+                <!-- <div class="dropdown">
                     <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Modificar
@@ -58,16 +53,76 @@ include ('../../php/session/validate-admin.php');
                         <li><a class="dropdown-item" id="btn-modif-datos-usuario">Datos</a></li>
                         <li><a class="dropdown-item" id="btn-modif-contrasena-usuario">Contraseña</a></li>
                     </ul>
-                </div>
-          
+                </div> -->
+
 
             </div>
 
+            <!-- filtro inicial -->
+            <div class="filtro-usuarios container-md bg-secondary-subtle">
+                <form class="form-filtro-usuarios" >
+                    <h3 id="titulo-filto-buscqueda-usuario">Filtro de busqueda de Usuario</h3>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Usuario</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Legajo</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword3">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Apellido</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword3">
+                        </div>
+                    </div>
 
+                    <fieldset class="row mb-3">
+                        <legend class="col-form-label col-sm-2 pt-0">Activo</legend>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridRadios3">
+                                <label class="form-check-label" for="gridRadios3">
+                                    
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+             
+                    <fieldset class="row mb-3">
+                        <legend class="col-form-label col-sm-2 pt-0">Administrador</legend>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridRadios3">
+                                <label class="form-check-label" for="gridRadios3">
+                                    
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <div class="d-flex flex-row-reverse">
+                        <button type="" class="btn btn-primary" id="btn-buscar-usuario">Buscar</button>
+
+                    </div>
+                </form>
+
+            </div>
 
             <!-- tabla abm-->
             <div id="contenedor-tabla-abm-usuarios"
-                class="table-responsive text-center bg-white text-dark abm-usuarios">
+                class="table-responsive text-center bg-white text-dark abm-usuarios ">
 
                 <!-- creo dinamicamente la tabla de abm -->
                 <!-- <table class="table">
@@ -216,12 +271,13 @@ include ('../../php/session/validate-admin.php');
 
             <!-- Modal modificacion de datos de usuario -->
             <div class="modal-container-ingreso-nuevo-usuario" id="modal-container-modif-datos-usuario">
-                <div class="modal modal-lg d-block" id="modal-form-modif-datos-usuario" data-bs-backdrop="static"
+                <div class="modal modal-lg" id="modal-form-modif-datos-usuario" data-bs-backdrop="static"
                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificación de datos de usuario</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificación de datos de usuario
+                                </h1>
                                 <button id="btn-close-modal-form-modif-datos-usuario" type="button" class="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
@@ -269,7 +325,8 @@ include ('../../php/session/validate-admin.php');
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                                     id="btn-cancel-modal-form-modf-datos-usuario">Cancel</button>
-                                <button type="submit" class="btn btn-success" id="btn-modif-datos-usuario">Ingresar</button>
+                                <button type="submit" class="btn btn-success"
+                                    id="btn-modif-datos-usuario">Ingresar</button>
                             </div>
                         </div>
                     </div>
@@ -281,18 +338,20 @@ include ('../../php/session/validate-admin.php');
 
 
             <!-- modal confirm modificacion de datos y contraseña de usuario -->
-            <div class="modal" tabindex="-1" id="modal-container-confirm-modificacion-datos"> <!-- aca agregar el d-block  -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-modificacion-datos">
+                <!-- aca agregar el d-block  -->
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h7 class="modal-title fs-7 titulo-confirm" id="titulo-modal-confirm-modificacion-datos">
                                 Confirm Desactivar/Activar usuario
                             </h7>
-                            <button id="close-btn-modal-confirm-modificacion-datos" type="button"
-                                class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="close-btn-modal-confirm-modificacion-datos" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h3 class="titulo-confirm" id="modal-title-confirm-modificacion-datos">Mostrar datos ingresados</h3>
+                            <h3 class="titulo-confirm" id="modal-title-confirm-modificacion-datos">Mostrar datos
+                                ingresados</h3>
                         </div>
                         <div class="modal-footer">
                             <button id="btn-cancel-modal-confirm-modificacion-datos" type="button"
@@ -393,7 +452,8 @@ include ('../../php/session/validate-admin.php');
             </div>
 
             <!-- modal confirm activar/desactivar usuario -->
-            <div class="modal" tabindex="-1" id="modal-container-confirm-desactivar-activar-usuario"> <!-- aca agregar el d-block  -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-desactivar-activar-usuario">
+                <!-- aca agregar el d-block  -->
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
