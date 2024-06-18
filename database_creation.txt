@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-06-2024 a las 22:19:44
+-- Tiempo de generación: 18-06-2024 a las 15:51:58
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -25,6 +25,26 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activate_course` (IN `p_id_curso` INT)   BEGIN
+	DECLARE p_isActive SMALLINT;
+    
+    SET p_isActive = 1;
+    
+    UPDATE cursos
+    SET isActive = p_isActive
+    WHERE id_curso = p_id_curso;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activate_user` (IN `p_id_usuario` INT)   BEGIN
+	DECLARE p_isActive SMALLINT;
+    
+    SET p_isActive = 1;
+    
+    UPDATE usuarios
+    SET isActive = p_isActive
+    WHERE id_usuario = p_id_usuario;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso` ()   BEGIN
 	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
 	FROM cursos AS T1
@@ -51,7 +71,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` IN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_libro_tema` ()   BEGIN
-    SELECT T1.tema, T1.descripcion, T1.fecha, T1.id_profesor, T3.apellido, T3.nombre ,T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
+    SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha,t1.fecha_ingreso, T1.fecha_modif, T3.apellido, T3.nombre ,T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
     FROM libro_temas AS T1
     INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
     INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
@@ -70,6 +90,41 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_relacion` ()   BEGIN
     ORDER BY T1.id_carrera;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_course` (IN `p_id_curso` INT)   BEGIN
+	DECLARE p_isActive SMALLINT;
+    
+    SET p_isActive = 0;
+    
+    UPDATE cursos
+    SET isActive = p_isActive
+    WHERE id_curso = p_id_curso;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `p_id_usuario` INT)   BEGIN
+	DECLARE p_isActive SMALLINT;
+    
+    SET p_isActive = 0;
+    
+    UPDATE usuarios
+    SET isActive = p_isActive
+    WHERE id_usuario = p_id_usuario;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_course` (IN `p_id_curso` INT)   BEGIN
+	DELETE FROM cursos 
+    WHERE id_curso = p_id_curso;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_topic` (IN `p_id_libro_tema` INT)   BEGIN
+	DELETE FROM libro_temas 
+    WHERE id_libro_tema = p_id_libro_tema;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` INT)   BEGIN
+	DELETE FROM usuarios 
+    WHERE id_usuario = p_id_usuario;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_course` ()   BEGIN
 	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_profesor, T8.apellido, T8.nombre, T8.isActive, T1.id_turno, T7.turno
 	FROM cursos AS T1
@@ -82,6 +137,38 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_course` ()   BEGIN
     INNER JOIN profesores AS T8 ON T8.id_profesor = T1.id_profesor
     WHERE T8.isActive = 1
 	ORDER BY T2.id_carrera;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materia_profesor_cursos` (IN `id_user` INT)   BEGIN
+
+DECLARE fecha_actual date;
+
+SELECT 
+        T1.id_curso, 
+        T1.id_profesor,
+        T1.id_relacion, 
+        T2.id_carrera,
+        T6.nom_abreviado, 
+        T2.id_anio,
+        T7.anio,
+        T2.id_materia,
+        T9.materia,
+        T1.id_comision,
+        T5.comision,
+        T1.id_turno,
+        T4.turno,
+        T8.semestre
+    FROM cursos AS T1
+    INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+    INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
+    INNER JOIN turnos as T4 ON T4.id_turno = T1.id_turno
+    INNER JOIN comisiones as T5 ON T5.id_comision = T1.id_comision
+    INNER JOIN carreras AS T6 ON T6.id_carrera = T2.id_carrera
+    INNER JOIN anios AS T7 ON T7.id_anio = T2.id_anio
+    INNER JOIN semestres AS T8 ON T8.id_semestre = T2.id_semestre
+    INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
+	WHERE T3.id_usuario = id_user
+    ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_usuarios` ()   BEGIN
@@ -247,10 +334,10 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`id_carrera`, `carrera`, `nom_abreviado`, `codigo_carrera`, `isActive`) VALUES
-(1, 'Licensiatura Sistemas de Información', 'Lic. Sistemas', 501, 1),
-(2, 'Ingenierá Informática', 'Ing. Informatica', 502, 1),
-(3, 'Técnicatura en Programación de Computadoras', 'Tec. Programacion', 560, 1),
-(4, 'Técnicatura en Diseño y Animación Digital', 'Tec. Diseño, Animacion Digital', 563, 1),
+(1, 'Licensiatura Sistemas de Informacion', 'Lic. Sistemas', 501, 1),
+(2, 'Ingenieria Informatica', 'Ing. Informatica', 502, 1),
+(3, 'Tecnicatura en Programacion de Computadoras', 'Tec. Programacion', 560, 1),
+(4, 'Tecnicatura en Diseño y Animacion Digital', 'Tec. Diseño, Animacion Digital', 563, 1),
 (99, 'NULL', 'NULL', 99, 1);
 
 -- --------------------------------------------------------
@@ -302,6 +389,7 @@ INSERT INTO `cursos` (`id_curso`, `id_relacion`, `id_comision`, `id_profesor`, `
 (7, 29, 1, 26, 1, 1, '2024'),
 (8, 92, 1, 2, 3, 1, '2024'),
 (9, 90, 1, 18, 3, 1, '2024'),
+(10, 1, 1, 1, 1, 1, '2024'),
 (11, 112, 1, 25, 3, 1, '2024'),
 (12, 113, 1, 12, 1, 1, '2024'),
 (13, 3, 1, 18, 3, 1, '2024'),
@@ -761,7 +849,8 @@ INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`, 
 (4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0, NULL),
 (5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0, NULL),
 (6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
-(99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL);
+(99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
+(100, 'agus', '$2y$10$zOfcBfEFyTMIjU04Q7epJeGA0/ez1soaPCL9ekQJBBtiz21TZLc.C', 1, 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -841,19 +930,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
