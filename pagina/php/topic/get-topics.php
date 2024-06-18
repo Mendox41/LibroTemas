@@ -81,57 +81,58 @@ $stmt = $dbh->prepare($sql);
 
 // Vinculo los parámetros 
 if (!empty($nombre_carrera)) {
-    $stmt->bindParam(':id', $nombre_carrera);
+    $stmt->bindParam(':carrera', $nombre_carrera);
 }
 if (!empty($anio_carrera)) {
-    $stmt->bindParam(':marca', $anio_carrera);
+    $stmt->bindParam(':anio', $anio_carrera);
 }
 if (!empty($nombre_materia)) {
-    $stmt->bindParam(':modelo', $nombre_materia);
+    $stmt->bindParam(':materia', $nombre_materia);
 }
 if (!empty($comision)) {
-    $stmt->bindParam(':anio', $comision);
+    $stmt->bindParam(':comision', $comision);
 }
 if (!empty($turno)) {
-    $stmt->bindParam(':valor', $turno);
+    $stmt->bindParam(':turno', $turno);
 }
 if (!empty($nombre_usuario)) {
-    $stmt->bindParam(':descripcion', $nombre_usuario);
+    $stmt->bindParam(':usuario', $nombre_usuario);
 }
 if (!empty($nombre_profesor)) {
-    $stmt->bindParam(':id', $nombre_profesor);
+    $stmt->bindParam(':nombre', $nombre_profesor);
 }
 if (!empty($apellido_profesor)) {
-    $stmt->bindParam(':marca', $apellido_profesor);
+    $stmt->bindParam(':apellido', $apellido_profesor);
 }
 if (!empty($fecha_tema)) {
-    $stmt->bindParam(':modelo', $fecha_tema);
+    $stmt->bindParam(':fecha', $fecha_tema);
 }
 if (!empty($titulo_tema)) {
-    $stmt->bindParam(':anio', $titulo_tema);
+    $stmt->bindParam(':tema', $titulo_tema);
 }
 if (!empty($descripcion_tema)) {
-    $stmt->bindParam(':valor', $descripcion_tema);
+    $stmt->bindParam(':descripcion', $descripcion_tema);
 }
 
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
-
+if (!empty($nombre_carrera)) {
+    $stmt->bindParam(':carrera', $nombre_carrera);
+}
 $topic = [];
 while ($fila = $stmt->fetch()) {
     $objTopic = new stdClass();
-    $objTopic->id = $fila["id"];
-    $objTopic->marca = $fila["marca"];
-    $objTopic->modelo = $fila["modelo"];
+    $objTopic->carrera = $fila["carrera"];
     $objTopic->anio = $fila["anio"];
-    $objTopic->valor = $fila["valor"];
-    $objTopic->descripcion = $fila["descripcion"];
-    $objTopic->id = $fila["id"];
-    $objTopic->marca = $fila["marca"];
-    $objTopic->modelo = $fila["modelo"];
-    $objTopic->anio = $fila["anio"];
-    $objTopic->valor = $fila["valor"];
+    $objTopic->materia = $fila["materia"];
+    $objTopic->comision = $fila["comision"];
+    $objTopic->turno = $fila["turno"];
+    $objTopic->usuario = $fila["usuario"];
+    $objTopic->nombre = $fila["nombre"];
+    $objTopic->apellido = $fila["apellido"];
+    $objTopic->fecha = $fila["fecha"];
+    $objTopic->tema = $fila["tema"];
     $objTopic->descripcion = $fila["descripcion"];
     // $objTopic->archivo_binario = $fila["archivo_binario"];
 
