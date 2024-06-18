@@ -10,7 +10,7 @@ mb_internal_encoding("UTF-8");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario'] : null;
+// $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario'] : null;
 
 $result = new stdClass();
 $result->success = false;
@@ -19,9 +19,9 @@ $result->success = false;
 // PENDIENTE (CONDICION)
 
 
-if (empty($id_usuario)) {
-    error_request($result, "El id ingresado esta vacio  $id_usuario");
-}
+// if (empty($id_usuario)) {
+//     error_request($result, "El id ingresado esta vacio  $id_usuario");
+// }
 
 $db_name = "300hs_laborales";
 mysqli_select_db($conn, $db_name);

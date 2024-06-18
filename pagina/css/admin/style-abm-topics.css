@@ -70,6 +70,11 @@ border-radius: 10px;
     margin-bottom: 2%;
 }
 
+
+.hidden-container {
+    display: none;
+}
+
 /* .form-floating{
     margin: 1% 0%;
 } */

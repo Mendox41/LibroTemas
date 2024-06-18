@@ -19,6 +19,8 @@ if (empty($id_usuario)) {
     error_request($result, "El id ingresado esta vacio  $id_usuario");
 }
 
+
+
 $db_name = "300hs_laborales";
 mysqli_select_db($conn, $db_name);
 // $conn->set_charset("utf8");
@@ -37,6 +39,9 @@ if (!$stmt->execute()) {
 
 // Manejo de resultados
 $stmt->bind_result($id_curcom, $id_profesor, $id_relacion, $id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $id_comision, $comision, $id_turno, $turno, $semestre);
+
+
+// ------------------
 
 $relacion = [];
 $cont = 0;

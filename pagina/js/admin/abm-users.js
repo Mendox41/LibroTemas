@@ -23,10 +23,8 @@ $(document).ready(function () {
                 $.ajax({
                     url: '../../php/user/get-users.php',
                     method: 'POST',
-                    data: { 'id_usuario': id_usuario },
-
                     success: function (segunda_respuesta) {
-                        // alert(segunda_respuesta); //RESPUESTA DE LAS RELACIONES ASOCIADAS AL PROFESOR
+                        alert(segunda_respuesta); //RESPUESTA DE LAS RELACIONES ASOCIADAS AL PROFESOR
                         var data_usuarios = JSON.parse(segunda_respuesta);
 
                         // alert(data_usuarios.success)

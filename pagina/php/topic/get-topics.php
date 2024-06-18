@@ -6,16 +6,16 @@ include(__DIR__ . "/../database/conection.php");
 // Incluir las funciones de error
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
-$nombre_carrera = isset($_POST["nombre-carrera"]) ? $_POST["nombre-carrera"] : '';
-$anio_carrera = isset($_POST["anio-carrera"]) ? $_POST["anio-carrera"] : '';
-$nombre_materia = isset($_POST["nombre-materia"]) ? $_POST["nombre-materia"] : '';
+$nombre_carrera = isset($_POST["nombre_carrera"]) ? $_POST["nombre_carrera"] : '';
+$anio_carrera = isset($_POST["anio_carrera"]) ? $_POST["anio_carrera"] : '';
+$nombre_materia = isset($_POST["nombre_materia"]) ? $_POST["nombre_materia"] : '';
 $comision = isset($_POST["comision"]) ? $_POST["comision"] : '';
 $turno = isset($_POST["turno"]) ? $_POST["turno"] : '';
-$nombre_profesor = isset($_POST["nombre-profesor"]) ? $_POST["nombre-profesor"] : '';
-$apellido_profesor = isset($_POST["apellido-profesor"]) ? $_POST["apellido-profesor"] : '';
-$fecha_tema = isset($_POST["fecha-tema"]) ? $_POST["fecha-tema"] : '';
-$titulo_tema = isset($_POST["titulo-tema"]) ? $_POST["titulo-tema"] : '';
-$descripcion_tema = isset($_POST["descripcion-tema"]) ? $_POST["descripcion-tema"] : '';
+$nombre_profesor = isset($_POST["nombre_profesor"]) ? $_POST["nombre_profesor"] : '';
+$apellido_profesor = isset($_POST["apellido_profesor"]) ? $_POST["apellido_profesor"] : '';
+$fecha_tema = isset($_POST["fecha_tema"]) ? $_POST["fecha_tema"] : '';
+$titulo_tema = isset($_POST["titulo_tema"]) ? $_POST["titulo_tema"] : '';
+$descripcion_tema = isset($_POST["descripcion_tema"]) ? $_POST["descripcion_tema"] : '';
 
 $result = new stdClass();
 $result->success = false;

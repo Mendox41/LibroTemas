@@ -167,48 +167,48 @@ include ('../../php/session/validate-admin.php');
 
                                 <form class="row g-3 form-filtro" id="modal-form-filtro-tema">
                                     <div class="col-sm-6">
-                                        <label for="nombre-carrera" class="form-label">Carrera</label>
+                                        <label for="nombre-carrera-modal-filtro" class="form-label">Carrera</label>
                                         <input type="text" class="form-control" id="nombre-carrera-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="anio-carrera" class="form-label">Año carrera</label>
+                                        <label for="anio-carrera-modal-filtro" class="form-label">Año carrera</label>
                                         <input type="text" class="form-control" id="anio-carrera-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="nombre-materia" class="form-label">Materia</label>
+                                        <label for="nombre-materia-modal-filtro" class="form-label">Materia</label>
                                         <input type="text" class="form-control" id="nombre-materia-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="comision" class="form-label">Comision</label>
+                                        <label for="comision-modal-filtro" class="form-label">Comision</label>
                                         <input type="text" class="form-control" id="comision-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="turno" class="form-label">Turno</label>
+                                        <label for="turno-modal-filtro" class="form-label">Turno</label>
                                         <input type="text" class="form-control" id="turno-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="nombre-usuario" class="form-label">Usuario</label>
+                                        <label for="nombre-usuario-modal-filtro" class="form-label">Usuario</label>
                                         <input type="text" class="form-control" id="nombre-usuario-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="nombre-profesor" class="form-label">Nombre Profesor</label>
+                                        <label for="nombre-profesor-modal-filtro" class="form-label">Nombre Profesor</label>
                                         <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="nombre-profesor" class="form-label">Apellido Profesor</label>
+                                        <label for="apellido-profesor-modal-filtro" class="form-label">Apellido Profesor</label>
                                         <input type="text" class="form-control" id="apellido-profesor-modal-filtro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="fecha-tema" class="form-label">Fecha</label>
+                                        <label for="fecha-tema-modal-filtro" class="form-label">Fecha</label>
                                         <input type="date" class="form-control" id="fecha-tema-modal-filtro">
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="titulo-tema" class="form-label">Titulo</label>
+                                        <label for="titulo-tema-modal-filtro" class="form-label">Titulo</label>
                                         <input type="text" class="form-control" id="titulo-tema-modal-filtro">
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label for="descripcion-tema" class="form-label">Descripcion</label>
+                                        <label for="descripcion-tema-modal-filtro" class="form-label">Descripcion</label>
                                         <textarea class="form-control" id="descripcion-tema-modal-filtro"
                                             rows="1"></textarea>
                                     </div>
@@ -574,8 +574,8 @@ include ('../../php/session/validate-admin.php');
     <!-- Google CND of Jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+    
     <!-- js -->
-    <!-- <script src="../../js/admin/abm-topics.js"></script> -->
     <script src="../../js/modals-actions/modals-abm-topics.js"></script>
     <script src="../../js/topic/topic-filter-actions.js"></script>
 
