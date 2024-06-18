@@ -37,7 +37,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_usuario, $usuario, $isActive, $isAdmin, $id_profesor, $legajo, $apellido_nombre, $grado, $carrera);
+$stmt->bind_result($id_usuario, $usuario, $isActive, $isAdmin, $id_profesor, $legajo, $apellido, $nombre, $grado, $carrera);
 
 $usuarios = [];
 $cont = 0;
@@ -47,29 +47,14 @@ while ($stmt->fetch()) {
 
     $usuarios_registrados->legajo = $legajo;
     $usuarios_registrados->usuario = $usuario;
-    $usuarios_registrados->apellido_nombre = $apellido_nombre;
+    $usuarios_registrados->apellido = $apellido;
+    $usuarios_registrados->nombre = $nombre;
     $usuarios_registrados->grado = $grado;
     $usuarios_registrados->carrera = $carrera;
     $usuarios_registrados->isActive = $isActive;
     $usuarios_registrados->isAdmin = $isAdmin;
 
     $usuarios_registrados->id_usuario = $id_usuario;
-
-
-
-
-
-    // $usuarios_registrados->id_usuario = $id_usuario;
-    // $usuarios_registrados->usuario = $usuario;
-    // $usuarios_registrados->isActive = $isActive;
-    // $usuarios_registrados->isAdmin = $isAdmin;
-    // $usuarios_registrados->id_profesor = $id_profesor;
-    // $usuarios_registrados->legajo = $legajo;
-    // $usuarios_registrados->apellido_nombre = $apellido_nombre;
-    // $usuarios_registrados->grado = $grado;
-    // $usuarios_registrados->carrera = $carrera;
-
-    
 
     $cont += 1;
 

@@ -23,7 +23,7 @@ mysqli_select_db($conn, $databaseName);
 $hashed_password = password_hash($plain_password, PASSWORD_DEFAULT);
 
 # Insert instruction
-$insertUserQuery = "INSERT INTO usuarios (usuario, pass, isActive) VALUES (?, ?, 1)";
+$insertUserQuery = "INSERT INTO usuarios (usuario, pass, isActive, isAdmin) VALUES (?, ?, 1, 0)";
 $stmt = $conn->prepare($insertUserQuery);
 
 if (!$stmt) {

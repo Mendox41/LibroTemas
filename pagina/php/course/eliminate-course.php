@@ -22,7 +22,7 @@ if (($id_curso === null)) {
     mysqli_select_db($conn, $db_name);
 
     // Llamada al procedimiento almacenado
-    $stmt = $conn->prepare("CALL deactivate_course(?)");
+    $stmt = $conn->prepare("CALL eliminate_course(?)");
     if (!$stmt) {
         error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
     }
@@ -36,7 +36,7 @@ if (($id_curso === null)) {
     $stmt->close();
     $conn ->close();
 
-    $result->message = 'El curso fue desactivado correctamente';
+    $result->message = 'El curso fue eliminado correctamente';
     $result -> success = true;
 };
 

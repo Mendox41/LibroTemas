@@ -9,12 +9,12 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$id_curso =  isset($_POST['id_curso']) ? $_POST['id_curso'] : null;
+$id_usuario =  isset($_POST['id_usuario']) ? $_POST['id_usuario'] : null;
 
 $result = new stdClass();
 $result->success = false;
 
-if (($id_curso === null)) {
+if (($id_usuario === null)) {
     $result->message = 'No se ingreso ningun id';
     $result->success = false;
 }else{
@@ -22,12 +22,12 @@ if (($id_curso === null)) {
     mysqli_select_db($conn, $db_name);
 
     // Llamada al procedimiento almacenado
-    $stmt = $conn->prepare("CALL deactivate_course(?)");
+    $stmt = $conn->prepare("CALL activate_user(?)");
     if (!$stmt) {
         error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
     }
 
-    $stmt->bind_param("i", $id_curso);
+    $stmt->bind_param("i", $id_usuario);
 
     if (!$stmt->execute()) {
         error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
@@ -36,7 +36,7 @@ if (($id_curso === null)) {
     $stmt->close();
     $conn ->close();
 
-    $result->message = 'El curso fue desactivado correctamente';
+    $result->message = 'El usuario fue activado correctamente';
     $result -> success = true;
 };
 
