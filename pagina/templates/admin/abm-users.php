@@ -59,7 +59,7 @@ include ('../../php/session/validate-admin.php');
             </div>
 
             <!-- filtro inicial -->
-            <div class="filtro-usuarios container-md bg-secondary-subtle">
+            <div class="filtro-usuarios container-md bg-secondary-subtle" hidden>
                 <form class="form-filtro-usuarios" >
                     <h3 id="titulo-filto-buscqueda-usuario">Filtro de busqueda de Usuario</h3>
                     <div class="row mb-3">

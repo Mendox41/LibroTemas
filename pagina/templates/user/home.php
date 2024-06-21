@@ -74,28 +74,22 @@ include ('../../php/session/validate-session.php');
                             <div class="form-floating mb-3">
                                 <div class="row g-3">
                                     <div class="">
-                                        <input type="text" class="form-control" placeholder="ID Curso"
-                                            aria-label="ID Curso" id="id-curso" disabled hidden>
+                                        <input type="text" class="form-control" id="id-curso" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="CarreraSelec"
-                                            aria-label="Carrera Seleccionada" id="carrera-selec" disabled>
+                                        <input type="text" class="form-control" id="carrera-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Año Carrera Selecc"
-                                            aria-label="Año Carrera Selecc" id="anio-carrera-selec" disabled>
+                                        <input type="text" class="form-control" id="anio-carrera-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Materia Selecc"
-                                            aria-label="Materia Selecc" id="materia-selec" disabled>
+                                        <input type="text" class="form-control"  id="materia-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Com selecc"
-                                            aria-label="Com selecc" id="comision-selec" disabled>
+                                        <input type="text" class="form-control"  id="comision-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Turno comm Selecc"
-                                            aria-label="Turno comm Selecc" id="turno-com-selec" disabled>
+                                        <input type="text" class="form-control" id="turno-com-selec" disabled>
                                     </div>
                                     <!-- <div class="col-md-6">
                                         <input type="text" class="form-control" placeholder="Fecha actual"

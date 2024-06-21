@@ -9,6 +9,7 @@ $(document).ready(function () {
         $("#body").removeClass("prueba-back");
 
         $("#modal-form").removeClass("d-block");
+        empty_form()
 
     });
 
@@ -19,6 +20,7 @@ $(document).ready(function () {
         $("#body").removeClass("prueba-back");
 
         $("#modal-form").removeClass("d-block");
+        empty_form()
 
     });
 

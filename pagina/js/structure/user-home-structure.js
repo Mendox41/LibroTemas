@@ -357,22 +357,14 @@ $(document).ready(function () {
                                     // // todoListoParaModify()
 
                                     //Vacia los campos del modal de form ingreso de nuevo tema si ya previamente tenia datos
-                                    $("#fecha-tema").val(0);
-                                    $("#titulo-tema").val("");
-                                    $("#descripcion-tema").val("");
-                                    $("#errorMessage").addClass("oculto");
-
-
-                                    $("#fecha-tema").removeClass('bg-danger-subtle');
-                                    $("#fecha-tema").removeClass("text-danger-emphasis");
-                                    $("#fecha-tema").removeClass("border-danger");
-
+                                    // vacio campos del form
+                                    empty_form()
 
                                     // completo los input con los datos que tenia
                                     $("#id-curso").val(relacion.id_curcom);
 
                                     // se llenan los campos con valores seleccionados (Fx en modals-actions.js)
-                                    //fill_form(relacion.id_curcom); // tomi falta que haga php
+                                    fill_form(relacion.id_curcom); // tomi falta que haga php
 
                                     // manejo de clases para mostrar modal del form 
                                     $("#modal-form").addClass("d-block");
@@ -626,24 +618,72 @@ $(document).ready(function () {
     // Funcion llenar form con datos seleccionados
     function fill_form(idCurso) {
         $.ajax({
-            type: "get",
-            url: "", // url de destino
+            type: "POST",
+            url: "../../php/individual_data/dato_curso.php", // url de destino
+
             data: {
-                id_curcom: idCurso // ver que no cambie nombre de variables en el php de destino
+                id_Curso: idCurso // ver que no cambie nombre de variables en el php de destino
             },
             success: function (respuestaDelServer) {
+
                 // alert(respuestaDelServer);
+
                 var objJson = JSON.parse(respuestaDelServer);
-                $('#carrera-selec').val(objJson.carrera);
-                $('#anio-carrera-selec').val(objJson.anio);
-                $('#materia-selec').val(objJson.materia);
-                $('#comision-selec').val(objJson.comision);
-                $('#turno-com-selec').val(objJson.turno);
-                $('#fecha-actual').val(objJson.fecha_actual);
+
+                if (objJson.success) {
+                    // console.log(objJson.curso.carrera);
+                    // $('#carrera-selec').val(objJson.curso.carrera);
+                    // $('#anio-carrera-selec').val(objJson.curso.anio);
+                    // $('#materia-selec').val(objJson.curso.materia);
+                    // $('#comision-selec').val(objJson.curso.comision);
+                    // $('#turno-com-selec').val(objJson.curso.turno);
+                    // // $('#fecha-actual').val(objJson.fecha_actual);
+
+
+                    var curso = objJson.curso[0]; // Acceder al primer elemento del array
+
+                    $('#carrera-selec').val(curso.carrera);
+                    $('#anio-carrera-selec').val(curso.anio);
+                    $('#materia-selec').val(curso.materia);
+                    $('#comision-selec').val(curso.comision);
+                    $('#turno-com-selec').val(curso.turno);
+                } else {
+                    console.log(respuestaDelServer);
+                }
+
+
+
+            },
+            error: function (xhr, status, error) {
+                console.error('Error en el envío: ' + error);
+                console.error('Estado: ' + status);
+                console.error('XHR: ' + JSON.stringify(xhr));
+
 
             }
 
         });
+    };
+
+    // Funcion para vaciar campos de datos del form ingreso tema
+    function empty_form() {
+        $('#carrera-selec').val("");
+        $('#anio-carrera-selec').val("");
+        $('#materia-selec').val("");
+        $('#comision-selec').val("");
+        $('#turno-com-selec').val("");
+
+        $("#fecha-tema").val(0);
+        $("#titulo-tema").val("");
+        $("#descripcion-tema").val("");
+        $("#errorMessage").addClass("oculto");
+
+
+        $("#fecha-tema").removeClass('bg-danger-subtle');
+        $("#fecha-tema").removeClass("text-danger-emphasis");
+        $("#fecha-tema").removeClass("border-danger");
+
+
     };
 
 });

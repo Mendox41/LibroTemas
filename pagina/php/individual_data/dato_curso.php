@@ -9,22 +9,36 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+$id_curso = isset($_POST['id_Curso']) ? $_POST['id_Curso'] : null;
+
 $result = new stdClass();
 $result->success = false;
 
-$db_name = "300hs_laborales";
-mysqli_select_db($conn, $db_name);
-
-// Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL datos_curso_id();"); 
-if (!$stmt) {
-    error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
+if ($id_curso === null) {
+    error_stmt($result, "ID de curso no proporcionado", null, $conn);
     echo json_encode($result);
     exit();
 }
 
+$db_name = "300hs_laborales";
+if (!mysqli_select_db($conn, $db_name)) {
+    error_stmt($result, "Error seleccionando la base de datos: " . $conn->error, null, $conn);
+    echo json_encode($result);
+    exit();
+}
+
+// Llamada al procedimiento almacenado
+$stmt = $conn->prepare("CALL datos_curso_id(?);");
+if (!$stmt) {
+    error_stmt($result, "Error preparando la consulta: " . $conn->error, null, $conn);
+    echo json_encode($result);
+    exit();
+}
+
+$stmt->bind_param("i", $id_curso);
+
 if (!$stmt->execute()) {
-    error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
+    error_stmt($result, "Error ejecutando la consulta: " . $stmt->error, $stmt, $conn);
     echo json_encode($result);
     exit();
 }
@@ -45,18 +59,16 @@ while ($stmt->fetch()) {
     $datoCurso->materia = $materia;
     $datoCurso->id_comision = $id_comision;
     $datoCurso->comision = $comision;
-    $datoCurso->id_turno = $id_turno;  
-    $datoCurso->turno = $turno;       
+    $datoCurso->id_turno = $id_turno;
+    $datoCurso->turno = $turno;
 
     array_push($curso, $datoCurso);
 }
 
 if (empty($curso)) {
-    error_request($result, "No hay curso registrados");
+    error_stmt($result, "No hay cursos registrados", null, $conn);
 } else {
-    $objCurso = new stdClass();
-    $objCurso->curso = $curso;
-    $result->respuesta = $objCurso;
+    $result->curso = $curso;
     $result->success = true;
 }
 
