@@ -49,7 +49,7 @@ include ('../../php/session/validate-admin.php');
             <!-- filtro inicial -->
 
             <div class="filtro container-md bg-secondary-subtle" id="container-filtro-temas">
-                <form class="row g-3 form-filtro" id="form-filtro-tema">
+                <div class="row g-3 form-filtro" id="form-filtro-tema">
                     <h3 id="titulo-filtro">Filtro de busqueda de Tema</h3>
                     <div class="col-sm-3">
                         <label for="nombre-carrera" class="form-label">Carrera</label>
@@ -98,17 +98,16 @@ include ('../../php/session/validate-admin.php');
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-primary" id="btn-buscar-tema">Buscar</button>
-
                     </div>
-                </form>
-            </div>
+                
+                </div>
 
 
-            <!-- tabla abm-->
-            <div id="contenedor-tabla-abm-temas" class="table-responsive text-center bg-white text-dark abm-temas ">
+                <!-- tabla abm-->
+                <div id="contenedor-tabla-abm-temas" class="table-responsive text-center bg-white text-dark abm-temas ">
 
-                <!-- creo dinamicamente la tabla de abm -->
-                <!-- <table class="table">
+                    <!-- creo dinamicamente la tabla de abm -->
+                    <!-- <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">Column 1</th>
@@ -142,9 +141,9 @@ include ('../../php/session/validate-admin.php');
                         </tr>
                     </tbody>
                 </table> -->
-            </div>
+                </div>
 
-        </div>
+            </div>
 
         </div>
 
@@ -165,7 +164,7 @@ include ('../../php/session/validate-admin.php');
                             <div class="modal-body" id="modal-body">
 
 
-                                <form class="row g-3 form-filtro" id="modal-form-filtro-tema">
+                                <div class="row g-3 form-filtro" id="modal-form-filtro-tema">
                                     <div class="col-sm-6">
                                         <label for="nombre-carrera-modal-filtro" class="form-label">Carrera</label>
                                         <input type="text" class="form-control" id="nombre-carrera-modal-filtro">
@@ -216,7 +215,7 @@ include ('../../php/session/validate-admin.php');
                                             rows="1"></textarea>
                                     </div>
 
-                                </form>
+                                </d>
 
                             </div>
 
@@ -255,6 +254,9 @@ include ('../../php/session/validate-admin.php');
     <!-- js -->
     <script src="../../js/modals-actions/modals-abm-topics.js"></script>
     <script src="../../js/topic/topic-filter-actions.js"></script>
+    <!-- <script src="../../js/structure/abm-topics-structure.js"></script> -->
+
+
 
 
 

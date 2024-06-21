@@ -6,6 +6,8 @@ include(__DIR__ . "/../database/conection.php");
 // Incluir las funciones de error
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
+
+// Recibir los datos del formulario
 $nombre_carrera = isset($_POST["nombre_carrera"]) ? $_POST["nombre_carrera"] : '';
 $anio_carrera = isset($_POST["anio_carrera"]) ? $_POST["anio_carrera"] : '';
 $nombre_materia = isset($_POST["nombre_materia"]) ? $_POST["nombre_materia"] : '';
@@ -17,13 +19,15 @@ $fecha_tema = isset($_POST["fecha_tema"]) ? $_POST["fecha_tema"] : '';
 $titulo_tema = isset($_POST["titulo_tema"]) ? $_POST["titulo_tema"] : '';
 $descripcion_tema = isset($_POST["descripcion_tema"]) ? $_POST["descripcion_tema"] : '';
 
+// Inicializar el objeto de resultado
 $result = new stdClass();
 $result->success = false;
 
+// Seleccionar la base de datos
 $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
-// Armo la consulta     
+// Iniciar la consulta SQL
 $sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha, T6.carrera, T7.anio, T5.materia, T8.comision, T9.turno, T3.apellido, T3.nombre  
         FROM libro_temas AS T1
         INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
@@ -39,57 +43,59 @@ $sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha, T6.carrera, 
 $parameters = [];
 $types = "";
 
+// Verificar y añadir condiciones dinámicas a la consulta
 if (!empty($nombre_carrera)) {
     $sql .= " AND T6.carrera LIKE ?";
-    $parameters[] = "%$nombre_carrera%";
+    $parameters[] = "%" . $nombre_carrera . "%";
     $types .= "s";
 }
 if (!empty($anio_carrera)) {
     $sql .= " AND T7.anio LIKE ?";
-    $parameters[] = "%$anio_carrera%";
+    $parameters[] = "%" . $anio_carrera . "%";
     $types .= "s";
 }
 if (!empty($nombre_materia)) {
     $sql .= " AND T5.materia LIKE ?";
-    $parameters[] = "%$nombre_materia%";
+    $parameters[] = "%" . $nombre_materia . "%";
     $types .= "s";
 }
 if (!empty($comision)) {
     $sql .= " AND T8.comision LIKE ?";
-    $parameters[] = "%$comision%";
+    $parameters[] = "%" . $comision . "%";
     $types .= "s";
 }
 if (!empty($turno)) {
     $sql .= " AND T9.turno LIKE ?";
-    $parameters[] = "%$turno%";
+    $parameters[] = "%" . $turno . "%";
     $types .= "s";
 }
 if (!empty($nombre_profesor)) {
     $sql .= " AND T3.nombre LIKE ?";
-    $parameters[] = "%$nombre_profesor%";
+    $parameters[] = "%" . $nombre_profesor . "%";
     $types .= "s";
 }
 if (!empty($apellido_profesor)) {
     $sql .= " AND T3.apellido LIKE ?";
-    $parameters[] = "%$apellido_profesor%";
+    $parameters[] = "%" . $apellido_profesor . "%";
     $types .= "s";
 }
 if (!empty($fecha_tema)) {
     $sql .= " AND T1.fecha LIKE ?";
-    $parameters[] = "%$fecha_tema%";
+    $parameters[] = "%" . $fecha_tema . "%";
     $types .= "s";
 }
 if (!empty($titulo_tema)) {
     $sql .= " AND T1.tema LIKE ?";
-    $parameters[] = "%$titulo_tema%";
+    $parameters[] = "%" . $titulo_tema . "%";
     $types .= "s";
 }
 if (!empty($descripcion_tema)) {
     $sql .= " AND T1.descripcion LIKE ?";
-    $parameters[] = "%$descripcion_tema%";
+    $parameters[] = "%" . $descripcion_tema . "%";
     $types .= "s";
 }
 
+// Preparar la consulta
 $stmt = $conn->prepare($sql);
 
 // Verificar si la preparación de la consulta fue exitosa
@@ -111,6 +117,7 @@ if (!$stmt->execute()) {
     exit;
 }
 
+// Almacenar el resultado y vincular los resultados
 $stmt->store_result();
 $stmt->bind_result($id_libro_tema, $tema, $descripcion, $fecha, $carrera, $anio, $materia, $comision, $turno, $apellido, $nombre);
 
@@ -136,6 +143,7 @@ while ($stmt->fetch()) {
     array_push($topic, $objTopic);
 }
 
+// Verificar si se encontraron resultados
 if (empty($topic)) {
     error_stmt($result, "No topics found", $stmt, $conn);
 } else {
@@ -144,9 +152,11 @@ if (empty($topic)) {
     $result->success = true;
 }
 
+// Cerrar la conexión y la consulta
 $stmt->close();
 $conn->close();
 
+// Devolver el resultado en formato JSON
 echo json_encode($result);
 
 ?>
