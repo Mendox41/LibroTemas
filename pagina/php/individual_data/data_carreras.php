@@ -31,20 +31,18 @@ $stmt->bind_result($id_carrera, $carrera);
 $carreras = [];
 
 while ($stmt->fetch()) {
-    $datoRelacion = new stdClass();
+    $dato_carrera = new stdClass();
 
-    $datoRelacion->id_carrera = $id_carrera;
-    $datoRelacion->carrera = $carrera;
+    $dato_carrera->id_carrera = $id_carrera;
+    $dato_carrera->nombre_carrera = $carrera;
 
-    array_push($carreras, $datoRelacion);
+    array_push($carreras, $dato_carrera);
 }
 
 if (empty($carreras)) {
     error_request($result, "No hay carreras registrados");
 } else {
-    $objRelacion = new stdClass();
-    $objRelacion->carreras = $carreras;
-    $result->respuesta = $objRelacion;
+    $result->carreras = $carreras;
     $result->success = true;
 }
 

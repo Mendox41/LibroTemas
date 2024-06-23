@@ -99,7 +99,7 @@ include ('../../php/session/validate-admin.php');
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-primary" id="btn-buscar-tema">Buscar</button>
                     </div>
-                
+
                 </div>
 
 
@@ -215,23 +215,109 @@ include ('../../php/session/validate-admin.php');
                                             rows="1"></textarea>
                                     </div>
 
-                                </d>
+                                    </d>
 
-                            </div>
+                                </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                    id="btn-cancel-modal-filtro-tema">Cancel</button>
-                                <button class="btn btn-success" id="btn-modal-buscar-tema">Buscar</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                        id="btn-cancel-modal-filtro-tema">Cancel</button>
+                                    <button class="btn btn-success" id="btn-modal-buscar-tema">Buscar</button>
 
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-            </div>
 
-        </div>
+                <!-- Modal Ingreso nuevo tema -->
+                <div class="modal-container-ingreso-nuevo-tema" id="modal-container-filtro-tema">
+                    <div class="modal modal-lg" id="modal-form-ingreso-nuevo-tema" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5">Ingreso de Nuevo Tema</h1>
+                                    <button id="btn-close-modal-nuevo-tema" type="button" class="btn-close"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body" id="modal-body">
+
+
+                                    <div class="row g-3 form-filtro" id="modal-form-nuevo-tema">
+                                        <div class="col-sm-6">
+                                            <label for="nuevo-tema-nombre-carrera" class="form-label">Carrera</label>
+                                            <select name="nuevo-tema-nombre-carrera" class="form-control"
+                                                id="nuevo-tema-nombre-carrera"></select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="nuevo-tema-anio-carrera" class="form-label">Año
+                                                carrera</label>
+                                            <select name="nuevo-tema-anio-carrera" class="form-control"
+                                                id="nuevo-tema-anio-carrera" disabled>
+                                                <option value="1">Hola</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="nuevo-tema-nombre-materia" class="form-label">Materia</label>
+                                            <select name="nuevo-tema-nombre-materia" class="form-control"
+                                                id="nuevo-tema-nombre-materia" disabled>
+                                                <option value="1">Hola</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="nuevo-tema-comision" class="form-label">Comision</label>
+                                            <select name="nuevo-tema-comision" class="form-control"
+                                                id="nuevo-tema-comision" disabled>
+                                                <option value="1">Hola</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="nuevo-tema-turno" class="form-label">Turno</label>
+                                            <select name="nuevo-tema-turno" class="form-control" id="nuevo-tema-turno"
+                                                disabled>
+                                                <option value="1">Hola</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <label for="fecha-tema-modal-filtro" class="form-label">Fecha</label>
+                                            <input type="date" class="form-control" id="nuevo-tema-fecha">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="titulo-tema-modal-filtro" class="form-label">Titulo</label>
+                                            <input type="text" class="form-control" id="nuevo-tema-titulo">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label for="descripcion-tema-modal-filtro"
+                                                class="form-label">Descripcion</label>
+                                            <textarea class="form-control" id="nuevo-tema-descripcion"
+                                                rows="1"></textarea>
+                                        </div>
+
+                                        </d>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            id="btn-cancel-ingreso-nuevo-tema">Cancel</button>
+                                        <button class="btn btn-success" id="btn-ingreso-nuevo-tema">Aceptar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
 
     </main>
 
@@ -254,6 +340,9 @@ include ('../../php/session/validate-admin.php');
     <!-- js -->
     <script src="../../js/modals-actions/modals-abm-topics.js"></script>
     <script src="../../js/topic/topic-filter-actions.js"></script>
+
+    <script type="module" src="../../js/topic/new-topic-admin.js"></script>
+
     <!-- <script src="../../js/structure/abm-topics-structure.js"></script> -->
 
 
