@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2024 a las 15:51:58
+-- Tiempo de generación: 23-06-2024 a las 21:33:57
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -45,18 +45,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `activate_user` (IN `p_id_usuario` I
     WHERE id_usuario = p_id_usuario;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso` ()   BEGIN
-	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
-	FROM cursos AS T1
-	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
-	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
-	INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
-	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
-	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
-	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
-	ORDER BY T2.id_carrera;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` INT)   BEGIN
 	SELECT T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
 	FROM cursos AS T1
@@ -68,26 +56,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` IN
 	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
     WHERE T1.id_curso = p_id_curso
 	ORDER BY T2.id_carrera;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_libro_tema` ()   BEGIN
-    SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha,t1.fecha_ingreso, T1.fecha_modif, T3.apellido, T3.nombre ,T4.id_materia, T5.materia, T4.id_carrera, T6.carrera 
-    FROM libro_temas AS T1
-    INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
-    INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
-    INNER JOIN relaciones AS T4 ON T4.id_relacion = T1.id_relacion
-    INNER JOIN materias AS T5 ON T5.id_materia = T4.id_materia
-    INNER JOIN carreras AS T6 ON T6.id_carrera = T4.id_carrera;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_relacion` ()   BEGIN
-	SELECT T1.id_carrera, T2.carrera, T1.id_anio, T3.anio, T1.id_semestre, T4.semestre, T1.id_materia, T5.materia 
-    FROM relaciones AS T1
-    INNER JOIN carreras AS T2 ON T2.id_carrera = T1.id_carrera
-    INNER JOIN anios AS T3 ON T3.id_anio = T1.id_anio
-    INNER JOIN semestres AS T4 ON T4.id_semestre = T1.id_semestre
-    INNER JOIN materias AS T5 ON T5.id_materia = T1.id_materia
-    ORDER BY T1.id_carrera;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_course` (IN `p_id_curso` INT)   BEGIN
@@ -125,18 +93,41 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` 
     WHERE id_usuario = p_id_usuario;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_course` ()   BEGIN
-	SELECT T1.id_curso, T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_profesor, T8.apellido, T8.nombre, T8.isActive, T1.id_turno, T7.turno
-	FROM cursos AS T1
-	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
-	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
-	INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
-	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
-	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
-	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
-    INNER JOIN profesores AS T8 ON T8.id_profesor = T1.id_profesor
-    WHERE T8.isActive = 1
-	ORDER BY T2.id_carrera;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_anio_carrera` (IN `id_carrera_selected` INT)   BEGIN
+    SELECT DISTINCT A.id_anio, A.anio
+    FROM anios AS A
+    INNER JOIN relaciones AS R ON R.id_anio = A.id_anio
+    INNER JOIN carreras AS C ON C.id_carrera = R.id_carrera
+    WHERE C.id_carrera = id_carrera_selected
+    ORDER BY anio;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_comisiones` (IN `id_relacion_selected` INT, IN `id_turno_selected` INT)   BEGIN
+    SELECT DISTINCT C.id_comision, COM.comision 
+    FROM cursos AS C
+    INNER JOIN comisiones AS COM ON COM.id_comision = C.id_comision
+    WHERE C.id_relacion = id_relacion_selected AND C.id_turno = id_turno_selected
+    ORDER BY COM.comision;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_curso` (IN `id_relacion_selected` INT, IN `id_turno_selected` INT, IN `id_comision_selected` INT)   BEGIN
+    SELECT id_curso
+    FROM cursos
+    WHERE id_relacion = id_relacion_selected 
+            AND id_turno = id_turno_selected
+            AND id_comision = id_comision_selected1;
+            
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materias` (IN `id_carrera_selected` INT, IN `id_anio_carrera_selected` INT)   BEGIN
+    SELECT R.id_relacion, M.materia, M.descripcion
+    FROM relaciones AS R
+    INNER JOIN materias AS M ON M.id_materia = R.id_materia
+    WHERE R.id_carrera = id_carrera_selected
+            AND R.id_anio = id_anio_carrera_selected
+    ORDER BY M.materia;
+    
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materia_profesor_cursos` (IN `id_user` INT)   BEGIN
@@ -169,6 +160,15 @@ SELECT
     INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
 	WHERE T3.id_usuario = id_user
     ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_turnos` (IN `id_relacion_selected` INT)   BEGIN
+    SELECT DISTINCT C.id_turno, T.turno
+    FROM cursos AS C
+    INNER JOIN turnos AS T ON T.id_turno = C.id_turno
+    WHERE C.id_relacion = id_relacion_selected
+    ORDER BY T.turno;
+    
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_usuarios` ()   BEGIN
@@ -214,35 +214,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150)
         isAdmin 
     FROM usuarios 
     WHERE usuario = log_user;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `materia_profesor` (IN `id_user` INT)   BEGIN
-SELECT 
-        T1.id_curso, 
-        T1.id_profesor,
-        T1.id_relacion, 
-        T2.id_carrera,
-        T6.nom_abreviado, 
-        T2.id_anio,
-        T7.anio,
-        T2.id_materia,
-        T9.materia,
-        T1.id_comision,
-        T5.comision,
-        T1.id_turno,
-        T4.turno,
-        T8.semestre
-    FROM cursos AS T1
-    INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
-    INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
-    INNER JOIN turnos as T4 ON T4.id_turno = T1.id_turno
-    INNER JOIN comisiones as T5 ON T5.id_comision = T1.id_comision
-    INNER JOIN carreras AS T6 ON T6.id_carrera = T2.id_carrera
-    INNER JOIN anios AS T7 ON T7.id_anio = T2.id_anio
-    INNER JOIN semestres AS T8 ON T8.id_semestre = T2.id_semestre
-    INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
-	WHERE T3.id_usuario = id_user
-    ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
@@ -641,6 +612,7 @@ INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido`, `nombre`, `grado`
 (36, 30313, 'ZAMBRANA', 'Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL, NULL),
 (37, 14523, 'GORGAL', 'Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL, NULL),
 (38, 21091, 'PRIETO', 'Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL, NULL),
+(39, 0, 'administrador', 'admin', '', '', '', '', '1', 1),
 (99, 410, 'Mendoza', 'Tomas', 'Estudiante', 'IT', 'mendoza.tomas', 'tgmendoza@outlook.com', '99', 1);
 
 -- --------------------------------------------------------
