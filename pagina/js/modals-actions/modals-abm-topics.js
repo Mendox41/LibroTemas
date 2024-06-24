@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     //  limpiar campos y mostrar modal de filtro de temas
     $("#btn-filtro-tema").click(function () {
         $("#modal-form-buscar-tema").addClass("d-block");
@@ -23,6 +23,7 @@ $(document).ready(function () {
 
     });
 
+    // ----------------------------------------------------------------
 
     // Funciones del modal para filtrar busqueda de temas
     // Btn x cerrar modal filtro 
@@ -37,6 +38,7 @@ $(document).ready(function () {
         $("#modal-form-buscar-tema").removeClass("d-block");
     });
 
+    // ----------------------------------------------------------------
 
     // Funciones del modal para ingresar un nuevo tema
 
@@ -52,8 +54,44 @@ $(document).ready(function () {
         $("#modal-form-ingreso-nuevo-tema").removeClass("d-block");
     });
 
+    // ----------------------------------------------------------------
+
+    // funciones del modal de mensaje de respuesta
+
+    // btn x
+    $("#close-btn-modal-respuesta").click(function () {
+        $("#modal-container-respuesta").removeClass("d-block");
+    });
+
+    // btn aceptar
+    $("#btn-acept-modal-respuesta").click(function () {
+        $("#modal-container-respuesta").removeClass("d-block");
+    });
+
+    // ----------------------------------------------------------------
+
+    // funcion del modal de confirmar ingreso de un nuevo tema 
+
+    // btn x
+    $("#btn-close-modal-confirm").click(function () {
+        $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
+        $("#modal-form-ingreso-nuevo-tema").addClass("d-block");
+
+    });
+
+    // btn cancelar
+    $("#btn-cancel-modal-confirm").click(function () {
+        $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
+        $("#modal-form-ingreso-nuevo-tema").addClass("d-block");
+
+    });
+
 
     
+
+
+    // ----------------------------------------------------------------
+
     // FUNCION que restablece los contenedores del body, header y fondo al cerrar un modal
     function restablecer_contenedores() {
         $("#header").removeClass("opacity-25");
