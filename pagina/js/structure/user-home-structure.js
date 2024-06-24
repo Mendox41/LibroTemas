@@ -619,7 +619,7 @@ $(document).ready(function () {
     function fill_form(idCurso) {
         $.ajax({
             type: "POST",
-            url: "../../php/individual_data/dato_curso.php", // url de destino
+            url: "../../php/individual_data/fill-form-new-topic.php", // url de destino
 
             data: {
                 id_Curso: idCurso // ver que no cambie nombre de variables en el php de destino
