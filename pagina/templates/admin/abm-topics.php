@@ -39,6 +39,20 @@ include ('../../php/session/validate-admin.php');
                 </div>
 
                 <div class="p-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            disabled>
+                            Exportar
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="btn-export-pdf">PDF</a></li>
+                            <li><a class="dropdown-item" href="#" id="btn-export-csv">CSV</a></li>
+                            <li><a class="dropdown-item" href="#" id="btn-export-txt">TXT</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-2">
                     <button type="button" name="" id="btn-filtro-tema" class="btn btn-primary" disabled>
                         Filtro
                     </button>
@@ -84,9 +98,22 @@ include ('../../php/session/validate-admin.php');
                         <input type="text" class="form-control" id="apellido-profesor">
                     </div>
                     <div class="col-sm-3">
-                        <label for="fecha-tema" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" id="fecha-tema">
+                        <label for="fecha-tema" class="form-label">Año ciclo lectivo</label>
+                        <input type="number" class="form-control" id="ciclo-lectivo">
                     </div>
+                    <div class="col-sm-3">
+                        <label for="fecha-tema" class="form-label">Semestre</label>
+                        <input type="number" class="form-control" id="semestre">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="fecha-tema" class="form-label">Fecha Desde</label>
+                        <input type="date" class="form-control" id="fecha-tema-desde">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="fecha-tema" class="form-label">Fecha Hasta</label>
+                        <input type="date" class="form-control" id="fecha-tema-hasta">
+                    </div>
+
                     <div class="col-md-12">
                         <label for="titulo-tema" class="form-label">Titulo</label>
                         <input type="text" class="form-control" id="titulo-tema">
@@ -231,93 +258,142 @@ include ('../../php/session/validate-admin.php');
 
                 </div>
 
-
-                <!-- Modal Ingreso nuevo tema -->
-                <div class="modal-container-ingreso-nuevo-tema" id="modal-container-filtro-tema">
-                    <div class="modal modal-lg" id="modal-form-ingreso-nuevo-tema" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5">Ingreso de Nuevo Tema</h1>
-                                    <button id="btn-close-modal-nuevo-tema" type="button" class="btn-close"
-                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body" id="modal-body">
+            </div>
 
 
-                                    <div class="row g-3 form-filtro" id="modal-form-nuevo-tema">
-                                        <div class="col-sm-6">
-                                            <label for="nuevo-tema-nombre-carrera" class="form-label">Carrera</label>
-                                            <select name="nuevo-tema-nombre-carrera" class="form-control"
-                                                id="nuevo-tema-nombre-carrera"></select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="nuevo-tema-anio-carrera" class="form-label">Año
-                                                carrera</label>
-                                            <select name="nuevo-tema-anio-carrera" class="form-control"
-                                                id="nuevo-tema-anio-carrera" disabled>
-                                                <option value="1">Hola</option>
-                                            </select>
+            <!-- Modal Ingreso nuevo tema -->
+            <div class="modal-container-ingreso-nuevo-tema" id="modal-container-ingreso-nuevo-tema">
+                <div class="modal modal-lg" id="modal-form-ingreso-nuevo-tema" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Ingreso de Nuevo Tema</h1>
+                                <button id="btn-close-modal-nuevo-tema" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="nuevo-tema-nombre-materia" class="form-label">Materia</label>
-                                            <select name="nuevo-tema-nombre-materia" class="form-control"
-                                                id="nuevo-tema-nombre-materia" disabled>
-                                                <option value="1">Hola</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="nuevo-tema-comision" class="form-label">Comision</label>
-                                            <select name="nuevo-tema-comision" class="form-control"
-                                                id="nuevo-tema-comision" disabled>
-                                                <option value="1">Hola</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="nuevo-tema-turno" class="form-label">Turno</label>
-                                            <select name="nuevo-tema-turno" class="form-control" id="nuevo-tema-turno"
-                                                disabled>
-                                                <option value="1">Hola</option>
-                                            </select>
-                                        </div>
+                            <div class="modal-body" id="modal-body">
 
-                                        <div class="col-sm-12">
-                                            <label for="fecha-tema-modal-filtro" class="form-label">Fecha</label>
-                                            <input type="date" class="form-control" id="nuevo-tema-fecha">
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="titulo-tema-modal-filtro" class="form-label">Titulo</label>
-                                            <input type="text" class="form-control" id="nuevo-tema-titulo">
-                                        </div>
 
-                                        <div class="col-md-12">
-                                            <label for="descripcion-tema-modal-filtro"
-                                                class="form-label">Descripcion</label>
-                                            <textarea class="form-control" id="nuevo-tema-descripcion"
-                                                rows="1"></textarea>
-                                        </div>
-
-                                        </d>
+                                <div class="row g-3 form-filtro" id="modal-form-nuevo-tema">
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-tema-nombre-carrera" class="form-label">Carrera</label>
+                                        <select name="nuevo-tema-nombre-carrera" class="form-control"
+                                            id="nuevo-tema-nombre-carrera"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-tema-anio-carrera" class="form-label">Año
+                                            carrera</label>
+                                        <select name="nuevo-tema-anio-carrera" class="form-control"
+                                            id="nuevo-tema-anio-carrera" disabled>
+                                        </select>
 
                                     </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                            id="btn-cancel-ingreso-nuevo-tema">Cancel</button>
-                                        <button class="btn btn-success" id="btn-ingreso-nuevo-tema">Aceptar</button>
-
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-tema-nombre-materia" class="form-label">Materia</label>
+                                        <select name="nuevo-tema-nombre-materia" class="form-control"
+                                            id="nuevo-tema-nombre-materia" disabled>
+                                        </select>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-tema-turno" class="form-label">Turno</label>
+                                        <select name="nuevo-tema-turno" class="form-control" id="nuevo-tema-turno"
+                                            disabled>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-tema-comision" class="form-label">Comision</label>
+                                        <select name="nuevo-tema-comision" class="form-control" id="nuevo-tema-comision"
+                                            disabled>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-sm-12">
+                                        <label for="fecha-tema-modal-filtro" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="nuevo-tema-fecha">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="titulo-tema-modal-filtro" class="form-label">Titulo</label>
+                                        <input type="text" class="form-control" id="nuevo-tema-titulo">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="descripcion-tema-modal-filtro"
+                                            class="form-label">Descripcion</label>
+                                        <textarea class="form-control" id="nuevo-tema-descripcion" rows="1"></textarea>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="errorMessage" id="errorMessage" class="invisible"></label>
+                                    </div>
+
                                 </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-ingreso-nuevo-tema">Cancel</button>
+                                <button class="btn btn-success" id="btn-aceptar-ingreso-nuevo-tema">Aceptar</button>
+
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
+
+            </div>
+
+            <!-- modal confirm ingreso tema-->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-ingreso-tema">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Confirmacion de nuevo
+                                Registro
+                            </h7>
+                            <button id="btn-close-modal-confirm" type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="modal-title-confirm">¿Desea registrar el tema con los datos
+                                Ingresados?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-cancel-modal-confirm" type="button" class="btn btn-danger"
+                                data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-warning"
+                                id="btn-confirm-ingreso-tema">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- modal respuesta -->
+            <div class="modal" tabindex="-1" id="modal-container-respuesta">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-modal-respuesta">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Mensaje de respuesta
+                            </h7>
+                            <button id="close-btn-modal-respuesta" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="modal-title-respuesta"></h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-acept-modal-respuesta" type="button" class="btn btn-primary"
+                                data-bs-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
 
     </main>
 

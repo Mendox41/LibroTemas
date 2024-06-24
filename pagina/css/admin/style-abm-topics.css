@@ -23,9 +23,23 @@ body {
 
 }
 
+#errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
 
 .modal-content {
     background-color: rgb(209, 209, 209);
+
+}
+
+#contenido-modal-respuesta {
+    background-color: rgb(192, 192, 192);
 
 }
 
@@ -56,17 +70,17 @@ td:nth-child(8) button {
 }
 
 .filtro {
-border-radius: 10px;
+    border-radius: 10px;
 }
 
-.form-filtro{
+.form-filtro {
     margin-top: 1%;
     margin-bottom: 1%;
 
     padding: 2%;
 }
 
-#titulo-filtro{
+#titulo-filtro {
     margin-bottom: 2%;
 }
 
@@ -75,39 +89,7 @@ border-radius: 10px;
     display: none;
 }
 
-/* .form-floating{
-    margin: 1% 0%;
-} */
 
-/* .col-sm-3, .col-sm{
-    padding: 1%;
-    border: 0.5px solid black;
-
- 
-} */
-
-/* .btn-group{
-    padding: 1% 5%;
-    width: 100%;
-} */
-
-/* 
-@media screen and (max-width: 550px) {
-
-    th:nth-child(4),
-    td:nth-child(4) {
-        display: none;
-    }
-
-   
-} */
-
-/* @media screen and (max-width: 600px) {
-
-    .col2{
-        display: none;
-    }
-}  */
 
 
 @media (max-width: 1350px) {
@@ -172,9 +154,10 @@ border-radius: 10px;
 @media screen and (max-width: 450px) {
 
     .modal-footer {
-      
+
         justify-content: center;
     }
+
     /* .btns-modificar button{
         margin: 5%;
         padding: 1%;
