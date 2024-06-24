@@ -9,13 +9,19 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$id_carrera = isset($_POST['id_carrera']) ? $_POST['id_carrera'] : null;
+$id_relacion = isset($_POST['id_relacion']) ? $_POST['id_relacion'] : null;
+$id_turno = isset($_POST['id_turno']) ? $_POST['id_turno'] : null;
+
 
 $result = new stdClass();
 $result->success = false;
 
-if ($id_carrera === null) {
-    error_stmt($result, "ID de carrera no proporcionado", null, $conn);
+if ($id_relacion === null) {
+    error_stmt($result, "ID de relacion no proporcionado", null, $conn);
+    echo json_encode($result);
+    exit();
+} else if ($id_turno === null) {
+    error_stmt($result, "ID de turno no proporcionado", null, $conn);
     echo json_encode($result);
     exit();
 }
@@ -28,14 +34,15 @@ if (!mysqli_select_db($conn, $db_name)) {
 }
 
 // Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL get_anio_carrera(?);");
+$stmt = $conn->prepare("CALL get_comisiones(?,?);");
 if (!$stmt) {
     error_stmt($result, "Error preparando la consulta: " . $conn->error, null, $conn);
     echo json_encode($result);
     exit();
 }
 
-$stmt->bind_param("i", $id_carrera);
+$stmt->bind_param("ii", $id_relacion, $id_turno);
+
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error ejecutando la consulta: " . $stmt->error, $stmt, $conn);
@@ -44,25 +51,25 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_anio, $anio);
+$stmt->bind_result($id_comision, $comision);
 
 $datos = [];
 $cont = 0;
 
 while ($stmt->fetch()) {
-    $dato_anio_carrera = new stdClass();
+    $dato_comision = new stdClass();
 
-    $dato_anio_carrera->id_anio = $id_anio;
-    $dato_anio_carrera->anio = $anio;
+    $dato_comision->id_comision = $id_comision;
+    $dato_comision->comision = $comision;
     
     $cont+=1;
 
 
-    array_push($datos, $dato_anio_carrera);
+    array_push($datos, $dato_comision);
 }
 
 if (empty($datos)) {
-    error_stmt($result, "No hay anios registrados", null, $conn);
+    error_stmt($result, "No hay comisiones registradas con esos datos", null, $conn);
 } else {
     $result->datos = $datos;
     $result->success = true;

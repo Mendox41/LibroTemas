@@ -9,13 +9,14 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$id_carrera = isset($_POST['id_carrera']) ? $_POST['id_carrera'] : null;
+$id_relacion = isset($_POST['id_relacion']) ? $_POST['id_relacion'] : null;
+
 
 $result = new stdClass();
 $result->success = false;
 
-if ($id_carrera === null) {
-    error_stmt($result, "ID de carrera no proporcionado", null, $conn);
+if ($id_relacion === null) {
+    error_stmt($result, "ID de turno no proporcionado", null, $conn);
     echo json_encode($result);
     exit();
 }
@@ -28,14 +29,15 @@ if (!mysqli_select_db($conn, $db_name)) {
 }
 
 // Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL get_anio_carrera(?);");
+$stmt = $conn->prepare("CALL get_turnos(?);");
 if (!$stmt) {
     error_stmt($result, "Error preparando la consulta: " . $conn->error, null, $conn);
     echo json_encode($result);
     exit();
 }
 
-$stmt->bind_param("i", $id_carrera);
+$stmt->bind_param("i", $id_relacion);
+
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error ejecutando la consulta: " . $stmt->error, $stmt, $conn);
@@ -44,31 +46,33 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_anio, $anio);
+$stmt->bind_result($id_turno, $turno);
 
 $datos = [];
 $cont = 0;
 
 while ($stmt->fetch()) {
-    $dato_anio_carrera = new stdClass();
+    $dato_turno = new stdClass();
 
-    $dato_anio_carrera->id_anio = $id_anio;
-    $dato_anio_carrera->anio = $anio;
+    $dato_turno->id_turno = $id_turno;
+    $dato_turno->turno = $turno;
+
     
     $cont+=1;
 
 
-    array_push($datos, $dato_anio_carrera);
+    array_push($datos, $dato_turno);
 }
 
 if (empty($datos)) {
-    error_stmt($result, "No hay anios registrados", null, $conn);
+    error_stmt($result, "No hay turnos registrados con esos datos", null, $conn);
 } else {
     $result->datos = $datos;
     $result->success = true;
 }
 
 $result->cont= $cont;
+
 
 $stmt->close();
 $conn->close();

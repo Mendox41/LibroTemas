@@ -9,13 +9,19 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$id_curso = isset($_POST['id_Curso']) ? $_POST['id_Curso'] : null;
+$id_carrera = isset($_POST['id_carrera']) ? $_POST['id_carrera'] : null;
+$id_anio_carrera = isset($_POST['id_anio_carrera']) ? $_POST['id_anio_carrera'] : null;
+
 
 $result = new stdClass();
 $result->success = false;
 
-if ($id_curso === null) {
-    error_stmt($result, "ID de curso no proporcionado", null, $conn);
+if ($id_carrera === null) {
+    error_stmt($result, "ID de carrera no proporcionado", null, $conn);
+    echo json_encode($result);
+    exit();
+} else if ($id_anio_carrera === null) {
+    error_stmt($result, "ID de año carrera no proporcionado", null, $conn);
     echo json_encode($result);
     exit();
 }
@@ -28,14 +34,15 @@ if (!mysqli_select_db($conn, $db_name)) {
 }
 
 // Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL datos_curso_id(?);");
+$stmt = $conn->prepare("CALL get_materias(?,?);");
 if (!$stmt) {
     error_stmt($result, "Error preparando la consulta: " . $conn->error, null, $conn);
     echo json_encode($result);
     exit();
 }
 
-$stmt->bind_param("i", $id_curso);
+$stmt->bind_param("ii", $id_carrera, $id_anio_carrera);
+
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error ejecutando la consulta: " . $stmt->error, $stmt, $conn);
@@ -44,32 +51,31 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $id_comision, $comision, $id_turno, $turno);
+$stmt->bind_result($id_relacion, $nombre_materia, $descripcion_materia);
 
-$curso = [];
+$datos = [];
+$cont = 0;
 
 while ($stmt->fetch()) {
-    $datoCurso = new stdClass();
+    $dato_materia = new stdClass();
 
-    $datoCurso->id_carrera = $id_carrera;
-    $datoCurso->carrera = $carrera;
-    $datoCurso->id_anio = $id_anio;
-    $datoCurso->anio = $anio;
-    $datoCurso->id_materia = $id_materia;
-    $datoCurso->materia = $materia;
-    $datoCurso->id_comision = $id_comision;
-    $datoCurso->comision = $comision;
-    $datoCurso->id_turno = $id_turno;
-    $datoCurso->turno = $turno;
+    $dato_materia->id_relacion = $id_relacion;
+    $dato_materia->nombre_materia = $nombre_materia;
+    $dato_materia->descripcion_materia = $descripcion_materia;
 
-    array_push($curso, $datoCurso);
+    
+    $cont+=1;
+
+
+    array_push($datos, $dato_materia);
 }
 
-if (empty($curso)) {
-    error_stmt($result, "No hay cursos registrados", null, $conn);
+if (empty($datos)) {
+    error_stmt($result, "No hay materias registrados", null, $conn);
 } else {
-    $result->curso = $curso;
+    $result->datos = $datos;
     $result->success = true;
+    $result->cont= $cont;
 }
 
 $stmt->close();
