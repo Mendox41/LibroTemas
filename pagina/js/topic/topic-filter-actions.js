@@ -54,7 +54,7 @@ $(document).ready(function () {
                 descripcion_tema: $("#descripcion-tema").val()
             },
             success: function (respuesta) {
-
+                alert(respuesta);
                 var data_filtro_temas = JSON.parse(respuesta);
                 // alert(data_filtro_temas.respuesta);
 
