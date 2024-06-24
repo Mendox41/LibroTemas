@@ -370,7 +370,7 @@ $(document).ready(function () {
                                     $("#modal-form").addClass("d-block");
                                     $("#header").addClass("opacity-25");
                                     $("#main-container").addClass("opacity-25");
-                                    $("#body").addClass("prueba-back");
+                                    $("#body").addClass("fondo-desactivado");
 
 
 

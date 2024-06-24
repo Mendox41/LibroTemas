@@ -6,7 +6,7 @@ $(document).ready(function () {
         $("#header").removeClass("opacity-25");
         $("#main-container").removeClass("opacity-25");
         $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
+        $("#body").removeClass("fondo-desactivado");
 
         $("#modal-form").removeClass("d-block");
         empty_form()
@@ -17,7 +17,7 @@ $(document).ready(function () {
         $("#header").removeClass("opacity-25");
         $("#main-container").removeClass("opacity-25");
         $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
+        $("#body").removeClass("fondo-desactivado");
 
         $("#modal-form").removeClass("d-block");
         empty_form()
@@ -26,21 +26,15 @@ $(document).ready(function () {
 
     // Funciones para ventana de confirm ingreso nuevo tema
     $("#btn-close-modal-confirm").click(function () {
-        $("#header").removeClass("opacity-25");
-        $("#main-container").removeClass("opacity-25");
-        $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
-
+        
+        $("#modal-form").addClass("d-block");
         $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
 
     });
 
     $("#btn-cancel-modal-confirm").click(function () {
-        $("#header").removeClass("opacity-25");
-        $("#main-container").removeClass("opacity-25");
-        $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
 
+        $("#modal-form").addClass("d-block");
         $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
 
     });
@@ -50,7 +44,7 @@ $(document).ready(function () {
         $("#header").removeClass("opacity-25");
         $("#main-container").removeClass("opacity-25");
         $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
+        $("#body").removeClass("fondo-desactivado");
 
         $("#modal-container-respuesta").removeClass("d-block");
 
@@ -60,7 +54,7 @@ $(document).ready(function () {
         $("#header").removeClass("opacity-25");
         $("#main-container").removeClass("opacity-25");
         $("#modal-container-ingreso-nuevo-tema").removeClass("opacity-0");
-        $("#body").removeClass("prueba-back");
+        $("#body").removeClass("fondo-desactivado");
 
         $("#modal-container-respuesta").removeClass("d-block");
 

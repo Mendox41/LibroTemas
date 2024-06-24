@@ -74,7 +74,7 @@ include ('../../php/session/validate-session.php');
                             <div class="form-floating mb-3">
                                 <div class="row g-3">
                                     <div class="">
-                                        <input type="text" class="form-control" id="id-curso" disabled>
+                                        <input type="text" class="form-control" id="id-curso" disabled hidden>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" id="carrera-selec" disabled>
@@ -149,7 +149,7 @@ include ('../../php/session/validate-session.php');
                     </div>
                     <div class="modal-body">
                         <h3 class="titulo-confirm" id="modal-title-confirm">¿Desea registrar el tema con los datos
-                            Ingresados? MOSTRAR DATOS QUE SE INGRESARON PREVIAMENTE</h3>
+                            Ingresados?</h3>
                     </div>
                     <div class="modal-footer">
                         <button id="btn-cancel-modal-confirm" type="button" class="btn btn-danger"

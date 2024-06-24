@@ -62,11 +62,10 @@ main{
 
 }
 
-.prueba-back {
+.fondo-desactivado {
     background-color: #332c2c;
 
 }
-
 
 #errorMessage {
     width: 100%;

@@ -25,7 +25,7 @@ $(document).ready(function () {
             // $("#header").addClass("opacity-25");
             // $("#main-container").addClass("opacity-25");
             // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            // $("#body").addClass("prueba-back");
+            // $("#body").addClass("fondo-desactivado");
 
             // $("#modal-container-respuesta").addClass("d-block");
 
@@ -45,7 +45,7 @@ $(document).ready(function () {
             // $("#header").addClass("opacity-25");
             // $("#main-container").addClass("opacity-25");
             // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            // $("#body").addClass("prueba-back");
+            // $("#body").addClass("fondo-desactivado");
 
             $("#modal-form").removeClass("d-block");
             $("#modal-container-confirm-ingreso-tema").addClass("d-block");
