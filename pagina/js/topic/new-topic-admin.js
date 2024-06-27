@@ -1,6 +1,5 @@
 import * as funciones_get_data_form from '../individual-data/funciones-get-data-form.js';
-import get_usuario from '../individual-data/get-usuario.js';
-
+import { get_usuario } from '../individual-data/get-usuario.js';
 
 $(document).ready(function () {
 
@@ -91,62 +90,45 @@ $(document).ready(function () {
 
 
     $("#btn-confirm-ingreso-tema").click(function () {
-        var id_usuario = get_usuario();
-
-        if (id_usuario == false) {
-            alert("Error: Id usuario not found");
-        } else {
-            // el id de relacion lo almaceno en el select de materia
-            var id_relacion = $("#nuevo-tema-nombre-materia").val();
-            var id_turno = $("#nuevo-tema-turno").val();
-            var id_comision = $("#nuevo-tema-comision").val();
-            var fecha_tema = $("#nuevo-tema-fecha").val();
-            var titulo_tema = $("#nuevo-tema-titulo").val();
-            var descripcion_tema = $("#nuevo-tema-descripcion").val();
-
-            $.ajax({
-                type: "post",
-                url: "../../php/topic/new-topic-admin.php",
-                data: {
-                    id_usuario: id_usuario,
-                    new_id_relacion: id_relacion,
-                    new_id_turno: id_turno,
-                    new_id_comision: id_comision,
-                    new_tema: titulo_tema,
-                    new_descripcion: descripcion_tema,
-                    new_time: fecha_tema
-
-                },
-                success: function (respuesta) {
-                    var data = JSON.parse(respuesta);
-
-                    // oculto el modal del form y del de confirmar ingreso de un nuevo tema
-                    $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
-
-                    // agrego el mensaje de respuesta del servidor
-                    $("#modal-title-respuesta").empty();
-                    $("#modal-title-respuesta").text(data.message);
-
-                    // hago visible el modal de respuesta
-                    $("#modal-container-respuesta").addClass("d-block");
-
-                    // if (data.success == true) {
-
-                    // } else {
-
-                    // }
-
-                }, error: function (error) {
-                    console.log(error);
-                }
-
-
-            });
-
-        }
-
-
-
+        get_usuario().then(function (id_usuario) {
+            if (id_usuario === false) {
+                alert("Error: Id usuario not found");
+            } else {
+                // el id de relacion lo almaceno en el select de materia
+                var id_relacion = $("#nuevo-tema-nombre-materia").val();
+                var id_turno = $("#nuevo-tema-turno").val();
+                var id_comision = $("#nuevo-tema-comision").val();
+                var fecha_tema = $("#nuevo-tema-fecha").val();
+                var titulo_tema = $("#nuevo-tema-titulo").val();
+                var descripcion_tema = $("#nuevo-tema-descripcion").val();
+                $.ajax({
+                    type: "post",
+                    url: "../../php/topic/new-topic-admin.php",
+                    data: {
+                        id_usuario: id_usuario,
+                        new_id_relacion: id_relacion,
+                        new_id_turno: id_turno,
+                        new_id_comision: id_comision,
+                        new_tema: titulo_tema,
+                        new_descripcion: descripcion_tema,
+                        new_time: fecha_tema
+                    },
+                    success: function (respuesta) {
+                        var data = JSON.parse(respuesta);
+                        // oculto el modal del form y del de confirmar ingreso de un nuevo tema
+                        $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
+                        // agrego el mensaje de respuesta del servidor
+                        $("#modal-title-respuesta").empty();
+                        $("#modal-title-respuesta").text(data.message);
+                        // hago visible el modal de respuesta
+                        $("#modal-container-respuesta").addClass("d-block");
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.error("Error al obtener el usuario:", error);
+            alert("Error al obtener el usuario");
+        });
     });
 
 
