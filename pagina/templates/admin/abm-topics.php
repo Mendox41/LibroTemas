@@ -172,6 +172,47 @@ include ('../../php/session/validate-admin.php');
 
             </div>
 
+            <!-- tabla abm-->
+            <div id="contenedor-tabla-abm-topic"
+                class="table-responsive text-center bg-white text-dark abm-topic ">
+
+                <!-- creo dinamicamente la tabla de abm -->
+                <!-- <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Column 1</th>
+                            <th class="col2" scope="col ">Column 2</th>
+                            <th scope="col ">Column 3</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr class="">
+                            <td scope="row">R1C1</td>
+                            <td class="col2">R1C2</td>
+                            <td>
+                                <div class="" role="" aria-label="Basic mixed styles example">
+                                    <button type="button" class="btn btn-primary">Ver</button>
+                                    <button type="button" class="btn btn-warning">Modificar</button>
+                                    <button type="button" class="btn btn-danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Item</td>
+                            <td class="col2">Item</td>
+                            <td>
+                                <div class="" role="" aria-label="Basic mixed styles example">
+                                    <button type="button" class="btn btn-primary">Ver</button>
+                                    <button type="button" class="btn btn-warning">Modificar</button>
+                                    <button type="button" class="btn btn-danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+            </div>
+
         </div>
 
         <div id="container-modals">
