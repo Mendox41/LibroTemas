@@ -126,17 +126,22 @@ $cont = 0;
 
 while ($stmt->fetch()) {
     $objTopic = new stdClass();
+
     $objTopic->id_libro_tema = $id_libro_tema;
+
+    $objTopic->tema = $tema;
+    $objTopic->descripcion = $descripcion;
+    $objTopic->fecha = $fecha;
     $objTopic->carrera = $carrera;
     $objTopic->anio = $anio;
     $objTopic->materia = $materia;
     $objTopic->comision = $comision;
     $objTopic->turno = $turno;
-    $objTopic->nombre = $nombre;
     $objTopic->apellido = $apellido;
-    $objTopic->fecha = $fecha;
-    $objTopic->tema = $tema;
-    $objTopic->descripcion = $descripcion;
+   
+
+    $objTopic->id_libro_tema_for_btns = $id_libro_tema;
+
 
     $cont += 1;
 
