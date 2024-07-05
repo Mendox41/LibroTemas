@@ -44,24 +44,25 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $id_comision, $comision, $id_turno, $turno);
+$stmt->bind_result($carrera, $anio, $materia, $turno, $comision, $usuario, $apellido, $nombre, $fecha, $fecha_ingreso, $fecha_modif, $tema, $descripcion);
 
 $curso = [];
 
 while ($stmt->fetch()) {
     $datoCurso = new stdClass();
-
-    $datoCurso->id_carrera = $id_carrera;
     $datoCurso->carrera = $carrera;
-    $datoCurso->id_anio = $id_anio;
     $datoCurso->anio = $anio;
-    $datoCurso->id_materia = $id_materia;
     $datoCurso->materia = $materia;
-    $datoCurso->id_comision = $id_comision;
-    $datoCurso->comision = $comision;
-    $datoCurso->id_turno = $id_turno;
     $datoCurso->turno = $turno;
-
+    $datoCurso->comision = $comision;
+    $datoCurso->usuario = $usuario;
+    $datoCurso->apellido = $apellido;
+    $datoCurso->nombre = $nombre;
+    $datoCurso->fecha = $fecha;
+    $datoCurso->fecha_ingreso = $fecha_ingreso;
+    $datoCurso->fecha_modif = $fecha_modif;
+    $datoCurso->tema = $tema;
+    $datoCurso->descripcion = $descripcion;
     array_push($curso, $datoCurso);
 }
 
