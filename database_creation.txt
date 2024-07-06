@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2024 a las 21:33:57
+-- Tiempo de generación: 06-07-2024 a las 23:59:37
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -116,8 +116,37 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_curso` (IN `id_relacion_selecte
     FROM cursos
     WHERE id_relacion = id_relacion_selected 
             AND id_turno = id_turno_selected
-            AND id_comision = id_comision_selected1;
+            AND id_comision = id_comision_selected;
             
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tema` INT)   BEGIN
+	SELECT 
+		T6.carrera, 
+        T7.anio,
+        T9.materia,
+        T4.turno,
+        T5.comision,
+        T10.usuario,
+        T3.apellido,
+        T3.nombre,
+        T1.fecha,
+        T1.fecha_ingreso,
+        T1.fecha_modif,
+        T1.tema,
+        T1.descripcion
+    FROM libro_temas AS T1
+    INNER JOIN cursos AS T20 ON T20.id_curso = T1.id_curso
+    INNER JOIN relaciones AS T2 ON T2.id_relacion = T20.id_relacion
+    INNER JOIN profesores AS T3 ON T3.id_profesor = T20.id_profesor
+    INNER JOIN turnos as T4 ON T4.id_turno = T20.id_turno
+    INNER JOIN comisiones as T5 ON T5.id_comision = T20.id_comision
+    INNER JOIN carreras AS T6 ON T6.id_carrera = T2.id_carrera
+    INNER JOIN anios AS T7 ON T7.id_anio = T2.id_anio
+    INNER JOIN semestres AS T8 ON T8.id_semestre = T2.id_semestre
+    INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
+    INNER JOIN usuarios AS T10 ON T10.id_usuario = T3.id_usuario
+	WHERE T1.id_libro_tema = p_id_libro_tema;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materias` (IN `id_carrera_selected` INT, IN `id_anio_carrera_selected` INT)   BEGIN
@@ -258,6 +287,75 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT,
     -- Insertar los datos en la tabla cursos
     INSERT INTO cursos (id_relacion, id_comision, id_profesor, id_turno, isActive, c_anio)
     VALUES (p_relacion, p_id_comision, p_id_profesor, p_id_turno, p_active, p_anio);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_topic_admin` (IN `p_id_usuario` INT, IN `p_id_relacion` INT, IN `p_id_comision` INT, IN `p_id_turno` INT, IN `p_titulo` VARCHAR(150), IN `p_descripcion` VARCHAR(150), IN `p_fecha` DATE, OUT `p_result` VARCHAR(100))   BEGIN
+    DECLARE id_profesor_admin INT;
+    DECLARE p_isActive INT DEFAULT 1;
+    DECLARE p_c_anio INT;
+    DECLARE id_curso INT;
+    DECLARE curso_existe BOOLEAN DEFAULT FALSE;
+    DECLARE id_curso_out INT;
+
+    -- Obtener id_profesor del usuario
+    SELECT id_profesor INTO id_profesor_admin 
+    FROM profesores 
+    WHERE id_usuario = p_id_usuario
+    LIMIT 1;
+
+    IF id_profesor_admin IS NULL THEN
+        SET p_result = 'Error: No se encontró el profesor asociado al usuario.';
+        ROLLBACK;
+    ELSE
+        -- Obtener el año actual
+        SET p_c_anio = YEAR(NOW());
+
+        -- Verificar si el curso ya existe
+        CALL validate_curso(p_id_relacion, p_id_comision, p_id_turno, id_profesor_admin, curso_existe, id_curso_out);
+        
+        IF curso_existe THEN
+            -- Usar el id del curso existente
+            SET id_curso = id_curso_out;
+            SET p_result = 'Se ha utilizado un curso existente para insertar el tema.';
+        ELSE
+            -- Insertar en la tabla cursos
+            INSERT INTO cursos (id_relacion, id_comision, id_profesor, id_turno, isActive, c_anio) 
+            VALUES (p_id_relacion, p_id_comision, id_profesor_admin, p_id_turno, p_isActive, p_c_anio);
+
+            -- Obtener el id del curso recién insertado
+            SET id_curso = LAST_INSERT_ID();
+            SET p_result = 'Se ha creado un nuevo curso y se ha insertado el tema.';
+        END IF;
+
+        -- Insertar en la tabla libro_temas
+        INSERT INTO libro_temas (id_curso, tema, descripcion, fecha, id_profesor, id_relacion, fecha_ingreso) 
+        VALUES (id_curso, p_titulo, p_descripcion, p_fecha, id_profesor_admin, p_id_relacion, NOW());
+
+        COMMIT;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_curso` (IN `p_id_relacion` INT, IN `p_id_comision` INT, IN `p_id_turno` INT, IN `p_id_profesor_admin` INT, OUT `curso_existe` BOOLEAN, OUT `id_curso_out` INT)   BEGIN
+    DECLARE v_id_curso INT;
+
+    -- Verificar si existe el curso
+    SELECT id_curso
+    INTO v_id_curso
+    FROM cursos 
+    WHERE id_relacion = p_id_relacion 
+      AND id_comision = p_id_comision 
+      AND id_turno = p_id_turno 
+      AND id_profesor = p_id_profesor_admin
+    LIMIT 1;
+
+    -- Si se encontró un curso, establecer las variables de salida en TRUE y el ID del curso
+    IF v_id_curso IS NOT NULL THEN
+        SET curso_existe = TRUE;
+        SET id_curso_out = v_id_curso;
+    ELSE
+        SET curso_existe = FALSE;
+        SET id_curso_out = NULL;
+    END IF;
 END$$
 
 DELIMITER ;
@@ -406,10 +504,10 @@ CREATE TABLE `libro_temas` (
 --
 
 INSERT INTO `libro_temas` (`id_libro_tema`, `id_curso`, `tema`, `descripcion`, `fecha`, `id_profesor`, `id_relacion`, `fecha_ingreso`, `fecha_modif`) VALUES
-(1, 18, 'Linux', 'hoy di linux terminal', NULL, 1, 68, NULL, NULL),
-(2, 14, 'Python', 'hoy di python basico', NULL, 18, 37, NULL, NULL),
-(3, 20, 'Java', 'En esta clase di java', '2024-05-02', 26, 20, NULL, NULL),
-(4, 20, 'PHP', 'En esta clase di php', '2024-05-06', 26, 20, NULL, NULL),
+(1, 18, 'Linux', 'hoy di linux terminal', '2024-05-02', 1, 68, '2024-06-06 16:42:00', NULL),
+(2, 14, 'Python', 'hoy di python basico', '2024-05-02', 18, 37, '2024-06-06 16:42:00', NULL),
+(3, 20, 'Java', 'En esta clase di java', '2024-05-02', 26, 20, '2024-06-06 16:42:00', NULL),
+(4, 20, 'PHP', 'En esta clase di php', '2024-05-06', 26, 20, '2024-06-06 16:42:00', NULL),
 (5, 20, 'C', 'En esta clase di c', '2024-06-06', 26, 20, '2024-06-06 16:42:00', NULL);
 
 -- --------------------------------------------------------
@@ -599,7 +697,7 @@ INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido`, `nombre`, `grado`
 (23, 8849, 'MENGIDE', 'Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL, NULL),
 (24, 8873, 'MITARITONNA', 'Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL, NULL),
 (25, 8915, 'MOSCUZZA GUIDONI', 'Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL, NULL),
-(26, 8840, 'PICCIN', 'Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', NULL, NULL),
+(26, 8840, 'PICCIN', 'Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', '101', 1),
 (27, 8158, 'PICCIRILLI', 'Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL, NULL),
 (28, 14503, 'PUYOL', 'Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL, NULL),
 (29, 21092, 'RAFFO', 'Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL, NULL),
@@ -822,7 +920,8 @@ INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`, 
 (5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0, NULL),
 (6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
 (99, 'tomy', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
-(100, 'agus', '$2y$10$zOfcBfEFyTMIjU04Q7epJeGA0/ez1soaPCL9ekQJBBtiz21TZLc.C', 1, 0, NULL);
+(100, 'agus', '$2y$10$zOfcBfEFyTMIjU04Q7epJeGA0/ez1soaPCL9ekQJBBtiz21TZLc.C', 1, 0, NULL),
+(101, 'piccin', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -902,13 +1001,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
