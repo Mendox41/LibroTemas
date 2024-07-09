@@ -42,7 +42,7 @@ $(document).ready(function () {
     $("#btn-buscar-tema").click(function () {
         // Escuchar clic en el botón de búsqueda de temas
         $.ajax({
-            url: '../../php/topic/topics-filter.php',
+            url: '../../php/topic/get-topics-filter.php',
             type: 'POST',
             data: {
                 nombre_carrera: $("#nombre-carrera").val(),
