@@ -8,14 +8,15 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
 $nombre_carrera = isset($_POST["nombre-carrera"]) ? $_POST["nombre-carrera"] : '';
 $anio_carrera = isset($_POST["anio-carrera"]) ? $_POST["anio-carrera"] : '';
+$semestre = isset($_POST["semestre"]) ? $_POST["semestre"] : '';
 $nombre_materia = isset($_POST["nombre-materia"]) ? $_POST["nombre-materia"] : '';
 $comision = isset($_POST["comision"]) ? $_POST["comision"] : '';
 $turno = isset($_POST["turno"]) ? $_POST["turno"] : '';
+$ciclo = isset($_POST["ciclo"]) ? $_POST["ciclo"] : '';
 $nombre_profesor = isset($_POST["nombre-profesor"]) ? $_POST["nombre-profesor"] : '';
 $apellido_profesor = isset($_POST["apellido-profesor"]) ? $_POST["apellido-profesor"] : '';
-// $fecha_tema = isset($_POST["fecha-tema"]) ? $_POST["fecha-tema"] : '';
-$titulo_tema = isset($_POST["titulo-tema"]) ? $_POST["titulo-tema"] : '';
-$descripcion_tema = isset($_POST["descripcion-tema"]) ? $_POST["descripcion-tema"] : '';
+$usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : '';
+$activo = isset($_POST["activo"]) ? $_POST["activo"] : '';
 
 $result = new stdClass();
 $result->success = false;
@@ -24,70 +25,76 @@ $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
 // Armo la consulta     
-$sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha, T6.carrera, T7.anio, T5.materia, T8.comision, T9.turno, T3.apellido, T3.nombre  
-        FROM libro_temas AS T1
-        INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
-        INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
-        INNER JOIN relaciones AS T4 ON T4.id_relacion = T1.id_relacion
-        INNER JOIN materias AS T5 ON T5.id_materia = T4.id_materia
-        INNER JOIN carreras AS T6 ON T6.id_carrera = T4.id_carrera
-        INNER JOIN anios AS T7 ON T7.id_anio = T4.id_anio
-        INNER JOIN comisiones AS T8 ON T8.id_comision = T2.id_comision 
-        INNER JOIN turnos AS T9 ON T9.id_turno = T2.id_turno
+$sql = "SELECT T1.id_curso, T3.carrera, T4.anio, T5.semestre, T6.materia, T7.comision, T8.turno, T1.c_anio, T9.nombre, t9.apellido, T10.usuario, T1.isActive
+        FROM cursos AS T1
+        INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+        INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
+        INNER JOIN anios AS T4 ON T4.id_anio = T2.id_anio
+        INNER JOIN semestres AS T5 ON T5.id_semestre = T2.id_semestre
+        INNER JOIN materias AS T6 ON T6.id_materia = T2.id_materia
+        INNER JOIN comisiones AS T7 ON T7.id_comision = T1.id_comision 
+        INNER JOIN turnos AS T8 ON T8.id_turno = T1.id_turno
+        INNER JOIN profesores AS T9 ON T9.id_profesor = T1.id_profesor
+        INNER JOIN usuarios AS T10 ON T10.id_usuario = T9.id_usuario
         WHERE 1=1";
 
 $parameters = [];
 $types = "";
 
 if (!empty($nombre_carrera)) {
-    $sql .= " AND T6.carrera LIKE ?";
-    $parameters[] = "%$nombre_carrera%";
+    $sql .= " AND T3.carrera LIKE ?";
+    $parameters[] = "%". $nombre_carrera."%";
     $types .= "s";
 }
 if (!empty($anio_carrera)) {
-    $sql .= " AND T7.anio LIKE ?";
-    $parameters[] = "%$anio_carrera%";
+    $sql .= " AND T4.anio LIKE ?";
+    $parameters[] = "%".$anio_carrera."%";
+    $types .= "s";
+}
+if (!empty($semestre)) {
+    $sql .= " AND T5.semestre LIKE ?";
+    $parameters[] = "%".$semestre."%";
     $types .= "s";
 }
 if (!empty($nombre_materia)) {
-    $sql .= " AND T5.materia LIKE ?";
-    $parameters[] = "%$nombre_materia%";
+    $sql .= " AND T6.materia LIKE ?";
+    $parameters[] = "%".$nombre_materia."%";
     $types .= "s";
 }
 if (!empty($comision)) {
-    $sql .= " AND T8.comision LIKE ?";
-    $parameters[] = "%$comision%";
+    $sql .= " AND T7.comision LIKE ?";
+    $parameters[] = "%".$comision."%";
     $types .= "s";
 }
 if (!empty($turno)) {
-    $sql .= " AND T9.turno LIKE ?";
-    $parameters[] = "%$turno%";
+    $sql .= " AND T8.turno LIKE ?";
+    $parameters[] = "%".$turno."%";
     $types .= "s";
 }
+if (!empty($ciclo)) {
+    $sql .= " AND T1.c_anio LIKE ?";
+    $parameters[] = "%".$ciclo."%";
+    $types .= "";
+}
 if (!empty($nombre_profesor)) {
-    $sql .= " AND T3.nombre LIKE ?";
-    $parameters[] = "%$nombre_profesor%";
+    $sql .= " AND T9.nombre LIKE ?";
+    $parameters[] = "%".$nombre_profesor."%";
     $types .= "s";
 }
 if (!empty($apellido_profesor)) {
-    $sql .= " AND T3.apellido LIKE ?";
-    $parameters[] = "%$apellido_profesor%";
+    $sql .= " AND T9.apellido LIKE ?";
+    $parameters[] = "%".$apellido_profesor."%";
     $types .= "s";
 }
-// if (!empty($fecha_tema)) {
-//     $sql .= " AND T1.fecha LIKE ?";
-//     $parameters[] = "%$fecha_tema%";
-//     $types .= "s";
-// }
-if (!empty($titulo_tema)) {
-    $sql .= " AND T1.tema LIKE ?";
-    $parameters[] = "%$titulo_tema%";
+if (!empty($usuario)) {
+    $sql .= " AND T10.usuario LIKE ?";
+    $parameters[] = "%".$usuario."%";
     $types .= "s";
 }
-if (!empty($descripcion_tema)) {
-    $sql .= " AND T1.descripcion LIKE ?";
-    $parameters[] = "%$descripcion_tema%";
-    $types .= "s";
+if (!empty($activo)) {
+    $sql .= " AND T1.isActive LIKE ?";
+    $parameters[] = "%".$activo."%";
+    $types .= "i";
 }
 
 $stmt = $conn->prepare($sql);
@@ -112,34 +119,36 @@ if (!$stmt->execute()) {
 }
 
 $stmt->store_result();
-$stmt->bind_result($id_libro_tema, $tema, $descripcion, $fecha, $carrera, $anio, $materia, $comision, $turno, $apellido, $nombre);
+$stmt->bind_result($id_curso, $carrera, $anio, $semestre, $materia, $comision, $turno, $c_anio, $nombre, $apellido, $usuario, $isActive);
 
-$topic = [];
+$course = [];
 $cont = 0;
 
 while ($stmt->fetch()) {
-    $objTopic = new stdClass();
-    $objTopic->id_libro_tema = $id_libro_tema;
-    $objTopic->carrera = $carrera;
-    $objTopic->anio = $anio;
-    $objTopic->materia = $materia;
-    $objTopic->comision = $comision;
-    $objTopic->turno = $turno;
-    $objTopic->nombre = $nombre;
-    $objTopic->apellido = $apellido;
-    $objTopic->fecha = $fecha;
-    $objTopic->tema = $tema;
-    $objTopic->descripcion = $descripcion;
+    $objCourse = new stdClass();
+
+    $objCourse->id_curso = $id_curso;
+    $objCourse->carrera = $carrera;
+    $objCourse->anio = $anio;
+    $objCourse->semestre = $semestre;
+    $objCourse->materia = $materia;
+    $objCourse->comision = $comision;
+    $objCourse->turno = $turno;
+    $objCourse->c_anio = $c_anio;
+    $objCourse->nombre = $nombre;
+    $objCourse->apellido = $apellido;
+    $objCourse->usuario = $usuario;
+    $objCourse->isActive = $isActive;
 
     $cont += 1;
 
-    array_push($topic, $objTopic);
+    array_push($course, $objCourse);
 }
 
-if (empty($topic)) {
+if (empty($course)) {
     error_stmt($result, "No topics found", $stmt, $conn);
 } else {
-    $result->respuesta = $topic;
+    $result->respuesta = $course;
     $result->cant_temas = $cont;
     $result->success = true;
 }
