@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    // Inicializo funciones
+    disabled_input_modal_modify_topic();
+
+
     //  limpiar campos y mostrar modal de filtro de temas
     $("#btn-filtro-tema").click(function () {
         $("#modal-form-buscar-tema").addClass("d-block");
@@ -86,8 +90,22 @@ $(document).ready(function () {
 
     });
 
+    // Funcion del modal de ver tema
 
-    
+    // btn x
+    $("#btn-close-modal-ver-tema").click(function () {
+        $("#modal-form-ver-tema").removeClass("d-block");
+        restablecer_contenedores();
+
+    });
+
+    $("#btn-volver-modal-ver-tema").click(function () {
+        $("#modal-form-ver-tema").removeClass("d-block");
+        restablecer_contenedores();
+
+    });
+
+
 
 
     // ----------------------------------------------------------------
@@ -99,5 +117,30 @@ $(document).ready(function () {
         $("#body").removeClass("fondo-desactivado");
     }
 
-
+    
 });
+
+export function restablecer_valores_modal_ver_tema() {
+    document.getElementById('ver-tema-td-carrera').innerHTML = "";
+    document.getElementById('ver-tema-td-anio-carrera').innerHTML = "";
+    document.getElementById('ver-tema-td-materia').innerHTML = "";
+    document.getElementById('ver-tema-td-turno').innerHTML = "";
+    document.getElementById('ver-tema-td-comision').innerHTML = "";
+    document.getElementById('ver-tema-td-usuario-profesor').innerHTML = "";
+    document.getElementById('ver-tema-td-nombre-profesor').innerHTML = "";
+    document.getElementById('ver-tema-td-fecha-tema').innerHTML = "";
+    document.getElementById('ver-tema-td-fecha-registrado').innerHTML = "";
+    document.getElementById('ver-tema-td-fecha-modificacion').innerHTML = "";
+    document.getElementById('ver-tema-td-titulo-tema').innerHTML = "";
+    document.getElementById('ver-tema-td-descripcion-tema').innerHTML = "";
+
+}
+
+function disabled_input_modal_modify_topic(){
+    $('#id-libro-tema-modal-modify').prop('disabled', true);
+    $('#tema-nombre-carrera-modal-modify').prop('disabled', true);
+    $('#tema-anio-carrera-modal-modify').prop('disabled', true);
+    $('#tema-nombre-materia-modal-modify').prop('disabled', true);
+    $('#tema-turno-modal-modify').prop('disabled', true);
+    $('#tema-comision-modal-modify').prop('disabled', true);
+}

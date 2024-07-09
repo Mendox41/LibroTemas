@@ -10,8 +10,10 @@ body {
     margin: 2% 1%;
 }
 
-.abm-usuarios {
+.abm-topic {
     border-radius: 10px;
+    width: 100%;
+    padding: 1%;
 }
 
 .div-botones {
@@ -89,6 +91,15 @@ td:nth-child(8) button {
     display: none;
 }
 
+ion-icon {
+    font-size: 25px;
+}
+
+
+.modal-footer-ver-tema {
+    display: flex;
+    justify-content: space-between;
+}
 
 
 

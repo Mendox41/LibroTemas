@@ -1,10 +1,11 @@
 <?php
+sleep(1);
 
 // Incluir el archivo de conexión a la base de datos
-include(__DIR__ . "/../database/conection.php");
+include (__DIR__ . "/../database/conection.php");
 
 // Incluir las funciones de error
-include(__DIR__ . "/../error_stmt/errorFunctions.php");
+include (__DIR__ . "/../error_stmt/errorFunctions.php");
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -56,8 +57,7 @@ while ($stmt->fetch()) {
     $datoCurso->turno = $turno;
     $datoCurso->comision = $comision;
     $datoCurso->usuario = $usuario;
-    $datoCurso->apellido = $apellido;
-    $datoCurso->nombre = $nombre;
+    $datoCurso->nombre_apellido = $apellido . ", " . $nombre;
     $datoCurso->fecha = $fecha;
     $datoCurso->fecha_ingreso = $fecha_ingreso;
     $datoCurso->fecha_modif = $fecha_modif;
