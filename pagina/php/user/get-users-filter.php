@@ -1,77 +1,118 @@
 <?php
+
 // Incluir el archivo de conexión a la base de datos
-include (__DIR__ . "/../database/conection.php");
+include(__DIR__ . "/../database/conection.php");
 
 // Incluir las funciones de error
-include (__DIR__ . "/../error_stmt/errorFunctions.php");
+include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
-mb_internal_encoding("UTF-8");
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario'] : null;
+$usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : '';
+$legajo = isset($_POST["legajo"]) ? $_POST["legajo"] : '';
+$nombre_profesor = isset($_POST["nombre-profesor"]) ? $_POST["nombre-profesor"] : '';
+$apellido_profesor = isset($_POST["apellido-profesor"]) ? $_POST["apellido-profesor"] : '';
+$activo = isset($_POST["activo"]) ? $_POST["activo"] : '';
+$admin = isset($_POST["admin"]) ? $_POST["admin"] : '';
 
 $result = new stdClass();
 $result->success = false;
 
-// realizar consulta sobre el id de usuario enviado y ver que sea un usuario con permisos de administrador
-// PENDIENTE (CONDICION)
+$databaseName = "300hs_laborales";
+mysqli_select_db($conn, $databaseName);
 
+// Armo la consulta     
+$sql = "SELECT T1.id_profesor, T2.id_usuario, T2.usuario, T1.legajo, T1.nombre, T1.apellido, T2.isActive, T2.IsAdmin 
+        FROM profesores AS T1
+        INNER JOIN usuarios AS T2 ON T2.id_usuario = T1.id_usuario
+        WHERE 1=1";
 
-// if (empty($id_usuario)) {
-//     error_request($result, "El id ingresado esta vacio  $id_usuario");
-// }
+$parameters = [];
+$types = "";
 
-$db_name = "300hs_laborales";
-mysqli_select_db($conn, $db_name);
+if (!empty($usuario)) {
+    $sql .= " AND T2.usuario LIKE ?";
+    $parameters[] = "%". $usuario."%";
+    $types .= "s";
+}
+if (!empty($legajo)) {
+    $sql .= " AND T1.legajo LIKE ?";
+    $parameters[] = "%".$legajo."%";
+    $types .= "s";
+}
+if (!empty($nombre_profesor)) {
+    $sql .= " AND T1.nombre LIKE ?";
+    $parameters[] = "%".$nombre_profesor."%";
+    $types .= "s";
+}
+if (!empty($apellido_profesor)) {
+    $sql .= " AND T1.apellido LIKE ?";
+    $parameters[] = "%".$apellido_profesor."%";
+    $types .= "s";
+}
+if (!empty($activo)) {
+    $sql .= " AND T2.isActive LIKE ?";
+    $parameters[] = "%".$activo."%";
+    $types .= "i    ";
+}
+if (!empty($admin)) {
+    $sql .= " AND T2.isAdmin LIKE ?";
+    $parameters[] = "%".$admin."%";
+    $types .= "i";
+}
 
-// Llamada al procedimiento almacenado
-$stmt = $conn->prepare("CALL get_usuarios()");
+$stmt = $conn->prepare($sql);
+
+// Verificar si la preparación de la consulta fue exitosa
 if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
+    echo json_encode($result);
+    exit;
 }
 
+// Vincular los parámetros
+if (!empty($parameters)) {
+    $stmt->bind_param($types, ...$parameters);
+}
+
+// Ejecutar la consulta y verificar si fue exitosa
 if (!$stmt->execute()) {
-    error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
+    error_stmt($result, "Error executing the query: " . $stmt->error, $stmt, $conn);
+    echo json_encode($result);
+    exit;
 }
 
-// Manejo de resultados
-$stmt->bind_result($id_usuario, $usuario, $isActive, $isAdmin, $id_profesor, $legajo, $apellido, $nombre, $grado, $carrera);
+$stmt->store_result();
+$stmt->bind_result($id_profesor, $id_usuario, $usuario, $legajo, $nombre, $apellido, $isActive, $IsAdmin);
 
-$usuarios = [];
+$course = [];
 $cont = 0;
 
 while ($stmt->fetch()) {
-    $usuarios_registrados = new stdClass();
+    $objCourse = new stdClass();
 
-    $usuarios_registrados->legajo = $legajo;
-    $usuarios_registrados->usuario = $usuario;
-    $usuarios_registrados->apellido = $apellido;
-    $usuarios_registrados->nombre = $nombre;
-    $usuarios_registrados->grado = $grado;
-    $usuarios_registrados->carrera = $carrera;
-    $usuarios_registrados->isActive = $isActive;
-    $usuarios_registrados->isAdmin = $isAdmin;
-
-    $usuarios_registrados->id_usuario = $id_usuario;
+    $objCourse->id_profesor = $id_profesor;
+    $objCourse->id_usuario = $id_usuario;
+    $objCourse->usuario = $usuario;
+    $objCourse->legajo = $legajo;
+    $objCourse->nombre = $nombre;
+    $objCourse->apellido = $apellido;
+    $objCourse->isActive = $isActive;
+    $objCourse->IsAdmin = $IsAdmin;
 
     $cont += 1;
 
-    array_push($usuarios, $usuarios_registrados);
+    array_push($course, $objCourse);
 }
 
-if (empty($usuarios)) {
-    error_request($result, "No hay resultados para ese ID: " . $id_usuario);
+if (empty($course)) {
+    error_stmt($result, "No topics found", $stmt, $conn);
 } else {
-    
-    $result->respuesta = $usuarios;
-    $result->cantidad_usuarios_registrados = $cont;
+    $result->respuesta = $course;
+    $result->cant_temas = $cont;
     $result->success = true;
-
 }
 
 $stmt->close();
+$conn->close();
 
 echo json_encode($result);
 
