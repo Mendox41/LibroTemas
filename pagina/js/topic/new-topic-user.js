@@ -125,33 +125,4 @@ $(document).ready(function () {
     };
 
 
-
-    // Fx de Btn para agregar nuevo tema
-    // $("#btnAltaNuevoTema").click(function () {
-    //     $("#footer").addClass("contenedor-pasivo");
-    //     $("#header").addClass("contenedor-pasivo");
-    //     $("#main-conteiner").addClass("contenedor-pasivo");
-    //     fillSelectAlta();
-
-    //     $('#newMarca').val(0);
-    //     $('#newModelo').val("");
-    //     $('#newDescrip').val("");
-    //     $('#newAno').val("");
-    //     $('#newValor').val(0);
-
-    //     $("#ventanaAltaRegistro").removeClass("modal-hidden");
-    // });
-
-
-
-
-
-
-
-
-
-
-
-
-
 });

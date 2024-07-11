@@ -50,7 +50,7 @@ $(document).ready(function () {
                 nombre_materia: $("#nombre-materia").val(),
                 comision: $("#comision").val(),
                 turno: $("#turno").val(),
-                nombre_usuario: $("#nombre-usuario").val(),
+                usuario: $("#nombre-usuario").val(),
                 nombre_profesor: $("#nombre-profesor").val(),
                 apellido_profesor: $("#apellido-profesor").val(),
                 fecha_tema: $("#fecha-tema").val(),
@@ -76,7 +76,7 @@ $(document).ready(function () {
                     // creo dinamicamente la tabla del ABM de topic
                     var tabla_abm = document.createElement('table');
                     tabla_abm.id = 'tabla-abm-topic';
-                    tabla_abm.classList.add('table', 'tabla-abm-topic', 'display');
+                    tabla_abm.classList.add('tabla-abm-topic', 'display');
 
                     // creo el thead de la tabla
                     var thead_tabla = document.createElement('thead');
@@ -84,7 +84,7 @@ $(document).ready(function () {
                     var tr_thead_tabla = document.createElement('tr');
 
 
-                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Descripcion', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
+                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
 
                     // recorro el array creado anteriormente de los titulos 
                     titulos_columnas_abm_topic.forEach(function (titulo) {
@@ -178,9 +178,15 @@ $(document).ready(function () {
 
                                 btn_modif_topic.onclick = function () {
                                     // fn modificar topic
-                                    alert(valor);
+                                    // alert(valor);
 
                                     fill_form_modify_topic(valor);
+                                    $('#id-libro-tema-modal-modify').val(valor);
+
+                                    $("#modal-form-modify-tema").addClass("d-block");
+                                    $("#header").addClass("opacity-25");
+                                    $("#main-container").addClass("opacity-25");
+                                    $("#body").addClass("fondo-desactivado");
 
 
                                 };

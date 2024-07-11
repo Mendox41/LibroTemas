@@ -105,11 +105,11 @@ include ('../../php/session/validate-admin.php');
                     </div>
                     <div class="col-sm-3">
                         <label for="fecha-tema" class="form-label">Año ciclo lectivo</label>
-                        <input type="number" class="form-control" id="ciclo-lectivo">
+                        <input type="text" class="form-control" id="ciclo-lectivo">
                     </div>
                     <div class="col-sm-3">
                         <label for="fecha-tema" class="form-label">Semestre</label>
-                        <input type="number" class="form-control" id="semestre">
+                        <input type="text" class="form-control" id="semestre">
                     </div>
                     <div class="col-sm-3">
                         <label for="fecha-tema" class="form-label">Fecha Desde</label>
@@ -470,7 +470,8 @@ include ('../../php/session/validate-admin.php');
                                                 <td id="ver-tema-td-fecha-tema"></td>
                                             </tr>
                                             <tr class="">
-                                                <td>Fecha registrado</td>
+                                                <td>Fecha registro
+                                                </td>
                                                 <td id="ver-tema-td-fecha-registrado"></td>
                                             </tr>
                                             <tr class="">
@@ -596,6 +597,31 @@ include ('../../php/session/validate-admin.php');
 
             </div>
 
+            <!-- modal confirm modificacion tema -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-modify-tema">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-modify-tema">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Confirmacion
+                                modificacion Tema
+                            </h7>
+                            <button id="close-btn-modal-confirm-modify-tema" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="">¿Desea modificar confirmar la modificacion de los datos del
+                                Tema?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-modify-tema">Cancel</button>
+                            <button class="btn btn-warning" id="btn-aceptar-modal-confirm-modify-tema">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- modal respuesta -->
             <div class="modal" tabindex="-1" id="modal-container-respuesta">
@@ -652,6 +678,11 @@ include ('../../php/session/validate-admin.php');
     <script type="module" src="../../js/topic/topic-filter-actions.js"></script>
 
     <script type="module" src="../../js/topic/new-topic-admin.js"></script>
+    <script type="module" src="../../js/topic/modify-topic.js"></script>
+
+    <script type="module" src="../../js/topic/delete-topic.js"></script>
+
+
 
     <!-- <script src="../../js/structure/abm-topics-structure.js"></script> -->
 

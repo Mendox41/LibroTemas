@@ -105,8 +105,18 @@ $(document).ready(function () {
 
     });
 
+    // Funciones del modal modify tema
+    $("#btn-close-modal-modify-tema").click(function () {
+        $("#modal-form-modify-tema").removeClass("d-block");
+        restablecer_contenedores();
+    });
 
+    
+    $("#btn-cancel-modify-tema").click(function () {
+        $("#modal-form-modify-tema").removeClass("d-block");
+        restablecer_contenedores();
 
+    });
 
     // ----------------------------------------------------------------
 
@@ -137,7 +147,10 @@ export function restablecer_valores_modal_ver_tema() {
 }
 
 function disabled_input_modal_modify_topic(){
+
     $('#id-libro-tema-modal-modify').prop('disabled', true);
+    $('#id-libro-tema-modal-modify').prop('hidden', true);
+
     $('#tema-nombre-carrera-modal-modify').prop('disabled', true);
     $('#tema-anio-carrera-modal-modify').prop('disabled', true);
     $('#tema-nombre-materia-modal-modify').prop('disabled', true);
