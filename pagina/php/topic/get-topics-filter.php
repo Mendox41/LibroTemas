@@ -43,7 +43,7 @@ $sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha, T6.carrera, 
         INNER JOIN comisiones AS T8 ON T8.id_comision = T2.id_comision 
         INNER JOIN turnos AS T9 ON T9.id_turno = T2.id_turno
         INNER JOIN usuarios AS T10 ON T10.id_usuario = T3.id_usuario
-        INNER JOIN semestres AS T11 ON T11.id_semestre = T2.id_semestre
+        INNER JOIN semestres AS T11 ON T11.id_semestre = T4.id_semestre
         WHERE 1=1";
 
 $parameters = [];
@@ -129,6 +129,7 @@ if (!empty($descripcion_tema)) {
     $parameters[] = "%" . $descripcion_tema . "%";
     $types .= "s";
 }
+$sql .= " ORDER BY T1.id_libro_tema";
 
 // Preparar la consulta
 $stmt = $conn->prepare($sql);
