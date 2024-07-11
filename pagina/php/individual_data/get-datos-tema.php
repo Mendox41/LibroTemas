@@ -1,5 +1,5 @@
 <?php
-sleep(1);
+
 
 // Incluir el archivo de conexión a la base de datos
 include (__DIR__ . "/../database/conection.php");

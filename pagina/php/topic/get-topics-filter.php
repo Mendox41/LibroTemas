@@ -166,13 +166,12 @@ while ($stmt->fetch()) {
     $objTopic->id_libro_tema = $id_libro_tema;
 
     $objTopic->tema = $tema;
-    $objTopic->descripcion = $descripcion;
     $objTopic->fecha = $fecha;
     $objTopic->carrera = $carrera;
     $objTopic->anio = $anio;
     $objTopic->materia = $materia;
-    $objTopic->comision = $comision;
     $objTopic->turno = $turno;
+    $objTopic->comision = $comision;
     $objTopic->apellido = $apellido;
    
 
