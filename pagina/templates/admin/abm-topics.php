@@ -72,62 +72,62 @@ include ('../../php/session/validate-admin.php');
                 <div class="row g-3 form-filtro" id="form-filtro-tema">
                     <h3 id="titulo-filtro">Filtro de busqueda de Tema</h3>
                     <div class="col-sm-3">
-                        <label for="nombre-carrera" class="form-label">Carrera</label>
-                        <input type="text" class="form-control" id="nombre-carrera">
+                        <label for="nombre-carrera-filtro" class="form-label">Carrera</label>
+                        <input type="text" class="form-control" id="nombre-carrera-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="anio-carrera" class="form-label">Año carrera</label>
-                        <input type="text" class="form-control" id="anio-carrera">
+                        <label for="anio-carrera-filtro" class="form-label">Año carrera</label>
+                        <input type="text" class="form-control" id="anio-carrera-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="nombre-materia" class="form-label">Materia</label>
-                        <input type="text" class="form-control" id="nombre-materia">
+                        <label for="nombre-materia-filtro" class="form-label">Materia</label>
+                        <input type="text" class="form-control" id="nombre-materia-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="comision" class="form-label">Comision</label>
-                        <input type="text" class="form-control" id="comision">
+                        <label for="comision-filtro" class="form-label">Comision</label>
+                        <input type="text" class="form-control" id="comision-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="turno" class="form-label">Turno</label>
-                        <input type="text" class="form-control" id="turno">
+                        <label for="turno-filtro" class="form-label">Turno</label>
+                        <input type="text" class="form-control" id="turno-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="nombre-usuario" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="nombre-usuario">
+                        <label for="nombre-usuario-filtro" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="nombre-usuario-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="nombre-profesor" class="form-label">Nombre Profesor</label>
-                        <input type="text" class="form-control" id="nombre-profesor">
+                        <label for="nombre-profesor-filtro" class="form-label">Nombre Profesor</label>
+                        <input type="text" class="form-control" id="nombre-profesor-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="apellido-profesor" class="form-label">Apellido Profesor</label>
-                        <input type="text" class="form-control" id="apellido-profesor">
+                        <label for="apellido-profesor-filtro" class="form-label">Apellido Profesor</label>
+                        <input type="text" class="form-control" id="apellido-profesor-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="fecha-tema" class="form-label">Año ciclo lectivo</label>
-                        <input type="text" class="form-control" id="ciclo-lectivo">
+                        <label for="ciclo-lectivo-filtro" class="form-label">Año ciclo lectivo</label>
+                        <input type="text" class="form-control" id="ciclo-lectivo-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="fecha-tema" class="form-label">Semestre</label>
-                        <input type="text" class="form-control" id="semestre">
+                        <label for="semestre-filtro" class="form-label">Semestre</label>
+                        <input type="text" class="form-control" id="semestre-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="fecha-tema" class="form-label">Fecha Desde</label>
-                        <input type="date" class="form-control" id="fecha-tema-desde">
+                        <label for="fecha-tema-desde-filtro" class="form-label">Fecha Desde</label>
+                        <input type="date" class="form-control" id="fecha-tema-desde-filtro">
                     </div>
                     <div class="col-sm-3">
-                        <label for="fecha-tema" class="form-label">Fecha Hasta</label>
-                        <input type="date" class="form-control" id="fecha-tema-hasta">
+                        <label for="fecha-tema-hasta-filtro" class="form-label">Fecha Hasta</label>
+                        <input type="date" class="form-control" id="fecha-tema-hasta-filtro">
                     </div>
 
                     <div class="col-md-12">
-                        <label for="titulo-tema" class="form-label">Titulo</label>
-                        <input type="text" class="form-control" id="titulo-tema">
+                        <label for="titulo-tema-filtro" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="titulo-tema-filtro">
                     </div>
 
                     <div class="col-md-12">
-                        <label for="descripcion-tema" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="descripcion-tema" rows="1"></textarea>
+                        <label for="descripcion-tema-filtro" class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="descripcion-tema-filtro" rows="1"></textarea>
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-primary" id="btn-buscar-tema">Buscar</button>

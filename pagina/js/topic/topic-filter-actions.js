@@ -45,20 +45,26 @@ $(document).ready(function () {
             url: '../../php/topic/get-topics-filter.php',
             type: 'POST',
             data: {
-                nombre_carrera: $("#nombre-carrera").val(),
-                anio_carrera: $("#anio-carrera").val(),
-                nombre_materia: $("#nombre-materia").val(),
-                comision: $("#comision").val(),
-                turno: $("#turno").val(),
-                usuario: $("#nombre-usuario").val(),
-                nombre_profesor: $("#nombre-profesor").val(),
-                apellido_profesor: $("#apellido-profesor").val(),
-                fecha_tema: $("#fecha-tema").val(),
-                titulo_tema: $("#titulo-tema").val(),
-                descripcion_tema: $("#descripcion-tema").val()
+                nombre_carrera: $("#nombre-carrera-filtro").val(),
+                anio_carrera: $("#anio-carrera-filtro").val(),
+                nombre_materia: $("#nombre-materia-filtro").val(),
+                comision: $("#comision-filtro").val(),
+                turno: $("#turno-filtro").val(),
+                usuario: $("#nombre-usuario-filtro").val(),
+                nombre_profesor: $("#nombre-profesor-filtro").val(),
+                apellido_profesor: $("#apellido-profesor-filtro").val(),
+
+                semestre: $("#semestre-filtro").val(),
+                ciclo_lectivo: $("#ciclo-lectivo-filtro").val(),
+                
+                fecha_desde: $("#fecha-tema-desde-filtro").val(),
+                fecha_hasta: $("#fecha-tema-hasta-filtro").val(),
+
+                titulo_tema: $("#titulo-tema-filtro").val(),
+                descripcion_tema: $("#descripcion-tema-filtro").val()
             },
             success: function (respuesta) {
-                // alert(respuesta);
+                alert(respuesta);
                 var data_filtro_temas = JSON.parse(respuesta);
 
                 if (!(data_filtro_temas.success)) {
