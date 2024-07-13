@@ -3,6 +3,8 @@
 include(__DIR__ . "/../database/conection.php");
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 $id_libro_tema = isset($_POST['id_libro_tema']) ? $_POST['id_libro_tema'] : null;
 $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : null;

@@ -96,7 +96,7 @@ if (!empty($ciclo_lectivo)) {
     $types .= "s";
 }
 if (!empty($semestre)) {
-    $sql .= " AND T1.semestre LIKE ?";
+    $sql .= " AND T11.semestre LIKE ?";
     $parameters[] = "%" . $semestre . "%";
     $types .= "s";
 }
