@@ -42,7 +42,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("iiss", $id_libro_tema, $fecha, $titulo, $descripcion);
+$stmt->bind_param("isss", $id_libro_tema, $fecha, $titulo, $descripcion);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
@@ -50,7 +50,8 @@ if (!$stmt->execute()) {
     exit();
 }
 
-$result->success = true;
+$result->message = 'El tema fue modificado de manera correcta';
+$result -> success = true;
 
 $stmt->close();
 $conn->close();
