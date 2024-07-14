@@ -145,7 +145,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tem
         T10.usuario,
         T3.apellido,
         T3.nombre,
-        DATE_FORMAT(T1.fecha, '%d-%m-%Y') AS fecha,
+        T1.fecha,
         DATE_FORMAT(T1.fecha_ingreso, '%d-%m-%Y %H:%i:%s') AS fecha_ingreso,
         DATE_FORMAT(T1.fecha_modif, '%d-%m-%Y %H:%i:%s') AS fecha_modif,
         T1.tema,
