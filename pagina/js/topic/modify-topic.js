@@ -1,3 +1,5 @@
+import { update_tabla_filtro_temas } from './topic-filter-actions.js';
+
 $(document).ready(function () {
 
     $("#btn-aceptar-modify-tema").click(function () {
@@ -72,6 +74,9 @@ $(document).ready(function () {
 
                     if (data.success == true) {
                         $("#modal-title-respuesta").addClass("text-success");
+
+                        update_tabla_filtro_temas();
+
                     } else {
                         $("#modal-title-respuesta").addClass("text-danger");
 
