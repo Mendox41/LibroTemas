@@ -56,8 +56,8 @@ while ($stmt->fetch()) {
     $datoCurso->materia = $materia;
     $datoCurso->turno = $turno;
     $datoCurso->comision = $comision;
-    $datoCurso->c_anio = $c_anio
-    $datoCurso->semestre = $semestre
+    $datoCurso->c_anio = $c_anio;
+    $datoCurso->semestre = $semestre;
     $datoCurso->usuario = $usuario;
     $datoCurso->nombre_apellido = $apellido . ", " . $nombre;
     $datoCurso->fecha = $fecha;
