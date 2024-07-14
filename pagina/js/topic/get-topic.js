@@ -17,6 +17,11 @@ export function fill_table_ver_datos_topic(valor) {
                     document.getElementById('ver-tema-td-materia').innerHTML = curso.materia || 'N/A';
                     document.getElementById('ver-tema-td-turno').innerHTML = curso.turno || 'N/A';
                     document.getElementById('ver-tema-td-comision').innerHTML = curso.comision || 'N/A';
+
+                    document.getElementById('ver-tema-td-ciclo').innerHTML = curso.c_anio || 'N/A';
+                    document.getElementById('ver-tema-td-semestre').innerHTML = curso.semestre || 'N/A';
+
+
                     document.getElementById('ver-tema-td-usuario-profesor').innerHTML = curso.usuario || 'N/A';
                     document.getElementById('ver-tema-td-nombre-profesor').innerHTML = curso.nombre_apellido || 'N/A';
                     document.getElementById('ver-tema-td-fecha-tema').innerHTML = curso.fecha || 'N/A';

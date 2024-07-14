@@ -83,13 +83,19 @@ include ('../../php/session/validate-session.php');
                                         <input type="text" class="form-control" id="anio-carrera-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control"  id="materia-selec" disabled>
+                                        <input type="text" class="form-control" id="materia-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control"  id="comision-selec" disabled>
+                                        <input type="text" class="form-control" id="comision-selec" disabled>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" id="turno-com-selec" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="ciclo-selec" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="semestre-selec" disabled>
                                     </div>
                                     <!-- <div class="col-md-6">
                                         <input type="text" class="form-control" placeholder="Fecha actual"

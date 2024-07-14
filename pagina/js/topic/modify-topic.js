@@ -40,10 +40,12 @@ $(document).ready(function () {
         var descripcion_tema = $("#descripcion-tema-modal-modify").val();
         var fecha_tema = $("#fecha-tema-modal-modify").val();
 
+
         if (fecha_tema == 0 || titulo_tema == "" || descripcion_tema == "") {
             alert("Todos los campos deben ser completados");
 
-        } else {
+        } 
+        else {
 
             // ajax que realiza el envio de datos al servidor
             $.ajax({
@@ -57,13 +59,12 @@ $(document).ready(function () {
 
                 },
                 success: function (respuesta) {
-                    alert(respuesta);
+                    // alert(respuesta);
                     var data = JSON.parse(respuesta);
 
                     
                     // oculto el modal del formy del de confirmar ingreso de un nuevo tema
                     $("#modal-container-confirm-modify-tema").removeClass("d-block");
-                    $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
 
                     // agrego el mensaje de respuesta del servidor
                     $("#modal-title-respuesta").empty();

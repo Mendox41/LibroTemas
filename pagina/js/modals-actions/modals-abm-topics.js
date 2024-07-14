@@ -137,6 +137,25 @@ $(document).ready(function () {
 
     });
 
+    // Funciones del modal confirm modify tema
+
+    // btn x
+    $("#close-btn-modal-confirm-modify-tema").click(function () {
+        $("#modal-form-modify-tema").addClass("d-block");
+        $("#modal-container-confirm-modify-tema").removeClass("d-block");
+
+    });
+
+    // btn cancelar
+    $("#btn-cancel-modal-confirm-modify-tema").click(function () {
+        $("#modal-form-modify-tema").addClass("d-block");
+        $("#modal-container-confirm-modify-tema").removeClass("d-block");
+
+
+    });
+
+// ----------------------------------------
+
 
     // Funciones del modal confirm delete tema
 
@@ -180,6 +199,11 @@ export function restablecer_valores_modal_ver_tema() {
     document.getElementById('ver-tema-td-materia').innerHTML = "";
     document.getElementById('ver-tema-td-turno').innerHTML = "";
     document.getElementById('ver-tema-td-comision').innerHTML = "";
+
+    document.getElementById('ver-tema-td-ciclo').innerHTML = '';
+    document.getElementById('ver-tema-td-semestre').innerHTML = '';
+
+
     document.getElementById('ver-tema-td-usuario-profesor').innerHTML = "";
     document.getElementById('ver-tema-td-nombre-profesor').innerHTML = "";
     document.getElementById('ver-tema-td-fecha-tema').innerHTML = "";
