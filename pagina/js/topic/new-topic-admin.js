@@ -1,5 +1,9 @@
 import * as funciones_get_data_form from '../individual-data/funciones-get-data-form.js';
 import { get_usuario } from '../individual-data/get-usuario.js';
+import { update_tabla_filtro_temas } from '../topic/topic-filter-actions.js';
+
+// C:\xampp\htdocs\trabajos\LibroTemas\pagina\js\topic\topic-filter-actions.js
+
 
 $(document).ready(function () {
 
@@ -13,9 +17,6 @@ $(document).ready(function () {
     $("#btn-nuevo-tema").click(function () {
 
         vaciar_campos_form_nuevo_tema();
-
-        // $("#nuevo-tema-nombre-carrera").empty();
-
 
         $("#modal-form-ingreso-nuevo-tema").addClass("d-block");
         $("#header").addClass("opacity-25");
@@ -47,22 +48,6 @@ $(document).ready(function () {
             $("#errorMessage").removeClass("invisible");
 
 
-            // $("#fecha-tema").classList.add("border", "border-danger");
-            // $("#fecha-tema").addClass("border");
-            // $("#fecha-tema").addClass("border-danger");
-
-
-            // $("#modal-title-respuesta").empty();
-            // $("#modal-title-respuesta").text("Todos los campos deben ser completados");
-            // $("#modal-title-respuesta").addClass("text-danger");
-
-            // $("#header").addClass("opacity-25");
-            // $("#main-container").addClass("opacity-25");
-            // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            // $("#body").addClass("prueba-back");
-
-            // $("#modal-container-respuesta").addClass("d-block");
-
         } else if (!validacion_fecha(fecha_tema)) {
             $("#errorMessage").empty();
             $("#errorMessage").text('La fecha ingresada debe ser menor o igual que la fecha actual');
@@ -76,11 +61,7 @@ $(document).ready(function () {
 
         } else {
             // si todos los campos estan completos entra aca
-            $("#header").addClass("opacity-25");
-            $("#main-container").addClass("opacity-25");
-            $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            $("#body").addClass("prueba-back");
-
+          
             $("#modal-form-ingreso-nuevo-tema").removeClass("d-block");
             $("#modal-container-confirm-ingreso-tema").addClass("d-block");
 
@@ -93,6 +74,9 @@ $(document).ready(function () {
         get_usuario().then(function (id_usuario) {
             if (id_usuario === false) {
                 alert("Error: Id usuario not found");
+            } else if (id_relacion == 0 || id_turno == 0 || id_comision == 0 || fecha_tema == 0 || titulo_tema == "" || descripcion_tema == "") {
+                alert("Todos los campos deben ser completados");
+
             } else {
                 // el id de relacion lo almaceno en el select de materia
                 var id_relacion = $("#nuevo-tema-nombre-materia").val();
@@ -120,6 +104,15 @@ $(document).ready(function () {
                         // agrego el mensaje de respuesta del servidor
                         $("#modal-title-respuesta").empty();
                         $("#modal-title-respuesta").text(data.message);
+
+                        if (data.success == true) {
+                            $("#modal-title-respuesta").addClass("text-success");
+                            // update_tabla_filtro_temas();
+                        } else {
+                            $("#modal-title-respuesta").addClass("text-danger");
+
+                        }
+
                         // hago visible el modal de respuesta
                         $("#modal-container-respuesta").addClass("d-block");
                     }
@@ -149,22 +142,19 @@ $(document).ready(function () {
     // Evento de cambio de valor en el select de nombre carrera
     select_nombre_carrera.on('change', function () {
         // console.log("Cambió el valor del select");
+        $('#nuevo-tema-anio-carrera').prop('disabled', true);
+        $('#nuevo-tema-nombre-materia').prop('disabled', true);
+        $('#nuevo-tema-comision').prop('disabled', true);
+        $('#nuevo-tema-turno').prop('disabled', true);
 
-        if (select_nombre_carrera.val() == 0) {
-            $('#nuevo-tema-anio-carrera').prop('disabled', true);
-            $('#nuevo-tema-nombre-materia').prop('disabled', true);
-            $('#nuevo-tema-comision').prop('disabled', true);
-            $('#nuevo-tema-turno').prop('disabled', true);
+        $("#nuevo-tema-anio-carrera").val(0);
+        $("#nuevo-tema-nombre-materia").val(0);
+        $("#nuevo-tema-comision").val(0);
+        $("#nuevo-tema-turno").val(0);
 
-            $("#nuevo-tema-anio-carrera").val(0);
-            $("#nuevo-tema-nombre-materia").val(0);
-            $("#nuevo-tema-comision").val(0);
-            $("#nuevo-tema-turno").val(0);
-
-        } else {
+        if (select_nombre_carrera.val() != 0) {
             $('#nuevo-tema-anio-carrera').prop('disabled', false);
             funciones_get_data_form.get_anio_carrera_select(select_nombre_carrera.val());
-
         }
     });
 
@@ -215,22 +205,11 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
     // ----------------------------------------------------------------
 
-    function cargar_campos_form_nuevo_tema(id_carrera) {
+    // function cargar_campos_form_nuevo_tema(id_carrera) {
 
-    };
+    // };
 
     function vaciar_campos_form_nuevo_tema() {
         $("#nuevo-tema-nombre-carrera").val(0);
@@ -246,6 +225,14 @@ $(document).ready(function () {
         $('#nuevo-tema-nombre-materia').prop('disabled', true);
         $('#nuevo-tema-comision').prop('disabled', true);
         $('#nuevo-tema-turno').prop('disabled', true);
+        
+        $("#nuevo-tema-fecha").removeClass('bg-danger-subtle');
+        $("#nuevo-tema-fecha").removeClass("text-danger-emphasis");
+        $("#nuevo-tema-fecha").removeClass("border-danger");
+
+        $("#errorMessage").addClass("invisible");
+
+
 
 
 

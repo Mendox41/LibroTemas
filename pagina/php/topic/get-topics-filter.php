@@ -185,7 +185,7 @@ while ($stmt->fetch()) {
 
 // Verificar si se encontraron resultados
 if (empty($topic)) {
-    error_stmt($result, "No topics found", $stmt, $conn);
+    error_stmt($result, "No se encontraron temas con los parametros ingresados. Intente nuevamente.", $stmt, $conn);
 } else {
     $result->respuesta = $topic;
     $result->cant_temas = $cont;

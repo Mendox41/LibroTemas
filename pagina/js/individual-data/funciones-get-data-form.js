@@ -127,12 +127,16 @@ export function get_turno_select(id_relacion) {
 
 
                 // agrego el mensaje de respuesta del servidor
-                $("#modal-title-respuesta").empty();
-                $("#modal-title-respuesta").text(data_turnos.message);
-                $("#modal-title-respuesta").addClass("text-danger");
+                $("#modal-title-respuesta-secundario").empty();
+                $("#modal-title-respuesta-secundario").text(data_turnos.message);
+                $("#modal-title-respuesta-secundario").addClass("text-danger");
 
                 // hago visible el modal de respuesta
-                $("#modal-container-respuesta").addClass("d-block");
+                $("#modal-container-respuesta-secundario").addClass("d-block");
+
+                // oculto modal de ingreso de nuevo tema
+                $("#modal-form-ingreso-nuevo-tema").removeClass("d-block");
+
 
                 $('#nuevo-tema-comision').prop('disabled', true);
                 $('#nuevo-tema-turno').prop('disabled', true);

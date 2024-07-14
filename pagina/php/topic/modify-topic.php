@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 $id_libro_tema = isset($_POST['id_libro_tema']) ? $_POST['id_libro_tema'] : null;
 $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : null;
 $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : null;
-$descricpcion = isset($_POST['descricpcion']) ? $_POST['descricpcion'] : null;
+$descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
 
 $result = new stdClass();
 $result->success = false;
@@ -26,7 +26,7 @@ if ($id_libro_tema === null) {
     error_request($result, "Falta el campo titulo");
     echo json_encode($result);
     exit();
-} elseif ($descricpcion === null) {
+} elseif ($descripcion === null) {
     error_request($result, "Falta el campo descripcion");
     echo json_encode($result);
     exit();
@@ -42,7 +42,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("iiss", $id_libro_tema, $fecha, $titulo, $descricpcion);
+$stmt->bind_param("iiss", $id_libro_tema, $fecha, $titulo, $descripcion);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);

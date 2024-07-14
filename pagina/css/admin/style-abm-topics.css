@@ -35,6 +35,16 @@ body {
 }
 
 
+.errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
+
 
 .modal-content {
     background-color: rgb(209, 209, 209);
@@ -102,6 +112,14 @@ ion-icon {
     justify-content: space-between;
 }
 
+.btns-modal-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.td-ver-tema{
+    background-color: rgb(166, 188, 255);
+}
 
 
 @media (max-width: 1350px) {

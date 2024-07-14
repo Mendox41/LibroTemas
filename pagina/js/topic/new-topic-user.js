@@ -29,15 +29,15 @@ $(document).ready(function () {
 
             // $("#modal-container-respuesta").addClass("d-block");
 
-        } else if (!validacion_fecha(fecha_tema) ){
+        } else if (!validacion_fecha(fecha_tema)) {
             $("#errorMessage").empty();
             $("#errorMessage").text('La fecha ingresada debe ser menor o igual que la fecha actual');
-          
+
             $("#fecha-tema").addClass('bg-danger-subtle');
             $("#fecha-tema").addClass("text-danger-emphasis");
             $("#fecha-tema").addClass("border-danger");
 
-        
+
             $("#errorMessage").removeClass("oculto");
 
         } else {
@@ -81,16 +81,16 @@ $(document).ready(function () {
                 // agrego el mensaje de respuesta del servidor
                 $("#modal-title-respuesta").empty();
                 $("#modal-title-respuesta").text(data.message);
-                // $("#modal-title-respuesta").addClass("text-danger");
+                if (data.success == true) {
+                    $("#modal-title-respuesta").addClass("text-success");
+                } else {
+                    $("#modal-title-respuesta").addClass("text-danger");
+                };
 
                 // hago visible el modal de respuesta
                 $("#modal-container-respuesta").addClass("d-block");
 
-                // if (data.success == true) {
-
-                // } else {
-
-                // }
+                
 
             }, error: function (error) {
                 console.log(error);
