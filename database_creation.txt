@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-07-2024 a las 19:29:01
+-- Tiempo de generación: 15-07-2024 a las 00:54:19
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -145,9 +145,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tem
         T10.usuario,
         T3.apellido,
         T3.nombre,
-        T1.fecha,
-        T1.fecha_ingreso,
-        T1.fecha_modif,
+        DATE_FORMAT(T1.fecha, '%d-%m-%Y') AS fecha,
+        DATE_FORMAT(T1.fecha_ingreso, '%d-%m-%Y %H:%i:%s') AS fecha_ingreso,
+        DATE_FORMAT(T1.fecha_modif, '%d-%m-%Y %H:%i:%s') AS fecha_modif,
         T1.tema,
         T1.descripcion
     FROM libro_temas AS T1
