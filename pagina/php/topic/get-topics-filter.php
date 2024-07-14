@@ -32,7 +32,7 @@ $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
 // Iniciar la consulta SQL
-$sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, T1.fecha, T6.carrera, T7.anio, T5.materia, T8.comision, T9.turno, T3.apellido, T3.nombre  
+$sql = "SELECT T1.id_libro_tema, T1.tema, T1.descripcion, DATE_FORMAT(T1.fecha, '%d-%m-%Y') AS fecha, T6.carrera, T7.anio, T5.materia, T8.comision, T9.turno, T3.apellido, T3.nombre  
         FROM libro_temas AS T1
         INNER JOIN cursos AS T2 ON T2.id_curso = T1.id_curso
         INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
