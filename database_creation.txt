@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2024 a las 23:59:37
+-- Tiempo de generación: 14-07-2024 a las 19:29:01
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -46,7 +46,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `activate_user` (IN `p_id_usuario` I
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` INT)   BEGIN
-	SELECT T2.id_carrera, T3.carrera, T2.id_anio, T4.anio, T2.id_materia, T5.materia, T1.id_comision, T6.comision, T1.id_turno, T7.turno
+	SELECT
+    T2.id_carrera, 
+    T3.carrera, 
+    T2.id_anio, 
+    T4.anio, 
+    T2.id_materia,
+    T5.materia,
+    T1.id_comision,
+    T6.comision, 
+    T1.id_turno,
+    T7.turno,
+    T1.c_anio,
+    T8.semestre
 	FROM cursos AS T1
 	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
 	INNER JOIN carreras AS T3 ON T3.id_carrera = T2.id_carrera
@@ -54,6 +66,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` IN
 	INNER JOIN materias AS T5 ON T5.id_materia = T2.id_materia
 	INNER JOIN comisiones AS T6 ON T6.id_comision = T1.id_comision
 	INNER JOIN turnos AS T7 ON T7.id_turno = T1.id_turno
+    INNER JOIN semestres as T8 ON T8.id_semestre = T2.id_semestre
     WHERE T1.id_curso = p_id_curso
 	ORDER BY T2.id_carrera;
 END$$
@@ -127,6 +140,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tem
         T9.materia,
         T4.turno,
         T5.comision,
+        T20.c_anio,
+        T8.semestre,
         T10.usuario,
         T3.apellido,
         T3.nombre,
@@ -177,7 +192,8 @@ SELECT
         T5.comision,
         T1.id_turno,
         T4.turno,
-        T8.semestre
+        T8.semestre,
+        T1.c_anio
     FROM cursos AS T1
     INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
     INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
@@ -267,6 +283,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT
         id_turno = p_id_turno,
         c_anio = p_anio
     WHERE id_curso = p_id_curso;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_topic` (IN `p_libro_tema` INT, IN `p_fecha` DATE, IN `p_tema` VARCHAR(255), IN `p_descripcion` VARCHAR(255))   BEGIN
+	DECLARE v_fecha_modify DATETIME;
+    
+    SET v_fecha_modify = NOW();
+    
+    UPDATE libro_temas
+    SET tema = p_tema,
+        descripcion = p_descripcion,
+        fecha = p_fecha,
+        fecha_modif = v_fecha_modify
+    WHERE id_libro_tema = p_libro_tema;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
@@ -1001,13 +1030,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
