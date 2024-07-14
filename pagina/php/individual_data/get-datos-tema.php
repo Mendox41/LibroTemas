@@ -45,7 +45,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($carrera, $anio, $materia, $turno, $comision, $usuario, $apellido, $nombre, $fecha, $fecha_ingreso, $fecha_modif, $tema, $descripcion);
+$stmt->bind_result($carrera, $anio, $materia, $turno, $comision, $c_anio, $semestre, $usuario, $apellido, $nombre, $fecha, $fecha_ingreso, $fecha_modif, $tema, $descripcion);
 
 $curso = [];
 
@@ -56,6 +56,8 @@ while ($stmt->fetch()) {
     $datoCurso->materia = $materia;
     $datoCurso->turno = $turno;
     $datoCurso->comision = $comision;
+    $datoCurso->c_anio = $c_anio
+    $datoCurso->semestre = $semestre
     $datoCurso->usuario = $usuario;
     $datoCurso->nombre_apellido = $apellido . ", " . $nombre;
     $datoCurso->fecha = $fecha;
