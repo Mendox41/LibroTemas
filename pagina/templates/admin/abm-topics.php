@@ -23,7 +23,7 @@ include ('../../php/session/validate-admin.php');
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
     <!--  -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css"> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
 
    
@@ -405,7 +405,7 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-tema-id-libro-tema" type="text" class="form-control" disabled>
+                                <input id="ver-tema-id-libro-tema" type="text" class="form-control" disabled hidden>
 
                                 <div class="table-responsive">
 
