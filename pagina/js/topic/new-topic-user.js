@@ -13,22 +13,6 @@ $(document).ready(function () {
             $("#errorMessage").removeClass("oculto");
 
 
-            // $("#fecha-tema").classList.add("border", "border-danger");
-            // $("#fecha-tema").addClass("border");
-            // $("#fecha-tema").addClass("border-danger");
-
-
-            // $("#modal-title-respuesta").empty();
-            // $("#modal-title-respuesta").text("Todos los campos deben ser completados");
-            // $("#modal-title-respuesta").addClass("text-danger");
-
-            // $("#header").addClass("opacity-25");
-            // $("#main-container").addClass("opacity-25");
-            // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            // $("#body").addClass("fondo-desactivado");
-
-            // $("#modal-container-respuesta").addClass("d-block");
-
         } else if (!validacion_fecha(fecha_tema)) {
             $("#errorMessage").empty();
             $("#errorMessage").text('La fecha ingresada debe ser menor o igual que la fecha actual');
@@ -41,12 +25,7 @@ $(document).ready(function () {
             $("#errorMessage").removeClass("oculto");
 
         } else {
-            // si todos los campos estan completos entra aca
-            // $("#header").addClass("opacity-25");
-            // $("#main-container").addClass("opacity-25");
-            // $("#modal-container-ingreso-nuevo-tema").addClass("opacity-0");
-            // $("#body").addClass("fondo-desactivado");
-
+   
             $("#modal-form").removeClass("d-block");
             $("#modal-container-confirm-ingreso-tema").addClass("d-block");
 

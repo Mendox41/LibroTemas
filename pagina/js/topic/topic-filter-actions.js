@@ -112,9 +112,8 @@ $(document).ready(function () {
                                 // creo los botones y le doy como id al valor de id del topic. id o atributo?
 
                                 // btn ver topic
-
-
                                 var ver_topic = document.createElement("button");
+
                                 // ver_topic.textContent = 'VER';
                                 ver_topic.classList.add("btn", "btn-primary");
                                 ver_topic.id = 'ver_topic';
@@ -164,7 +163,7 @@ $(document).ready(function () {
                                     // vacio campo con datos anteriores
 
                                     $('#id-libro-tema-modal-modify').val("");
-                                    restablecer_valores_modal_modify_tema()
+                                    restablecer_valores_modal_modify_tema();
 
                                     fill_form_modify_topic(valor);
                                     $('#id-libro-tema-modal-modify').val(valor);
@@ -226,12 +225,6 @@ $(document).ready(function () {
 
                                 btn_delete_topic.appendChild(icono_eliminar);
 
-                                // <ion-icon name="trash"></ion-icon>
-
-
-
-
-
                                 td_tbody_tabla.appendChild(ver_topic);
                                 td_tbody_tabla.appendChild(btn_modif_topic);
                                 td_tbody_tabla.appendChild(btn_delete_topic);
@@ -276,7 +269,7 @@ $(document).ready(function () {
 
                     var table = $('#tabla-abm-topic').DataTable({
                         orderCellsTop: true,
-                        fixedHeader: true
+                        // fixedHeader: true
                     });
 
                 }

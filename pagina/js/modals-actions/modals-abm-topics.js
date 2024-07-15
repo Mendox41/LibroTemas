@@ -243,7 +243,7 @@ export function restablecer_valores_modal_modify_tema() {
 function disabled_input_modal_modify_topic() {
 
     $('#id-libro-tema-modal-modify').prop('disabled', true);
-    $('#id-libro-tema-modal-modify').prop('hidden', true);
+    // $('#id-libro-tema-modal-modify').prop('hidden', true);
 
     $('#tema-nombre-carrera-modal-modify').prop('disabled', true);
     $('#tema-anio-carrera-modal-modify').prop('disabled', true);

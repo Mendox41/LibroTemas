@@ -6,15 +6,15 @@ include(__DIR__ . "/../database/conection.php");
 // Incluir las funciones de error
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
-$nombre_carrera = isset($_POST["nombre-carrera"]) ? $_POST["nombre-carrera"] : '';
-$anio_carrera = isset($_POST["anio-carrera"]) ? $_POST["anio-carrera"] : '';
+$nombre_carrera = isset($_POST["nombre_carrera"]) ? $_POST["nombre_carrera"] : '';
+$anio_carrera = isset($_POST["anio_carrera"]) ? $_POST["anio_carrera"] : '';
 $semestre = isset($_POST["semestre"]) ? $_POST["semestre"] : '';
-$nombre_materia = isset($_POST["nombre-materia"]) ? $_POST["nombre-materia"] : '';
+$nombre_materia = isset($_POST["nombre_materia"]) ? $_POST["nombre_materia"] : '';
 $comision = isset($_POST["comision"]) ? $_POST["comision"] : '';
 $turno = isset($_POST["turno"]) ? $_POST["turno"] : '';
 $ciclo = isset($_POST["ciclo"]) ? $_POST["ciclo"] : '';
-$nombre_profesor = isset($_POST["nombre-profesor"]) ? $_POST["nombre-profesor"] : '';
-$apellido_profesor = isset($_POST["apellido-profesor"]) ? $_POST["apellido-profesor"] : '';
+$nombre_profesor = isset($_POST["nombre_profesor"]) ? $_POST["nombre_profesor"] : '';
+$apellido_profesor = isset($_POST["apellido_profesor"]) ? $_POST["apellido_profesor"] : '';
 $usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : '';
 $activo = isset($_POST["activo"]) ? $_POST["activo"] : '';
 
@@ -128,17 +128,22 @@ while ($stmt->fetch()) {
     $objCourse = new stdClass();
 
     $objCourse->id_curso = $id_curso;
+
     $objCourse->carrera = $carrera;
     $objCourse->anio = $anio;
-    $objCourse->semestre = $semestre;
     $objCourse->materia = $materia;
-    $objCourse->comision = $comision;
     $objCourse->turno = $turno;
+    $objCourse->comision = $comision;
+
     $objCourse->c_anio = $c_anio;
-    $objCourse->nombre = $nombre;
+    $objCourse->semestre = $semestre;
+
     $objCourse->apellido = $apellido;
-    $objCourse->usuario = $usuario;
+    
     $objCourse->isActive = $isActive;
+
+    $objCourse->id_curso_for_btns = $id_curso;
+
 
     $cont += 1;
 

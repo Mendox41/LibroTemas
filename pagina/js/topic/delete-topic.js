@@ -3,7 +3,7 @@ import { update_tabla_filtro_temas } from './topic-filter-actions.js';
 $(document).ready(function () {
 
 
-
+    // btn aceptar eliminacion de tema del modal eliminar tema
     $("#btn-aceptar-modal-confirm-delete-tema").click(function () {
         var id_libro_tema = $("#id-libro-tema-modal-confirm-delete").val();
         if (id_libro_tema == "") {
@@ -318,6 +318,29 @@ $(document).ready(function () {
 
 
             });
+        };
+
+
+
+
+    });
+
+    // btn eliminar del modal de ver tema
+    $("#btn-eliminar-modal-ver-tema").click(function () {
+        $('#id-libro-tema-modal-confirm-delete').val("");
+
+        var id_libro_tema = $("#ver-tema-id-libro-tema").val();
+        if (id_libro_tema == "") {
+            alert("No se ingreso ningun id_libro_tema");
+        } else {
+            $('#id-libro-tema-modal-confirm-delete').val(id_libro_tema);
+
+            // habilito modal de confirm eliminacion del tema
+            $("#modal-container-confirm-delete-tema").addClass("d-block");
+
+            // deshabilito modal de ver tema
+            $("#modal-form-ver-tema").removeClass("d-block");
+
         };
 
 

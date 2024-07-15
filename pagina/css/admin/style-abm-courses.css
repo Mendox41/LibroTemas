@@ -5,3 +5,113 @@ body {
 .navbar {
     background-color: #ffffff;
 }
+
+.main-container {
+    margin: 2% 1%;
+}
+
+.abm-cursos {
+    border-radius: 10px;
+    width: 100%;
+    padding: 1%;
+    font-size: 14px;
+}
+
+.div-botones {
+    margin: 1% 0%;
+}
+
+.fondo-desactivado {
+    background-color: #332c2c;
+
+}
+
+#errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
+.errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
+
+
+.modal-content {
+    background-color: rgb(209, 209, 209);
+
+}
+
+#contenido-modal-respuesta {
+    background-color: rgb(192, 192, 192);
+
+}
+
+
+/* columna de botones */
+td:nth-child(8) button {
+    margin: 0 0.5%;
+}
+
+
+/* tabla del modal de muestra de datos */
+
+
+.tabla-datos-usuario th:nth-child(1),
+.tabla-datos-usuario td:nth-child(1) {
+    width: 30%;
+    background-color: #bfc2c2;
+}
+
+.modal-footer-ver-usuario {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filtro {
+    border-radius: 10px;
+}
+
+.form-filtro {
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    padding: 2%;
+}
+
+#titulo-filtro {
+    margin-bottom: 2%;
+}
+
+
+.hidden-container {
+    display: none;
+}
+
+ion-icon {
+    font-size: 20px;
+}
+
+
+.modal-footer-ver-course {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns-modal-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.td-ver-course{
+    background-color: rgb(166, 188, 255);
+}

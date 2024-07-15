@@ -412,7 +412,7 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-tema-id-libro-tema" type="text" disabled hidden>
+                                <input id="ver-tema-id-libro-tema" type="text" class="form-control" disabled >
 
                                 <div class="table-responsive">
                                     
@@ -486,10 +486,10 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-footer btns-modal-space-between">
                                 <div id="btns-modificar" class="">
-                                    <button type="submit" class="btn btn-warning" id="btn-modif-datos">Modificar
+                                    <button type="submit" class="btn btn-warning" id="btn-modif-modal-ver-tema">Modificar
                                         Datos</button>
                                     <button type="submit" class="btn btn-danger"
-                                        id="btn-eliminar-tema">Eliminar</button>
+                                        id="btn-eliminar-modal-ver-tema">Eliminar</button>
 
                                 </div>
                                 <div id="otros-btns">
@@ -548,8 +548,6 @@ include ('../../php/session/validate-admin.php');
                                         <label for="tema-comision-modal-modify" class="form-label">Comision</label>
                                         <input type="text" id="tema-comision-modal-modify" class="form-control">
                                     </div>
-
-
                                     <div class="col-sm-12">
                                         <label for="fecha-tema-modal-modify" class="form-label">Fecha</label>
                                         <input type="date" class="form-control" id="fecha-tema-modal-modify">

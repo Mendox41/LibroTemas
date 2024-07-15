@@ -121,7 +121,7 @@ ion-icon {
     background-color: rgb(166, 188, 255);
 }
 
-
+/* 
 @media (max-width: 1350px) {
 
     .tabla-abm-usuarios th:nth-child(5),
@@ -188,10 +188,6 @@ ion-icon {
         justify-content: center;
     }
 
-    /* .btns-modificar button{
-        margin: 5%;
-        padding: 1%;
-    } */
 
 
-}
+} */

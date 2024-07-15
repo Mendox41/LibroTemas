@@ -1,4 +1,8 @@
 import { update_tabla_filtro_temas } from './topic-filter-actions.js';
+import { fill_form_modify_topic } from './get-topic.js';
+import { restablecer_valores_modal_modify_tema } from '../modals-actions/modals-abm-topics.js';
+
+
 
 $(document).ready(function () {
 
@@ -22,7 +26,6 @@ $(document).ready(function () {
             $("#fecha-tema").addClass("text-danger-emphasis");
             $("#fecha-tema").addClass("border-danger");
 
-
             $("#errorMessage-modal-modify-tema").removeClass("invisible");
 
         } else {
@@ -35,7 +38,6 @@ $(document).ready(function () {
 
     });
 
-    // pendiente de terminar
     $("#btn-aceptar-modal-confirm-modify-tema").click(function () {
         var id_libro_tema = $("#id-libro-tema-modal-modify").val();
         var titulo_tema = $("#titulo-tema-modal-modify").val();
@@ -46,7 +48,7 @@ $(document).ready(function () {
         if (fecha_tema == 0 || titulo_tema == "" || descripcion_tema == "") {
             alert("Todos los campos deben ser completados");
 
-        } 
+        }
         else {
 
             // ajax que realiza el envio de datos al servidor
@@ -64,7 +66,7 @@ $(document).ready(function () {
                     // alert(respuesta);
                     var data = JSON.parse(respuesta);
 
-                    
+
                     // oculto el modal del formy del de confirmar ingreso de un nuevo tema
                     $("#modal-container-confirm-modify-tema").removeClass("d-block");
 
@@ -81,11 +83,11 @@ $(document).ready(function () {
                         $("#modal-title-respuesta").addClass("text-danger");
 
                     }
-                    
+
                     // hago visible el modal de respuesta
                     $("#modal-container-respuesta").addClass("d-block");
 
-                    
+
 
                 }, error: function (error) {
                     console.log(error);
@@ -99,6 +101,37 @@ $(document).ready(function () {
 
 
     });
+
+    // btn modificar datos del modal de ver tema
+    $("#btn-modif-modal-ver-tema").click(function () {
+        $('#id-libro-tema-modal-modify').val("");
+
+        restablecer_valores_modal_modify_tema();
+
+
+        var id_libro_tema = $("#ver-tema-id-libro-tema").val();
+
+        if (id_libro_tema == "") {
+            alert("No se ingreso ningun id_libro_tema");
+        } else {
+            $('#id-libro-tema-modal-modify').val(id_libro_tema);
+
+            fill_form_modify_topic(id_libro_tema);
+
+            // habilito modal de modificacion de datos del tema
+            $("#modal-form-modify-tema").addClass("d-block");
+
+
+            // deshabilito modal de ver tema
+            $("#modal-form-ver-tema").removeClass("d-block");
+
+        };
+
+
+
+
+    });
+
 
 
 

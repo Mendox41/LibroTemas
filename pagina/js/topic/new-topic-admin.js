@@ -56,8 +56,7 @@ $(document).ready(function () {
             $("#nuevo-tema-fecha").addClass("text-danger-emphasis");
             $("#nuevo-tema-fecha").addClass("border-danger");
 
-
-            $("#errorMessage").removeClass("oculto");
+            $("#errorMessage").removeClass("invisible");
 
         } else {
             // si todos los campos estan completos entra aca
