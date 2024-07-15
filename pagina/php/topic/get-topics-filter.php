@@ -116,9 +116,6 @@ elseif (!empty($fecha_hasta)) {
     $parameters[] = $fecha_hasta;
     $types .= "s";
 }
-else {
-    $sql .= " AND T1.fecha BETWEEN CONCAT(YEAR(CURDATE()),'-01-01') AND CURDATE()";
-}
 if (!empty($titulo_tema)) {
     $sql .= " AND T1.tema LIKE ?";
     $parameters[] = "%" . $titulo_tema . "%";
