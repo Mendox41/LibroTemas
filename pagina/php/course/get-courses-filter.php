@@ -91,9 +91,9 @@ if (!empty($usuario)) {
     $parameters[] = "%".$usuario."%";
     $types .= "s";
 }
-if (!empty($activo)) {
-    $sql .= " AND T1.isActive LIKE ?";
-    $parameters[] = "%".$activo."%";
+if ($activo !== '') {
+    $sql .= " AND T1.isActive = ?";
+    $parameters[] = (int)$activo;
     $types .= "i";
 }
 
