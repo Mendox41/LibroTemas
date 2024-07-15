@@ -19,7 +19,7 @@ $(document).ready(function () {
     //  Funcionalidad al boton del filtro inicial para buscar los cursos y crear tabla dinamicamente
     $("#btn-buscar-curso").click(function () {
         
-        console.log(estado);
+        // console.log(estado);
 
         // Escuchar clic en el botón de búsqueda de cursos
         $.ajax({
@@ -66,7 +66,7 @@ $(document).ready(function () {
 
 
                 } else {
-                    $('#btn-filtro-curos').prop('disabled', false);
+                    $('#btn-filtro-curso').prop('disabled', false);
                     $('#form-filtro-curso').hide();
 
                     // vacio el contenedor del abm

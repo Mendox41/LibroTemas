@@ -15,6 +15,16 @@ body {
     width: 100%;
     padding: 1%;
     font-size: 14px;
+    
+}
+
+.tabla-abm-topic{
+    border: rgb(128, 128, 128) solid 0.1px;
+    border-radius: 0 0 10px 10px;
+}
+
+.th-tabla{
+    text-align: center;
 }
 
 .div-botones {
