@@ -151,7 +151,7 @@ while ($stmt->fetch()) {
 }
 
 if (empty($course)) {
-    error_stmt($result, "No topics found", $stmt, $conn);
+    error_stmt($result, "No se encontraron cursos", $stmt, $conn);
 } else {
     $result->respuesta = $course;
     $result->cant_temas = $cont;
