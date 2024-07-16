@@ -56,6 +56,7 @@ $(document).ready(function () {
                     $('#btn-filtro-tema').prop('disabled', false);
                     $('#form-filtro-tema').hide();
 
+
                     // vacio el contenedor del abm
                     $('#contenedor-tabla-abm-topic').empty();
 
@@ -68,10 +69,13 @@ $(document).ready(function () {
                     // creo dinamicamente la tabla del ABM de topic
                     var tabla_abm = document.createElement('table');
                     tabla_abm.id = 'tabla-abm-topic';
-                    tabla_abm.classList.add('tabla-abm-topic', 'display');
+                    tabla_abm.classList.add('tabla-abm-topic', 'display', 'w-100');
 
                     // creo el thead de la tabla
                     var thead_tabla = document.createElement('thead');
+                    thead_tabla.classList.add('thead-tabla');
+
+
                     // creo elemento tr para agregar los th con valores de los titulos de las columnas
                     var tr_thead_tabla = document.createElement('tr');
 
@@ -82,6 +86,8 @@ $(document).ready(function () {
                     titulos_columnas_abm_topic.forEach(function (titulo) {
                         var th_tabla = document.createElement('th');
                         th_tabla.textContent = titulo;
+                        th_tabla.classList.add('th-tabla');
+
 
                         // agrego como clase la posicion del titulo dentro del array para colocar clases distintas
                         var num_columna = 'columna-' + titulos_columnas_abm_topic.indexOf(titulo);
@@ -269,7 +275,62 @@ $(document).ready(function () {
 
                     var table = $('#tabla-abm-topic').DataTable({
                         orderCellsTop: true,
-                        // fixedHeader: true
+                        layout: {
+                            topStart: {
+                                buttons: [
+                                    {
+                                        extend: 'pageLength',
+                                        text: 'Filas Visibles'
+                                    },
+                                    {
+                                        extend: 'colvis',
+                                        postfixButtons: ['colvisRestore'],
+                                        text: 'Filtrar Columnas',
+                                        className: 'btn btn-primary'
+                                    },
+                                    {
+                                        extend: 'spacer',
+                                        style: 'bar',
+                                        text: 'Exportar a:'
+                                    },
+                                    {
+                                        extend: 'pdfHtml5',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-danger',
+                                        orientation: 'landscape',
+                                        pageSize: 'LEGAL',
+                                        download: 'open'
+                                    },
+                                    {
+                                        extend: 'excel',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-success'
+                                    },
+                                    {
+                                        extend: 'print',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-info',
+                                        customize: function (win) {
+
+
+                                            $(win.document.body)
+                                                .find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                        }
+                                    }
+
+
+                                ]
+                            }
+                        },
+
                     });
 
                 }
@@ -561,7 +622,62 @@ $(document).ready(function () {
 
                     var table = $('#tabla-abm-topic').DataTable({
                         orderCellsTop: true,
-                        fixedHeader: true
+                        layout: {
+                            topStart: {
+                                buttons: [
+                                    {
+                                        extend: 'pageLength',
+                                        text: 'Filas Visibles'
+                                    },
+                                    {
+                                        extend: 'colvis',
+                                        postfixButtons: ['colvisRestore'],
+                                        text: 'Filtrar Columnas',
+                                        className: 'btn btn-primary'
+                                    },
+                                    {
+                                        extend: 'spacer',
+                                        style: 'bar',
+                                        text: 'Exportar a:'
+                                    },
+                                    {
+                                        extend: 'pdfHtml5',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-danger',
+                                        orientation: 'landscape',
+                                        pageSize: 'LEGAL',
+                                        download: 'open'
+                                    },
+                                    {
+                                        extend: 'excel',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-success'
+                                    },
+                                    {
+                                        extend: 'print',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        },
+                                        className: 'btn btn-info',
+                                        customize: function (win) {
+
+
+                                            $(win.document.body)
+                                                .find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                        }
+                                    }
+
+
+                                ]
+                            }
+                        },
+
                     });
 
                 }
@@ -637,7 +753,8 @@ export function update_tabla_filtro_temas() {
                 // creo dinamicamente la tabla del ABM de topic
                 var tabla_abm = document.createElement('table');
                 tabla_abm.id = 'tabla-abm-topic';
-                tabla_abm.classList.add('tabla-abm-topic', 'display');
+                tabla_abm.classList.add('tabla-abm-topic', 'display', 'w-100');
+
 
                 // creo el thead de la tabla
                 var thead_tabla = document.createElement('thead');
@@ -832,9 +949,63 @@ export function update_tabla_filtro_temas() {
 
                 var table = $('#tabla-abm-topic').DataTable({
                     orderCellsTop: true,
-                    fixedHeader: true
-                });
+                    layout: {
+                        topStart: {
+                            buttons: [
+                                {
+                                    extend: 'pageLength',
+                                    text: 'Filas Visibles'
+                                },
+                                {
+                                    extend: 'colvis',
+                                    postfixButtons: ['colvisRestore'],
+                                    text: 'Filtrar Columnas',
+                                    className: 'btn btn-primary'
+                                },
+                                {
+                                    extend: 'spacer',
+                                    style: 'bar',
+                                    text: 'Exportar a:'
+                                },
+                                {
+                                    extend: 'pdfHtml5',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    },
+                                    className: 'btn btn-danger',
+                                    orientation: 'landscape',
+                                    pageSize: 'LEGAL',
+                                    download: 'open'
+                                },
+                                {
+                                    extend: 'excel',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    },
+                                    className: 'btn btn-success'
+                                },
+                                {
+                                    extend: 'print',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    },
+                                    className: 'btn btn-info',
+                                    customize: function (win) {
 
+
+                                        $(win.document.body)
+                                            .find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                                }
+
+
+                            ]
+                        }
+                    },
+
+                });
             }
 
         },

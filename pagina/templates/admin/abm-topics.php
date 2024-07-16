@@ -21,9 +21,12 @@ include ('../../php/session/validate-admin.php');
 
     <!-- Data tables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
 
+    <!--  -->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
 
+   
 </head>
 
 <body id="body">
@@ -43,19 +46,7 @@ include ('../../php/session/validate-admin.php');
                     </button>
                 </div>
 
-                <div class="p-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            disabled>
-                            Exportar
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" id="btn-export-pdf">PDF</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-csv">CSV</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-txt">TXT</a></li>
-                        </ul>
-                    </div>
-                </div>
+                
 
                 <div class="p-2">
                     <button type="button" name="" id="btn-filtro-tema" class="btn btn-primary" disabled>
@@ -270,14 +261,16 @@ include ('../../php/session/validate-admin.php');
 
 
                                 <div class="modal-footer modal-footer-ver-tema">
-                                    
+
                                     <div id="btns-izq" class="">
-                                        <button class="btn btn-warning" id="btn-restablecer-datos-modal-filtro">Restablecer campos</button>
+                                        <button class="btn btn-warning"
+                                            id="btn-restablecer-datos-modal-filtro">Restablecer campos</button>
                                     </div>
                                     <div id="otros-der">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                        id="btn-cancel-modal-filtro-tema">Cancel</button>
-                                    <button class="btn btn-success" id="btn-modal-filtro-buscar-tema">Buscar</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            id="btn-cancel-modal-filtro-tema">Cancel</button>
+                                        <button class="btn btn-success"
+                                            id="btn-modal-filtro-buscar-tema">Buscar</button>
                                     </div>
 
                                 </div>
@@ -412,43 +405,51 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-tema-id-libro-tema" type="text" class="form-control" disabled >
+                                <input id="ver-tema-id-libro-tema" type="text" class="form-control" disabled hidden>
 
                                 <div class="table-responsive">
-                                    
+
                                     <table class="table table-hover table-bordered tabla-datos-tema">
-                                        
+
                                         <tbody>
                                             <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" >Carrera</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-carrera"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Carrera</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-carrera"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class="bg-secondary-subtle text-secondary-emphasis">Año Carrera</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-anio-carrera"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-anio-carrera"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class="bg-secondary-subtle text-secondary-emphasis">Materia</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-materia"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-materia"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class="bg-secondary-subtle text-secondary-emphasis">Turno</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-turno"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-turno"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class="bg-secondary-subtle text-secondary-emphasis">Comision</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-comision"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-comision"></td>
                                             </tr>
                                             <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Ciclo Lectivo</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-ciclo"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Ciclo Lectivo
+                                                </td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-ciclo"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class="bg-secondary-subtle text-secondary-emphasis">Semestre</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis" id="ver-tema-td-semestre"></td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-tema-td-semestre"></td>
                                             </tr>
                                             <tr class="">
-                                                <td >Usuario</td>
+                                                <td>Usuario</td>
                                                 <td id="ver-tema-td-usuario-profesor"></td>
                                             </tr>
                                             <tr class="">
@@ -469,12 +470,15 @@ include ('../../php/session/validate-admin.php');
                                                 <td id="ver-tema-td-fecha-modificacion"></td>
                                             </tr>
                                             <tr class="">
-                                                <td class=" bg-primary-subtle text-primary-emphasis" >Titulo del Tema</td>
-                                                <td class=" bg-primary-subtle text-primary-emphasis" id="ver-tema-td-titulo-tema"></td>
+                                                <td class=" bg-primary-subtle text-primary-emphasis">Titulo del Tema
+                                                </td>
+                                                <td class=" bg-primary-subtle text-primary-emphasis"
+                                                    id="ver-tema-td-titulo-tema"></td>
                                             </tr>
                                             <tr class="">
                                                 <td class=" bg-primary-subtle text-primary-emphasis">Descripcion</td>
-                                                <td class=" bg-primary-subtle text-primary-emphasis" id="ver-tema-td-descripcion-tema"></td>
+                                                <td class=" bg-primary-subtle text-primary-emphasis"
+                                                    id="ver-tema-td-descripcion-tema"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -486,7 +490,8 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-footer btns-modal-space-between">
                                 <div id="btns-modificar" class="">
-                                    <button type="submit" class="btn btn-warning" id="btn-modif-modal-ver-tema">Modificar
+                                    <button type="submit" class="btn btn-warning"
+                                        id="btn-modif-modal-ver-tema">Modificar
                                         Datos</button>
                                     <button type="submit" class="btn btn-danger"
                                         id="btn-eliminar-modal-ver-tema">Eliminar</button>
@@ -718,9 +723,30 @@ include ('../../php/session/validate-admin.php');
     <script type="module" src="../../js/topic/delete-topic.js"></script>
 
 
+    <!--  -->
 
-    <!-- <script src="../../js/structure/abm-topics-structure.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js" type="text/javascript"></script>
 
+    <!--     
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js" type="text/javascript"></script> -->
 
 
 </body>

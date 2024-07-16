@@ -12,6 +12,9 @@ body {
 
 .abm-usuarios {
     border-radius: 10px;
+    width: 100%;
+    padding: 1%;
+    font-size: 14px;
 }
 
 .div-botones {
@@ -23,157 +26,83 @@ body {
 
 }
 
+#errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
+.errorMessage {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 4px;
+    color: white;
+}
+
+
+
 
 .modal-content {
     background-color: rgb(209, 209, 209);
 
 }
 
-.checkbox-admin {
-    margin: 1%;
-    padding: 4% 1%;
+#contenido-modal-respuesta {
+    background-color: rgb(192, 192, 192);
+
 }
 
-
-/* columna de botones */
-td:nth-child(8) button {
-    margin: 0 0.5%;
-}
 
 
 /* tabla del modal de muestra de datos */
 
 
-.tabla-datos-usuario th:nth-child(1),
-.tabla-datos-usuario td:nth-child(1) {
-    width: 30%;
-    background-color: #bfc2c2;
-}
+
 
 .modal-footer-ver-usuario {
     display: flex;
     justify-content: space-between;
 }
 
-.filtro-usuarios {
-border-radius: 10px;
+.filtro {
+    border-radius: 10px;
 }
 
-.form-filtro-usuarios{
+.form-filtro {
     margin-top: 1%;
     margin-bottom: 1%;
 
     padding: 2%;
 }
 
-#titulo-filto-buscqueda-usuario{
+#titulo-filtro {
     margin-bottom: 2%;
 }
 
-/* .form-floating{
-    margin: 1% 0%;
-} */
 
-/* .col-sm-3, .col-sm{
-    padding: 1%;
-    border: 0.5px solid black;
-
- 
-} */
-
-/* .btn-group{
-    padding: 1% 5%;
-    width: 100%;
-} */
-
-/* 
-@media screen and (max-width: 550px) {
-
-    th:nth-child(4),
-    td:nth-child(4) {
-        display: none;
-    }
-
-   
-} */
-
-/* @media screen and (max-width: 600px) {
-
-    .col2{
-        display: none;
-    }
-}  */
-
-
-@media (max-width: 1350px) {
-
-    .tabla-abm-usuarios th:nth-child(5),
-    .tabla-abm-usuarios td:nth-child(5) {
-        display: none;
-    }
-
+.hidden-container {
+    display: none;
 }
 
-@media screen and (max-width: 1050px) {
-
-    .tabla-abm-usuarios th:nth-child(4),
-    .tabla-abm-usuarios td:nth-child(4) {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 900px) {
-
-    .tabla-abm-usuarios th:nth-child(1),
-    .tabla-abm-usuarios td:nth-child(1) {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 750px) {
-
-    .tabla-abm-usuarios th:nth-child(7),
-    .tabla-abm-usuarios td:nth-child(7) {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 610px) {
-
-    .tabla-abm-usuarios th:nth-child(6),
-    .tabla-abm-usuarios td:nth-child(6) {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 550px) {
-
-    .tabla-abm-usuarios th:nth-child(3),
-    .tabla-abm-usuarios td:nth-child(3) {
-        display: none;
-    }
-
-    .tabla-abm-usuarios td:nth-child(8) .btn-warning,
-    td:nth-child(8) .btn-danger,
-    td:nth-child(8) .btn-success {
-        display: none;
-
-    }
-
-
+ion-icon {
+    font-size: 20px;
 }
 
 
-@media screen and (max-width: 450px) {
+.modal-footer-ver-course {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .modal-footer {
-      
-        justify-content: center;
-    }
-    /* .btns-modificar button{
-        margin: 5%;
-        padding: 1%;
-    } */
+.btns-modal-space-between {
+    display: flex;
+    justify-content: space-between;
+}
 
-
+.td-ver-course{
+    background-color: rgb(166, 188, 255);
 }
