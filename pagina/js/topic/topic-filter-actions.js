@@ -80,7 +80,7 @@ $(document).ready(function () {
                     var tr_thead_tabla = document.createElement('tr');
 
 
-                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Docente', '-'];
+                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Descripción', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
 
                     // recorro el array creado anteriormente de los titulos 
                     titulos_columnas_abm_topic.forEach(function (titulo) {
@@ -330,6 +330,12 @@ $(document).ready(function () {
                                 ]
                             }
                         },
+                        columnDefs: [
+                            {
+                                targets: 2,
+                                visible: false
+                            }
+                        ]
 
                     });
 
@@ -422,7 +428,7 @@ $(document).ready(function () {
                     var tr_thead_tabla = document.createElement('tr');
 
 
-                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Docente', '-'];
+                    var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Descripción', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
 
                     // recorro el array creado anteriormente de los titulos 
                     titulos_columnas_abm_topic.forEach(function (titulo) {
@@ -677,6 +683,12 @@ $(document).ready(function () {
                                 ]
                             }
                         },
+                        columnDefs: [
+                            {
+                                targets: 2,
+                                visible: false
+                            }
+                        ]
 
                     });
 
@@ -762,7 +774,7 @@ export function update_tabla_filtro_temas() {
                 var tr_thead_tabla = document.createElement('tr');
 
 
-                var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
+                var titulos_columnas_abm_topic = ['ID', 'Titulo', 'Descripción', 'Fecha', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Apellido', '-'];
 
                 // recorro el array creado anteriormente de los titulos 
                 titulos_columnas_abm_topic.forEach(function (titulo) {
@@ -1004,6 +1016,12 @@ export function update_tabla_filtro_temas() {
                             ]
                         }
                     },
+                    columnDefs: [
+                        {
+                            targets: 2,
+                            visible: false
+                        }
+                    ]
 
                 });
             }

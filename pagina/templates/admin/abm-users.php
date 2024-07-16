@@ -21,7 +21,6 @@ include ('../../php/session/validate-admin.php');
 
     <!-- Data tables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
 
 
 </head>
@@ -42,21 +41,6 @@ include ('../../php/session/validate-admin.php');
                         Nuevo Usuario
                     </button>
                 </div>
-
-                <!-- <div class="p-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            disabled>
-                            Exportar
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" id="btn-export-pdf">PDF</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-csv">CSV</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-txt">TXT</a></li>
-                        </ul>
-                    </div>
-                </div> -->
-
                 <div class="p-2">
                     <button type="button" name="" id="btn-filtro-usuario" class="btn btn-primary" disabled>
                         Filtro
@@ -96,7 +80,7 @@ include ('../../php/session/validate-admin.php');
                     </div>
                     <div class="col-sm-6">
                         <label for="admin-filtro" class="form-label">Administrador</label>
-                        <select class="form-select" name="admin-filtro" id="select-estado-filtro">
+                        <select class="form-select" name="admin-filtro" id="admin-filtro">
                             <option value="">Seleccione Opcion</option>
                             <option value="1">Si</option>
                             <option value="0">No</option>
@@ -265,13 +249,15 @@ include ('../../php/session/validate-admin.php');
 
 
     <!-- js -->
-    <!-- <script type="module" src="../../js/modals-actions/modals-abm-users.js"></script>
-    <script type="module" src="../../js/user/user-filter-actions.js"></script>
+    <script type="module" src="../../js/modals-actions/modals-abm-users.js"></script>
+    <script type="module" src="../../js/users/user-filter-actions.js"></script>
 
-    <script type="module" src="../../js/user/new-user.js"></script>
-    <script type="module" src="../../js/user/modify-user.js"></script>
+    <script type="module" src="../../js/users/new-user.js"></script>
 
-    <script type="module" src="../../js/user/delete-user.js"></script> -->
+
+    <script type="module" src="../../js/users/modify-user.js"></script>
+
+    <script type="module" src="../../js/users/delete-user.js"></script>
 
 
 
