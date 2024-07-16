@@ -8,8 +8,8 @@ include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
 $usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : '';
 $legajo = isset($_POST["legajo"]) ? $_POST["legajo"] : '';
-$nombre_profesor = isset($_POST["nombre-profesor"]) ? $_POST["nombre-profesor"] : '';
-$apellido_profesor = isset($_POST["apellido-profesor"]) ? $_POST["apellido-profesor"] : '';
+$nombre_profesor = isset($_POST["nombre_profesor"]) ? $_POST["nombre_profesor"] : '';
+$apellido_profesor = isset($_POST["apellido_profesor"]) ? $_POST["apellido_profesor"] : '';
 $activo = isset($_POST["activo"]) ? $_POST["activo"] : '';
 $admin = isset($_POST["admin"]) ? $_POST["admin"] : '';
 
@@ -89,14 +89,15 @@ $cont = 0;
 while ($stmt->fetch()) {
     $objCourse = new stdClass();
 
-    $objCourse->id_profesor = $id_profesor;
     $objCourse->id_usuario = $id_usuario;
     $objCourse->usuario = $usuario;
     $objCourse->legajo = $legajo;
-    $objCourse->nombre = $nombre;
-    $objCourse->apellido = $apellido;
+    $objCourse->nombre_apellido = $nombre . ', ' . $apellido;
     $objCourse->isActive = $isActive;
     $objCourse->IsAdmin = $IsAdmin;
+
+    $objCourse->id_profesor_for_btns = $id_profesor;
+
 
     $cont += 1;
 

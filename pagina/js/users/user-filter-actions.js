@@ -1,59 +1,61 @@
-// import { fill_table_ver_datos_course, fill_form_modify_course } from './get-course.js';
-import { deshabilitar_contenedores } from '../modals-actions/modals-abm-courses.js';
-//  restablecer_valores_modal_ver_curso 
+// import { fill_table_ver_datos_user, fill_form_modify_user } from './get-user.js';
+import { deshabilitar_contenedores } from '../modals-actions/modals-abm-users.js';
+//  restablecer_valores_modal_ver_usuario 
 
 $(document).ready(function () {
 
-    
-    var estado = $('#select-estado-filtro').val();
-    var estado = $('#select-estado-filtro').val();
 
-   
-    // evento cuando cambia lo seleccionado en el select de estado del filtro de un curso
-    $('#select-estado-filtro').change(function() {
+    var estado = $('#select-estado-filtro').val();
+    var admin = $('#admin-filtro').val();
+
+
+    // evento cuando cambia lo seleccionado en el select de estado del filtro de un usuario
+    $('#select-estado-filtro').change(function () {
         // Obtén el valor seleccionado
         estado = $(this).val();
-               
-        // Muestra el valor seleccionado en un elemento <p>
-        // console.log(estado);
-      });
 
-    //  Funcionalidad al boton del filtro inicial para buscar los cursos y crear tabla dinamicamente
-    $("#btn-buscar-curso").click(function () {
-        
-        // console.log(estado);
+    });
 
-        // Escuchar clic en el botón de búsqueda de cursos
+    // evento cuando cambia lo seleccionado en el select de administrador del filtro de un usuario
+    $('#admin-filtro').change(function () {
+        // Obtén el valor seleccionado
+        admin = $(this).val();
+
+    });
+
+
+    //  Funcionalidad al boton del filtro inicial para buscar los usuarios y crear tabla dinamicamente
+    $("#btn-buscar-usuario").click(function () {
+
+        // console.log(estado + " / " + admin);
+
+        // Escuchar clic en el botón de búsqueda de usuarios
         $.ajax({
-            url: '../../php/course/get-courses-filter.php',
+            url: '../../php/user/get-users-filter.php',
             type: 'POST',
             data: {
-                nombre_carrera: $("#nombre-carrera-filtro").val(),
-                anio_carrera: $("#anio-carrera-filtro").val(),
-                nombre_materia: $("#nombre-materia-filtro").val(),
-                comision: $("#comision-filtro").val(),
-                turno: $("#turno-filtro").val(),
 
                 usuario: $("#nombre-usuario-filtro").val(),
+                legajo: $("#legajo-filtro").val(),
                 nombre_profesor: $("#nombre-profesor-filtro").val(),
                 apellido_profesor: $("#apellido-profesor-filtro").val(),
 
-                
+                admin: admin,
                 activo: estado
 
             },
             success: function (respuesta) {
                 // alert(respuesta);
-                var data_filtro_cursos = JSON.parse(respuesta);
+                var data_filtro_usuarios = JSON.parse(respuesta);
 
-                if (!(data_filtro_cursos.success)) {
+                if (!(data_filtro_usuarios.success)) {
 
-                    // caso de no encontrar cursos con los datos ingresados en el filtro 
-                    // alert("Error: no se encontraron cursos");
+                    // caso de no encontrar usuarios con los datos ingresados en el filtro 
+                    // alert("Error: no se encontraron usuarios");
 
                     // agrego el mensaje de respuesta del servidor
                     $("#modal-title-respuesta").empty();
-                    $("#modal-title-respuesta").text(data_filtro_cursos.message);
+                    $("#modal-title-respuesta").text(data_filtro_usuarios.message);
                     $("#modal-title-respuesta").addClass("text-danger");
 
                     // deshabilito contenedores de fondo
@@ -66,22 +68,22 @@ $(document).ready(function () {
 
 
                 } else {
-                    $('#btn-filtro-curso').prop('disabled', false);
-                    $('#form-filtro-curso').hide();
+                    $('#btn-filtro-usuario').prop('disabled', false);
+                    $('#form-filtro-usuario').hide();
 
                     // vacio el contenedor del abm
-                    $('#contenedor-tabla-abm-course').empty();
+                    $('#contenedor-tabla-abm-user').empty();
 
 
-                    $('#contenedor-tabla-abm-course').addClass('bg-white');
+                    $('#contenedor-tabla-abm-user').addClass('bg-white');
 
-                    // actualizo campos de inputs del filtro inicial al modal filtro cursos
-                    // update_inputs_modal_filtro_cursos(); // FALTA CREAR EL MODAL DE FILTRO DE CURSOS
+                    // actualizo campos de inputs del filtro inicial al modal filtro usuarios
+                    // update_inputs_modal_filtro_usuarios(); // FALTA CREAR EL MODAL DE FILTRO DE CURSOS
 
-                    // creo dinamicamente la tabla del ABM de course
+                    // creo dinamicamente la tabla del ABM de user
                     var tabla_abm = document.createElement('table');
-                    tabla_abm.id = 'tabla-abm-course';
-                    tabla_abm.classList.add('tabla-abm-course', 'display');
+                    tabla_abm.id = 'tabla-abm-user';
+                    tabla_abm.classList.add('tabla-abm-user', 'display');
 
                     // creo el thead de la tabla
                     var thead_tabla = document.createElement('thead');
@@ -89,15 +91,15 @@ $(document).ready(function () {
                     var tr_thead_tabla = document.createElement('tr');
 
 
-                    var titulos_columnas_abm_course = ['ID', 'Carrera', 'Año Carrera', 'Materia', 'Turno', 'Comision', 'Ciclo', 'Semestre', 'Docente', 'Estado', '-'];
+                    var titulos_columnas_abm_user = ['ID', 'Usuario', 'Legajo', 'Docente', 'Estado', 'Administrador', '-'];
 
                     // recorro el array creado anteriormente de los titulos 
-                    titulos_columnas_abm_course.forEach(function (titulo) {
+                    titulos_columnas_abm_user.forEach(function (titulo) {
                         var th_tabla = document.createElement('th');
                         th_tabla.textContent = titulo;
 
                         // agrego como clase la posicion del titulo dentro del array para colocar clases distintas
-                        var num_columna = 'columna-' + titulos_columnas_abm_course.indexOf(titulo);
+                        var num_columna = 'columna-' + titulos_columnas_abm_user.indexOf(titulo);
 
                         th_tabla.classList.add(num_columna);
 
@@ -108,39 +110,39 @@ $(document).ready(function () {
 
                     // creo el tbody de la tabla
                     var tbody_tabla = document.createElement('tbody');
-                    tbody_tabla.id = 'tabla-abm-course-tbody';
+                    tbody_tabla.id = 'tabla-abm-user-tbody';
 
 
                     // recorro los valores obtenidos de la respuesta ajax
-                    data_filtro_cursos.respuesta.forEach(function (course) {
-                        // alert(course);
+                    data_filtro_usuarios.respuesta.forEach(function (user) {
+                        // alert(user);
                         var tr_tbody_tabla = document.createElement('tr');
 
-                        Object.entries(course).forEach(function ([dato_course, valor]) {
+                        Object.entries(user).forEach(function ([dato_user, valor]) {
 
-                            if (dato_course == 'id_curso_for_btns') {
+                            if (dato_user == 'id_profesor_for_btns') {
                                 var td_tbody_tabla = document.createElement('td');
                                 td_tbody_tabla.classList.add('d-flex', 'justify-content-center');
 
-                                // creo los botones y le doy como id al valor de id del course. id o atributo?
+                                // creo los botones y le doy como id al valor de id del user. id o atributo?
 
-                                // btn ver course
-                                var ver_course = document.createElement("button");
+                                // btn ver user
+                                var ver_user = document.createElement("button");
 
-                                // ver_course.textContent = 'VER';
-                                ver_course.classList.add("btn", "btn-primary");
-                                ver_course.id = 'ver_course';
-                                ver_course.setAttribute("id_course", valor);
-                                ver_course.setAttribute('type', "button");
+                                // ver_user.textContent = 'VER';
+                                ver_user.classList.add("btn", "btn-primary");
+                                ver_user.id = 'ver_user';
+                                ver_user.setAttribute("id_user", valor);
+                                ver_user.setAttribute('type', "button");
 
-                                ver_course.onclick = function () {
-                                    // fn carga de datos de course en tabla del modal
+                                ver_user.onclick = function () {
+                                    // fn carga de datos de user en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_tema(); // Crear funcion con datos modificados a cursos
+                                    // restablecer_valores_modal_ver_tema(); // Crear funcion con datos modificados a usuarios
                                     $('#ver-tema-id-libro-tema').val("");
 
-                                    fill_table_ver_datos_course(valor);
+                                    fill_table_ver_datos_user(valor);
                                     $('#ver-tema-id-libro-tema').val(valor);
 
                                     // deshabilito contenedores de fondo
@@ -158,27 +160,27 @@ $(document).ready(function () {
                                 var icono_ver = document.createElement("ion-icon");
                                 icono_ver.setAttribute('name', "search");
 
-                                ver_course.appendChild(icono_ver);
+                                ver_user.appendChild(icono_ver);
 
 
-                                // BTN modificar course
+                                // BTN modificar user
 
-                                var btn_modif_course = document.createElement("button");
-                                // btn_modif_course.textContent = 'Modificar';
-                                btn_modif_course.classList.add("btn", "btn-warning");
-                                btn_modif_course.id = 'btn_modif_course';
-                                btn_modif_course.setAttribute("id_course", valor);
-                                btn_modif_course.setAttribute('type', "button");
+                                var btn_modif_user = document.createElement("button");
+                                // btn_modif_user.textContent = 'Modificar';
+                                btn_modif_user.classList.add("btn", "btn-warning");
+                                btn_modif_user.id = 'btn_modif_user';
+                                btn_modif_user.setAttribute("id_user", valor);
+                                btn_modif_user.setAttribute('type', "button");
 
-                                btn_modif_course.onclick = function () {
-                                    // fn modificar course
+                                btn_modif_user.onclick = function () {
+                                    // fn modificar user
                                     // alert(valor);
                                     // vacio campo con datos anteriores
 
                                     $('#id-libro-tema-modal-modify').val("");
                                     restablecer_valores_modal_modify_tema();
 
-                                    fill_form_modify_course(valor);
+                                    fill_form_modify_user(valor);
                                     $('#id-libro-tema-modal-modify').val(valor);
 
                                     // deshabilito contenedores de fondo
@@ -199,20 +201,20 @@ $(document).ready(function () {
                                 icono_modificar.setAttribute('name', "pencil");
 
 
-                                btn_modif_course.appendChild(icono_modificar);
+                                btn_modif_user.appendChild(icono_modificar);
 
 
-                                // Btn eliminar course
-                                var btn_delete_course = document.createElement("button");
-                                btn_delete_course.id = 'btn_delete_course';
-                                btn_delete_course.setAttribute("id_course", valor);
-                                btn_delete_course.setAttribute('type', "button");
+                                // Btn eliminar user
+                                var btn_delete_user = document.createElement("button");
+                                btn_delete_user.id = 'btn_delete_user';
+                                btn_delete_user.setAttribute("id_user", valor);
+                                btn_delete_user.setAttribute('type', "button");
 
 
-                                // btn_delete_course.textContent = 'Eliminar';
-                                btn_delete_course.classList.add("btn", "btn-danger");
-                                btn_delete_course.onclick = function () {
-                                    // fn delete course
+                                // btn_delete_user.textContent = 'Eliminar';
+                                btn_delete_user.classList.add("btn", "btn-danger");
+                                btn_delete_user.onclick = function () {
+                                    // fn delete user
                                     // alert(valor);
                                     // vacio campo con datos anteriores
                                     $('#id-libro-tema-modal-confirm-delete').val("");
@@ -236,38 +238,47 @@ $(document).ready(function () {
                                 var icono_eliminar = document.createElement("ion-icon");
                                 icono_eliminar.setAttribute('name', "trash");
 
-                                btn_delete_course.appendChild(icono_eliminar);
+                                btn_delete_user.appendChild(icono_eliminar);
 
 
-                                td_tbody_tabla.appendChild(ver_course);
-                                td_tbody_tabla.appendChild(btn_modif_course);
-                                td_tbody_tabla.appendChild(btn_delete_course);
+                                td_tbody_tabla.appendChild(ver_user);
+                                td_tbody_tabla.appendChild(btn_modif_user);
+                                td_tbody_tabla.appendChild(btn_delete_user);
 
                                 tr_tbody_tabla.appendChild(td_tbody_tabla);
 
 
 
-                            }else if (dato_course == 'isActive'){
+                            } else if (dato_user == 'isActive') {
 
-                                // creo los td con los valores de los datos de los course
+                                // creo los td con los valores de los datos de los user
                                 var td_tbody_tabla = document.createElement('td');
-                                if (valor == 1){
+                                if (valor == 1) {
                                     td_tbody_tabla.textContent = "Activo";
-                                }else{
+                                } else {
                                     td_tbody_tabla.textContent = "Desactivado";
                                 }
 
                                 tr_tbody_tabla.appendChild(td_tbody_tabla);
 
-                            }else {
-                                // creo los td con los valores de los datos de los course
+                            } else if (dato_user == 'IsAdmin') {
+                                var td_tbody_tabla = document.createElement('td');
+                                if (valor == 1) {
+                                    td_tbody_tabla.textContent = "Si";
+                                } else {
+                                    td_tbody_tabla.textContent = "No";
+                                }
+
+                                tr_tbody_tabla.appendChild(td_tbody_tabla);
+                            } else {
+                                // creo los td con los valores de los datos de los user
                                 var td_tbody_tabla = document.createElement('td');
                                 td_tbody_tabla.textContent = valor;
 
                                 tr_tbody_tabla.appendChild(td_tbody_tabla);
 
                             }
-                            // console.log(dato_course + ": " + valor);
+                            // console.log(dato_user + ": " + valor);
                         });
 
 
@@ -289,11 +300,11 @@ $(document).ready(function () {
 
 
                     // Inserto la tabla con elementos creados en el contenedor
-                    document.getElementById("contenedor-tabla-abm-course").appendChild(tabla_abm);
+                    document.getElementById("contenedor-tabla-abm-user").appendChild(tabla_abm);
 
                     // ----------------------------------------------------------------
 
-                    var table = $('#tabla-abm-course').DataTable({
+                    var table = $('#tabla-abm-user').DataTable({
                         orderCellsTop: true,
                         // fixedHeader: true
                     });

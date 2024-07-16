@@ -255,9 +255,9 @@ include ('../../php/session/validate-admin.php');
     <script type="module" src="../../js/users/new-user.js"></script>
 
 
-    <script type="module" src="../../js/users/modify-user.js"></script>
+    <!-- <script type="module" src="../../js/users/modify-user.js"></script> -->
 
-    <script type="module" src="../../js/users/delete-user.js"></script>
+    <!-- <script type="module" src="../../js/users/delete-user.js"></script> -->
 
 
 
