@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-07-2024 a las 00:54:19
+-- Tiempo de generación: 16-07-2024 a las 05:54:45
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -91,19 +91,61 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `deactivate_user` (IN `p_id_usuario`
     WHERE id_usuario = p_id_usuario;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_course` (IN `p_id_curso` INT)   BEGIN
-	DELETE FROM cursos 
-    WHERE id_curso = p_id_curso;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_course` (IN `p_id_curso` INT, OUT `curso_eliminado` BOOLEAN, OUT `mensaje` VARCHAR(255))   BEGIN
+    DECLARE curso_existe BOOLEAN;
+
+    -- Llamar al procedimiento de validación
+    CALL validate_curso_id(p_id_curso, curso_existe);
+
+    -- Si el curso existe, proceder a eliminarlo
+    IF curso_existe THEN
+        DELETE FROM cursos 
+        WHERE id_curso = p_id_curso;
+
+        SET curso_eliminado = TRUE;
+        SET mensaje = 'Curso eliminado exitosamente.';
+    ELSE
+        SET curso_eliminado = FALSE;
+        SET mensaje = 'El curso con el ID proporcionado no existe.';
+    END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_topic` (IN `p_id_libro_tema` INT)   BEGIN
-	DELETE FROM libro_temas 
-    WHERE id_libro_tema = p_id_libro_tema;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_topic` (IN `p_id_libro_tema` INT, OUT `libro_tema_eliminado` BOOLEAN, OUT `mensaje` VARCHAR(255))   BEGIN
+    DECLARE libro_tema_existe BOOLEAN;
+
+    -- Llamar al procedimiento de validación
+    CALL validate_libro_tema_id(p_id_libro_tema, libro_tema_existe);
+
+    -- Si el libro_tema existe, proceder a eliminarlo
+    IF libro_tema_existe THEN
+        DELETE FROM libro_temas 
+        WHERE id_libro_tema = p_id_libro_tema;
+
+        SET libro_tema_eliminado = TRUE;
+        SET mensaje = 'Tema de libro eliminado exitosamente.';
+    ELSE
+        SET libro_tema_eliminado = FALSE;
+        SET mensaje = 'El tema de libro con el ID proporcionado no existe.';
+    END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` INT)   BEGIN
-	DELETE FROM usuarios 
-    WHERE id_usuario = p_id_usuario;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` INT, OUT `usuario_eliminado` BOOLEAN, OUT `mensaje` VARCHAR(255))   BEGIN
+    DECLARE usuario_existe BOOLEAN;
+
+    -- Llamar al procedimiento de validación
+    CALL validate_usuario_id(p_id_usuario, usuario_existe);
+
+    -- Si el usuario existe, proceder a eliminarlo
+    IF usuario_existe THEN
+        DELETE FROM usuarios 
+        WHERE id_usuario = p_id_usuario;
+
+        SET usuario_eliminado = TRUE;
+        SET mensaje = 'Usuario eliminado exitosamente.';
+    ELSE
+        SET usuario_eliminado = FALSE;
+        SET mensaje = 'El usuario con el ID proporcionado no existe.';
+    END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_anio_carrera` (IN `id_carrera_selected` INT)   BEGIN
@@ -384,6 +426,60 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_curso` (IN `p_id_relacion`
     ELSE
         SET curso_existe = FALSE;
         SET id_curso_out = NULL;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_curso_id` (IN `p_id_curso` INT, OUT `curso_existe` BOOLEAN)   BEGIN
+    DECLARE v_id_curso INT;
+
+    -- Verificar si existe el curso
+    SELECT id_curso
+    INTO v_id_curso
+    FROM cursos 
+    WHERE id_curso = p_id_curso
+    LIMIT 1;
+
+    -- Si se encontró un curso, establecer la variable de salida en TRUE
+    IF v_id_curso IS NOT NULL THEN
+        SET curso_existe = TRUE;
+    ELSE
+        SET curso_existe = FALSE;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_libro_tema_id` (IN `p_id_libro_tema` INT, OUT `libro_tema_existe` BOOLEAN)   BEGIN
+    DECLARE v_id_libro_tema INT;
+
+    -- Verificar si existe el libro_tema
+    SELECT id_libro_tema
+    INTO v_id_libro_tema
+    FROM libro_temas 
+    WHERE id_libro_tema = p_id_libro_tema
+    LIMIT 1;
+
+    -- Si se encontró un libro_tema, establecer la variable de salida en TRUE
+    IF v_id_libro_tema IS NOT NULL THEN
+        SET libro_tema_existe = TRUE;
+    ELSE
+        SET libro_tema_existe = FALSE;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_usuario_id` (IN `p_id_usuario` INT, OUT `usuario_existe` BOOLEAN)   BEGIN
+    DECLARE v_id_usuario INT;
+
+    -- Verificar si existe el usuario
+    SELECT id_usuario
+    INTO v_id_usuario
+    FROM usuarios 
+    WHERE id_usuario = p_id_usuario
+    LIMIT 1;
+
+    -- Si se encontró un usuario, establecer la variable de salida en TRUE
+    IF v_id_usuario IS NOT NULL THEN
+        SET usuario_existe = TRUE;
+    ELSE
+        SET usuario_existe = FALSE;
     END IF;
 END$$
 
@@ -1030,19 +1126,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
