@@ -20,7 +20,7 @@ $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
 // Armo la consulta     
-$sql = "SELECT T1.id_profesor, T2.id_usuario, T2.usuario, T1.legajo, T1.nombre, T1.apellido, T2.isActive, T2.IsAdmin 
+$sql = "SELECT T1.id_profesor, T2.id_usuario, T2.usuario, T1.legajo, T1.nombre, T1.apellido, T2.isActive, T2.isAdmin 
         FROM profesores AS T1
         INNER JOIN usuarios AS T2 ON T2.id_usuario = T1.id_usuario
         WHERE 1=1";
@@ -48,14 +48,14 @@ if (!empty($apellido_profesor)) {
     $parameters[] = "%".$apellido_profesor."%";
     $types .= "s";
 }
-if (!empty($activo)) {
-    $sql .= " AND T2.isActive LIKE ?";
-    $parameters[] = "%".$activo."%";
+if ($activo !== '')  {
+    $sql .= " AND T2.isActive = ?";
+    $parameters[] = $activo;
     $types .= "i";
 }
-if (!empty($admin)) {
-    $sql .= " AND T2.isAdmin LIKE ?";
-    $parameters[] = "%".$admin."%";
+if ($admin !== '') {
+    $sql .= " AND T2.isAdmin = ?";
+    $parameters[] = $admin;
     $types .= "i";
 }
 
@@ -98,14 +98,13 @@ while ($stmt->fetch()) {
 
     $objCourse->id_profesor_for_btns = $id_profesor;
 
-
     $cont += 1;
 
     array_push($course, $objCourse);
 }
 
 if (empty($course)) {
-    error_stmt($result, "No topics found", $stmt, $conn);
+    error_stmt($result, "No se encontro ningun usuario con ese filtro", $stmt, $conn);
 } else {
     $result->respuesta = $course;
     $result->cant_temas = $cont;
