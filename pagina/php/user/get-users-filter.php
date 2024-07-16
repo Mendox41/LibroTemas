@@ -51,7 +51,7 @@ if (!empty($apellido_profesor)) {
 if (!empty($activo)) {
     $sql .= " AND T2.isActive LIKE ?";
     $parameters[] = "%".$activo."%";
-    $types .= "i    ";
+    $types .= "i";
 }
 if (!empty($admin)) {
     $sql .= " AND T2.isAdmin LIKE ?";
