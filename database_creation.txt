@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2024 a las 10:17:13
+-- Tiempo de generación: 17-07-2024 a las 23:52:28
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -181,6 +181,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_comisiones` (IN `id_relacion_se
     
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_comisiones_for_new_course` ()   BEGIN
+	SELECT DISTINCT T1.id_comision, T2.comision
+    FROM cursos AS T1
+    INNER JOIN comisiones AS T2 ON T2.id_comision = T1.id_comision;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_curso` (IN `id_relacion_selected` INT, IN `id_turno_selected` INT, IN `id_comision_selected` INT)   BEGIN
     SELECT id_curso
     FROM cursos
@@ -231,6 +237,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materias` (IN `id_carrera_selec
     
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materias_for_new_course` (IN `id_carrera_selected` INT, IN `id_anio_carrera_selected` INT)   BEGIN
+    SELECT R.id_materia, M.materia, M.descripcion
+    FROM relaciones AS R
+    INNER JOIN materias AS M ON M.id_materia = R.id_materia
+    WHERE R.id_carrera = id_carrera_selected
+            AND R.id_anio = id_anio_carrera_selected
+    ORDER BY M.materia;
+    
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materia_profesor_cursos` (IN `id_user` INT)   BEGIN
 
 DECLARE fecha_actual date;
@@ -264,6 +280,16 @@ SELECT
     ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_semestre` (IN `id_carrera_selected` INT, IN `id_anio_carrera_selected` INT, IN `id_materia_selected` INT)   BEGIN
+SELECT S.id_semestre, S.semestre
+    FROM semestres AS S
+    INNER JOIN relaciones AS R ON R.id_semestre = S.id_semestre
+    WHERE R.id_carrera = id_carrera_selected
+            AND R.id_anio = id_anio_carrera_selected
+            AND R.id_materia = id_materia_selected
+    ORDER BY S.semestre; 
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_turnos` (IN `id_relacion_selected` INT)   BEGIN
     SELECT DISTINCT C.id_turno, T.turno
     FROM cursos AS C
@@ -271,6 +297,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_turnos` (IN `id_relacion_select
     WHERE C.id_relacion = id_relacion_selected
     ORDER BY T.turno;
     
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_turnos_for_new_course` ()   BEGIN
+    SELECT DISTINCT C.id_turno, T.turno
+    FROM cursos AS C
+    INNER JOIN turnos AS T ON T.id_turno = C.id_turno;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_usuarios` ()   BEGIN
@@ -355,24 +387,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_topic` (IN `p_libro_tema` IN
     WHERE id_libro_tema = p_libro_tema;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
-    DECLARE p_anio INT;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_semestre` INT, IN `p_id_materia` INT, IN `p_ciclo` INT, IN `p_id_turno` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT)   BEGIN
     DECLARE p_active SMALLINT DEFAULT 1;
     DECLARE p_relacion INT;
-
-    -- Obtener el año actual
-    SET p_anio = YEAR(NOW());
 
     -- Obtener el id_relacion desde la tabla relaciones
     SELECT id_relacion INTO p_relacion
     FROM relaciones 
     WHERE id_carrera = p_id_carrera 
         AND id_anio = p_id_anio 
+        AND id_semestre = p_id_semestre
         AND id_materia = p_id_materia;
 
     -- Insertar los datos en la tabla cursos
     INSERT INTO cursos (id_relacion, id_comision, id_profesor, id_turno, isActive, c_anio)
-    VALUES (p_relacion, p_id_comision, p_id_profesor, p_id_turno, p_active, p_anio);
+    VALUES (p_relacion, p_id_comision, p_id_profesor, p_id_turno, p_active, p_ciclo);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `new_topic_admin` (IN `p_id_usuario` INT, IN `p_id_relacion` INT, IN `p_id_comision` INT, IN `p_id_turno` INT, IN `p_titulo` VARCHAR(150), IN `p_descripcion` VARCHAR(150), IN `p_fecha` DATE, OUT `p_result` VARCHAR(100))   BEGIN
