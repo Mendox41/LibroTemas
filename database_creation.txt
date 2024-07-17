@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-07-2024 a las 05:54:45
+-- Tiempo de generación: 17-07-2024 a las 10:17:13
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -43,6 +43,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `activate_user` (IN `p_id_usuario` I
     UPDATE usuarios
     SET isActive = p_isActive
     WHERE id_usuario = p_id_usuario;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_admin_user` (IN `p_usuario` VARCHAR(255), IN `p_id_usuario` INT)   BEGIN
+	INSERT INTO profesores (legajo, apellido, nombre, id_usuario, isActive)
+	VALUES (0, 'administrador', p_usuario, p_id_usuario, 1);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_curso_id` (IN `p_id_curso` INT)   BEGIN
@@ -131,6 +136,12 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` INT, OUT `usuario_eliminado` BOOLEAN, OUT `mensaje` VARCHAR(255))   BEGIN
     DECLARE usuario_existe BOOLEAN;
+    DECLARE v_id_profesor int;
+    
+    SELECT id_profesor INTO v_id_profesor
+    FROM profesores 
+    WHERE id_usuario = p_id_usuario
+    LIMIT 1;
 
     -- Llamar al procedimiento de validación
     CALL validate_usuario_id(p_id_usuario, usuario_existe);
@@ -139,6 +150,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminate_user` (IN `p_id_usuario` 
     IF usuario_existe THEN
         DELETE FROM usuarios 
         WHERE id_usuario = p_id_usuario;
+        
+        UPDATE profesores
+		SET id_usuario = ''
+        WHERE id_usuario = p_id_usuario AND id_profesor = v_id_profesor;
 
         SET usuario_eliminado = TRUE;
         SET mensaje = 'Usuario eliminado exitosamente.';
@@ -406,6 +421,65 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `new_topic_admin` (IN `p_id_usuario`
     END IF;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_user` (IN `p_usuario` VARCHAR(250), IN `p_pass` VARCHAR(250), IN `p_id_profesor` INT, IN `p_isAdmin` INT, OUT `usuario_creado` BOOLEAN, OUT `mensaje` VARCHAR(255))   BEGIN
+    DECLARE usuario_existe BOOLEAN;
+    DECLARE admin_existe BOOLEAN;
+    DECLARE usuario_existe2 BOOLEAN;
+    DECLARE id_user_nuevo INT;
+    DECLARE id_admin_nuevo INT;
+
+    -- Validar si el usuario ya existe
+    CALL validate_usuario_nombre(p_usuario, usuario_existe);
+
+    IF usuario_existe THEN
+        SET usuario_creado = FALSE;
+        SET mensaje = 'El usuario ya existe.';
+    ELSE
+        IF p_isAdmin = 1 THEN
+			CALL validate_user_admin(p_usuario, admin_existe);
+            
+            IF admin_existe THEN
+				SET usuario_creado = FALSE;
+				SET mensaje = 'Ese nombre de usuario ya existe.';
+			ELSE
+				-- Insertar usuario como administrador
+				INSERT INTO usuarios (usuario, pass, isActive, isAdmin) 
+				VALUES (p_usuario, p_pass, 1, 1);
+				-- Insertar profesor como administrador
+                
+                SET id_admin_nuevo = LAST_INSERT_ID();
+				
+                CALL create_admin_user(p_usuario, id_admin_nuevo);
+
+				SET usuario_creado = TRUE;
+				SET mensaje = 'Usuario administrador creado exitosamente.';
+			END IF;
+        ELSE
+            CALL validate_profesor_id_user(p_id_profesor, usuario_existe2);
+
+            IF usuario_existe2 THEN
+                SET usuario_creado = FALSE;
+                SET mensaje = 'El profesor ya tiene un usuario asociado.';
+            ELSE
+                -- Insertar usuario normal
+                INSERT INTO usuarios (usuario, pass, isActive, isAdmin) 
+                VALUES (p_usuario, p_pass, 1, 0);
+
+                -- Obtener el id del usuario recién insertado
+                SET id_user_nuevo = LAST_INSERT_ID();
+
+                -- Actualizar el profesor con el id del nuevo usuario
+                UPDATE profesores 
+                SET id_usuario = id_user_nuevo 
+                WHERE id_profesor = p_id_profesor;
+
+                SET usuario_creado = TRUE;
+                SET mensaje = 'Usuario creado exitosamente.';
+            END IF;
+        END IF;
+    END IF;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_curso` (IN `p_id_relacion` INT, IN `p_id_comision` INT, IN `p_id_turno` INT, IN `p_id_profesor_admin` INT, OUT `curso_existe` BOOLEAN, OUT `id_curso_out` INT)   BEGIN
     DECLARE v_id_curso INT;
 
@@ -465,6 +539,42 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_libro_tema_id` (IN `p_id_l
     END IF;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_profesor_id_user` (IN `p_id_profesor` INT, OUT `usuario_existe` BOOLEAN)   BEGIN
+    DECLARE v_id_usuario int DEFAULT NULL;
+
+    -- Verificar si existe el usuario
+    SELECT id_usuario
+    INTO v_id_usuario
+    FROM profesores 
+    WHERE id_profesor = p_id_profesor
+    LIMIT 1;
+
+    -- Si se encontró un usuario, establecer la variable de salida en TRUE
+    IF v_id_usuario IS NOT NULL THEN
+        SET usuario_existe = TRUE;
+    ELSE
+        SET usuario_existe = FALSE;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_user_admin` (IN `p_usuario` VARCHAR(255), OUT `usuario_existe` BOOLEAN)   BEGIN
+    DECLARE v_usuario VARCHAR(255) DEFAULT NULL;
+
+    -- Verificar si existe el usuario
+    SELECT usuario
+    INTO v_usuario
+    FROM usuarios
+    WHERE usuario = p_usuario
+    LIMIT 1;
+
+    -- Si se encontró un usuario, establecer la variable de salida en TRUE
+    IF v_usuario IS NOT NULL THEN
+        SET usuario_existe = TRUE;
+    ELSE
+        SET usuario_existe = FALSE;
+    END IF;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_usuario_id` (IN `p_id_usuario` INT, OUT `usuario_existe` BOOLEAN)   BEGIN
     DECLARE v_id_usuario INT;
 
@@ -477,6 +587,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_usuario_id` (IN `p_id_usua
 
     -- Si se encontró un usuario, establecer la variable de salida en TRUE
     IF v_id_usuario IS NOT NULL THEN
+        SET usuario_existe = TRUE;
+    ELSE
+        SET usuario_existe = FALSE;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validate_usuario_nombre` (IN `p_usuario` VARCHAR(255), OUT `usuario_existe` BOOLEAN)   BEGIN
+    DECLARE v_usuario VARCHAR(255) DEFAULT NULL;
+
+    -- Verificar si existe el usuario
+    SELECT usuario
+    INTO v_usuario
+    FROM usuarios 
+    WHERE usuario = p_usuario
+    LIMIT 1;
+
+    -- Si se encontró un usuario, establecer la variable de salida en TRUE
+    IF v_usuario IS NOT NULL THEN
         SET usuario_existe = TRUE;
     ELSE
         SET usuario_existe = FALSE;
@@ -633,7 +761,8 @@ INSERT INTO `libro_temas` (`id_libro_tema`, `id_curso`, `tema`, `descripcion`, `
 (2, 14, 'Python', 'hoy di python basico', '2024-05-02', 18, 37, '2024-06-06 16:42:00', NULL),
 (3, 20, 'Java', 'En esta clase di java', '2024-05-02', 26, 20, '2024-06-06 16:42:00', NULL),
 (4, 20, 'PHP', 'En esta clase di php', '2024-05-06', 26, 20, '2024-06-06 16:42:00', NULL),
-(5, 20, 'C', 'En esta clase di c', '2024-06-06', 26, 20, '2024-06-06 16:42:00', NULL);
+(5, 20, 'C', 'En esta clase di c', '2024-06-06', 26, 20, '2024-06-06 16:42:00', NULL),
+(38, 18, 'Linux', 'En esta clase di redireccionamiento de carpetas y sus comandos', '2024-07-17', 1, 68, '2024-07-17 03:14:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -798,43 +927,43 @@ CREATE TABLE `profesores` (
 
 INSERT INTO `profesores` (`id_profesor`, `legajo`, `apellido`, `nombre`, `grado`, `carrera`, `mail_comunidad`, `mail_secundario`, `id_usuario`, `isActive`) VALUES
 (1, 8738, 'AGUILERA', 'Sergio', 'Titular', 'IT', 'sergio.aguilera', 'sergio.aguilera@ub.edu.ar ', '2', 1),
-(2, 8827, 'ALDEGANI', 'Gustavo', 'Adjunto I', 'IT', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL, NULL),
-(3, 8744, 'ANGELERI', 'Paula María', 'Titular', 'IT', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL, NULL),
-(4, 16069, 'ARGOTA BICHARA', 'Maria Patricia', 'Coord. Doc.', 'IT', 'patricia.argota', '', NULL, NULL),
-(5, 8944, 'BLANCO', 'Miguel Angel', 'Asociado', 'IT', 'miguel.blanco', '', NULL, NULL),
-(6, 8943, 'BOCCATONDA', 'Carmen', 'Coord. Doc.', 'IT', 'carmen.boccatonda', '', NULL, NULL),
-(7, 8935, 'BREST', 'Pedro', 'Coord. Doc.', 'IT', 'pedro.brest', 'pbrest@hotmail.com', NULL, NULL),
-(8, 8862, 'CEBALLOS', 'Jorge Luis', 'Titular', 'IT', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL, NULL),
-(9, 30253, 'CERDA', 'Natalia Soledad', 'JTP', 'IT', 'natalia.cerda', '', NULL, NULL),
-(10, 8410, 'CICINELLI', 'Diana', 'Asociado', 'IT', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL, NULL),
-(11, 8902, 'COCENTINO', 'Mariano', 'Titular', 'IT', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL, NULL),
-(12, 8937, 'DAITTER', 'Patricia', 'Coord. Doc.', 'IT', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL, NULL),
-(13, 14469, 'DALLOCCHIO', 'Estefanía', 'JTP', 'IT', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL, NULL),
-(14, 8942, 'DI FAZIO', 'Karina', 'Adj.III de Grado ', 'IT', 'karina.difazio', '', NULL, NULL),
-(15, 8866, 'DURÁN', 'José', 'Asociado', 'IT', 'jose.duran', 'jedo370@gmail.com', NULL, NULL),
-(16, 8938, 'ESTEVES', 'Carlos', 'Coord. Doc.', 'IT', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL, NULL),
-(17, 14435, 'FERNANDEZ CROCCO', 'Gabriel', 'Adjunto I', 'IT', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL, NULL),
+(2, 8827, 'ALDEGANI', 'Gustavo', 'Adjunto I', 'IT', 'gustavo.aldegani', 'aldegani@arnet.com.ar', NULL, 1),
+(3, 8744, 'ANGELERI', 'Paula María', 'Titular', 'IT', 'paula.angeleri', 'paula.angeleri@ub.edu.ar', NULL, 1),
+(4, 16069, 'ARGOTA BICHARA', 'Maria Patricia', 'Coord. Doc.', 'IT', 'patricia.argota', '', NULL, 1),
+(5, 8944, 'BLANCO', 'Miguel Angel', 'Asociado', 'IT', 'miguel.blanco', '', NULL, 1),
+(6, 8943, 'BOCCATONDA', 'Carmen', 'Coord. Doc.', 'IT', 'carmen.boccatonda', '', NULL, 1),
+(7, 8935, 'BREST', 'Pedro', 'Coord. Doc.', 'IT', 'pedro.brest', 'pbrest@hotmail.com', NULL, 1),
+(8, 8862, 'CEBALLOS', 'Jorge Luis', 'Titular', 'IT', 'jorge.ceballos', 'ceballos001@yahoo.com.ar', NULL, 1),
+(9, 30253, 'CERDA', 'Natalia Soledad', 'JTP', 'IT', 'natalia.cerda', '', NULL, 1),
+(10, 8410, 'CICINELLI', 'Diana', 'Asociado', 'IT', 'diana.cicinelli', 'dcicinelli@gmail.com', NULL, 1),
+(11, 8902, 'COCENTINO', 'Mariano', 'Titular', 'IT', 'mariano.cocentino', 'MSC@marianok.com.ar', NULL, 1),
+(12, 8937, 'DAITTER', 'Patricia', 'Coord. Doc.', 'IT', 'patricia.daitter', 'patricia.daitter@gmail.com', NULL, 1),
+(13, 14469, 'DALLOCCHIO', 'Estefanía', 'JTP', 'IT', 'estefania.dallocchio', 'estefaniadal@yahoo.com.ar', NULL, 1),
+(14, 8942, 'DI FAZIO', 'Karina', 'Adj.III de Grado ', 'IT', 'karina.difazio', '', NULL, 1),
+(15, 8866, 'DURÁN', 'José', 'Asociado', 'IT', 'jose.duran', 'jedo370@gmail.com', NULL, 1),
+(16, 8938, 'ESTEVES', 'Carlos', 'Coord. Doc.', 'IT', 'carlos.esteves', 'carlos.esteves@mindef.gov.ar', NULL, 1),
+(17, 14435, 'FERNANDEZ CROCCO', 'Gabriel', 'Adjunto I', 'IT', 'gabriel.fernandez', 'gafernandez@rocketmail.com', NULL, 1),
 (18, 8239, 'GREINER', 'Laura C', 'Asociado', 'IT', 'laura.greiner', 'lgreiner@anses.gov.ar', '3', 1),
-(19, 8628, 'HADAD', 'Graciela', 'Titular', 'IT', 'graciela.hadad', 'gracielahadad@gmail.com', NULL, NULL),
-(20, 8946, 'MARCHINI', 'jorge', 'Coord. Doc.', 'IT', 'jorge.marchini', '', NULL, NULL),
-(21, 14402, 'KLEINER', 'Roberto', 'Titular', 'I', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL, NULL),
-(22, 8918, 'MENAL', 'Claudio Marcelo', 'Adjunto II', 'IT', 'claudio.menal', 'marcelomenal@gmail.com', NULL, NULL),
-(23, 8849, 'MENGIDE', 'Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL, NULL),
-(24, 8873, 'MITARITONNA', 'Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL, NULL),
-(25, 8915, 'MOSCUZZA GUIDONI', 'Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL, NULL),
+(19, 8628, 'HADAD', 'Graciela', 'Titular', 'IT', 'graciela.hadad', 'gracielahadad@gmail.com', NULL, 1),
+(20, 8946, 'MARCHINI', 'jorge', 'Coord. Doc.', 'IT', 'jorge.marchini', '', NULL, 1),
+(21, 14402, 'KLEINER', 'Roberto', 'Titular', 'I', 'roberto.kleiner', 'roberto.kleiner55@gmail.com', NULL, 1),
+(22, 8918, 'MENAL', 'Claudio Marcelo', 'Adjunto II', 'IT', 'claudio.menal', 'marcelomenal@gmail.com', NULL, 1),
+(23, 8849, 'MENGIDE', 'Juán Pablo', 'Adjunto II', 'IT', 'juanpablo.mengide', '', NULL, 1),
+(24, 8873, 'MITARITONNA', 'Alejandro', 'Asociado', 'IT', 'alejandro.mitaritonna', 'alemitaritonna@gmail.com', NULL, 1),
+(25, 8915, 'MOSCUZZA GUIDONI', 'Marcelo', 'Adjunto II', 'IT', 'marcelo.moscuzza', 'moscuzzama@yahoo.com', NULL, 1),
 (26, 8840, 'PICCIN', 'Ana María', 'Titular', 'IT', 'ana.piccin', 'anapiccin@yahoo.com', '101', 1),
-(27, 8158, 'PICCIRILLI', 'Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL, NULL),
-(28, 14503, 'PUYOL', 'Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL, NULL),
-(29, 21092, 'RAFFO', 'Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL, NULL),
-(30, 8914, 'REINOSA', 'Enrique José', 'Titular', 'IT', 'enrique.reinosa', 'ereinosa@gmail.com', NULL, NULL),
-(31, 8901, 'SEBASTIAN', 'Alberto', 'Adjunto III', 'IT', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL, NULL),
-(32, 8947, 'SECATORE', 'Miguel', 'Coord. Doc.', 'IT', 'miguela.secatore', '', NULL, NULL),
-(33, 8809, 'TITIOSKY', 'Rolando', 'Titular', 'IT', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL, NULL),
-(34, 8871, 'TORO', 'Juán Roberto', 'Adjunto III', 'IT', 'juan.toro', 'j_r_toro@hotmail.com', NULL, NULL),
-(35, 8843, 'TOZZI', 'Adrián Horacio', 'Asociado', 'IT', 'adrian.tozzi', '', NULL, NULL),
-(36, 30313, 'ZAMBRANA', 'Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL, NULL),
-(37, 14523, 'GORGAL', 'Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL, NULL),
-(38, 21091, 'PRIETO', 'Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL, NULL),
+(27, 8158, 'PICCIRILLI', 'Darío', 'Titular', 'IT', 'dario.piccirilli', 'dariopiccirilli@gmail.com', NULL, 1),
+(28, 14503, 'PUYOL', 'Orlando', 'Asociado', 'IT', 'orlando.puyol', 'puyol.orlando@gmail.com', NULL, 1),
+(29, 21092, 'RAFFO', 'Daniela', 'JTP', 'IT', 'daniela.raffo', 'madaraf123@hotmail.com', NULL, 1),
+(30, 8914, 'REINOSA', 'Enrique José', 'Titular', 'IT', 'enrique.reinosa', 'ereinosa@gmail.com', '202', 1),
+(31, 8901, 'SEBASTIAN', 'Alberto', 'Adjunto III', 'IT', 'sebastian.alberto', 'asebastian@outlook.com.ar', NULL, 1),
+(32, 8947, 'SECATORE', 'Miguel', 'Coord. Doc.', 'IT', 'miguela.secatore', '', NULL, 1),
+(33, 8809, 'TITIOSKY', 'Rolando', 'Titular', 'IT', 'rolando.titiosky', 'rolando.titiosky@gmail.com', NULL, 1),
+(34, 8871, 'TORO', 'Juán Roberto', 'Adjunto III', 'IT', 'juan.toro', 'j_r_toro@hotmail.com', NULL, 1),
+(35, 8843, 'TOZZI', 'Adrián Horacio', 'Asociado', 'IT', 'adrian.tozzi', '', NULL, 1),
+(36, 30313, 'ZAMBRANA', 'Maria Guillermina', 'JTP', 'IT', 'guillermina.zambrana', '', NULL, 1),
+(37, 14523, 'GORGAL', 'Macarena', 'Coord. Doc.', 'IT', 'macarena.gorgal', '', NULL, 1),
+(38, 21091, 'PRIETO', 'Patricia', 'Adjunto II', 'IT', 'patricia.prieto', 'patriciaeugeniaprieto@gmail.com', NULL, 1),
 (39, 0, 'administrador', 'admin', '', '', '', '', '1', 1),
 (99, 410, 'Mendoza', 'Tomas', 'Estudiante', 'IT', 'mendoza.tomas', 'tgmendoza@outlook.com', '99', 1);
 
@@ -1132,13 +1261,19 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT de la tabla `profesores`
+--
+ALTER TABLE `profesores`
+  MODIFY `id_profesor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
