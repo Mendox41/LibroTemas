@@ -2,8 +2,6 @@ import * as funciones_get_data_form from '../individual-data/funciones-get-data-
 import { get_usuario } from '../individual-data/get-usuario.js';
 import { update_tabla_filtro_temas } from '../topic/topic-filter-actions.js';
 
-// C:\xampp\htdocs\trabajos\LibroTemas\pagina\js\topic\topic-filter-actions.js
-
 
 $(document).ready(function () {
 

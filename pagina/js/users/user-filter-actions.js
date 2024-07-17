@@ -45,7 +45,7 @@ $(document).ready(function () {
 
             },
             success: function (respuesta) {
-                alert(respuesta);
+                // alert(respuesta);
                 var data_filtro_usuarios = JSON.parse(respuesta);
 
                 if (!(data_filtro_usuarios.success)) {
