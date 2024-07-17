@@ -12,7 +12,7 @@ $admin = isset($_POST["admin"]) ? $_POST["admin"] : '';
 $result = new stdClass();
 $result->success = true;
 
-if (($usuario === null) || ($plain_password === null) || ($admin === '') || ($id_profesor === '')) {
+if (($usuario === null) || ($plain_password === null) || ($admin === '') || (($id_profesor === '') && ($admin == 0) )) {
     error_request($result, "Todos los campos deben ser completados");
 }
 

@@ -42,9 +42,7 @@ while ($stmt->fetch()) {
 if (empty($profesores)) {
     error_request($result, "No hay profesores registrados");
 } else {
-    $objRelacion = new stdClass();
-    $objRelacion->profesores = $profesores;
-    $result->respuesta = $objRelacion;
+    $result->profesores = $profesores;
     $result->success = true;
 }
 
