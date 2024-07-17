@@ -287,20 +287,20 @@ include ('../../php/session/validate-admin.php');
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="nuevo-curso-ciclo" class="form-label">Ciclo</label>
-                                        <input type="text" class="form-control" id="nuevo-curso-ciclo"
-                                            placeholder="Ingrese Ciclo">
-                                    </div>
-                                    <div class="col-sm-6">
                                         <label for="nuevo-curso-semestre" class="form-label">Semestre</label>
                                         <select name="nuevo-curso-semestre" class="form-control"
-                                            id="nuevo-curso-semestre">
+                                            id="nuevo-curso-semestre" disabled>
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="nuevo-curso-turno" class="form-label">Turno</label>
                                         <select name="nuevo-curso-turno" class="form-control" id="nuevo-curso-turno">
                                         </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-ciclo" class="form-label">Ciclo</label>
+                                        <input type="text" class="form-control" id="nuevo-curso-ciclo"
+                                            placeholder="Ingrese Ciclo">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="nuevo-curso-comision" class="form-label">Comision</label>
@@ -310,8 +310,8 @@ include ('../../php/session/validate-admin.php');
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="nuevo-curso-profesor" class="form-label">Profesor Asociado</label>
-                                        <select name="nuevo-curso-profesor" class="form-control"
-                                            id="nuevo-curso-profesor">
+                                        <select name="select-profesor-asociado" class="form-control"
+                                            id="select-profesor-asociado">
                                         </select>
                                     </div>
 

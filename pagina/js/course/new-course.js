@@ -11,13 +11,13 @@ $(document).ready(function () {
     funciones_get_data_form.crear_primer_opcion('Comision', 'nuevo-curso-comision');
     funciones_get_data_form.crear_primer_opcion('Turno', 'nuevo-curso-turno');
     funciones_get_data_form.crear_primer_opcion('Semestre', 'nuevo-curso-semestre');
-    funciones_get_data_form.crear_primer_opcion('Profesor', 'nuevo-curso-profesor');
+    funciones_get_data_form.crear_primer_opcion('Profesor', 'select-profesor-asociado');
 
 
 
     $("#btn-nuevo-curso").click(function () {
 
-        // vaciar_campos_form_nuevo_curso();
+        vaciar_campos_form_nuevo_curso();
 
         $("#modal-form-ingreso-nuevo-curso").addClass("d-block");
         deshabilitar_contenedores();
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         } else {
             // si todos los campos estan completos entra aca
-          
+
             $("#modal-form-ingreso-nuevo-curso").removeClass("d-block");
             $("#modal-container-confirm-ingreso-curso").addClass("d-block");
 
@@ -133,6 +133,7 @@ $(document).ready(function () {
     let select_materias = $("#nuevo-curso-nombre-materia");
     let select_turno = $("#nuevo-curso-turno");
     let select_comision = $("#nuevo-curso-comision");
+    let select_semestre = $("#nuevo-curso-semestre");
 
 
 
@@ -152,15 +153,15 @@ $(document).ready(function () {
 
         if (select_nombre_carrera.val() != 0) {
             $('#nuevo-curso-anio-carrera').prop('disabled', false);
-            funciones_get_data_form.get_anio_carrera_select(select_nombre_carrera.val());
+            funciones_get_data_form.get_anio_carrera_for_select(select_nombre_carrera.val(), "nuevo-curso-anio-carrera");
         }
     });
 
     // Evento de cambio de valor en el select de anio carrera
     select_anio_carrera.on('change', function () {
         $('#nuevo-curso-nombre-materia').prop('disabled', true);
-        $('#nuevo-curso-comision').prop('disabled', true);
-        $('#nuevo-curso-turno').prop('disabled', true);
+        // $('#nuevo-curso-comision').prop('disabled', true);
+        // $('#nuevo-curso-turno').prop('disabled', true);
 
         $("#nuevo-curso-nombre-materia").val(0);
         // $("#nuevo-curso-comision").val(0);
@@ -168,7 +169,7 @@ $(document).ready(function () {
 
         if (select_anio_carrera.val() != 0) {
             $('#nuevo-curso-nombre-materia').prop('disabled', false);
-            funciones_get_data_form.get_materias_select(select_nombre_carrera.val(), select_anio_carrera.val());
+            funciones_get_data_form.get_materias_for_select(select_nombre_carrera.val(), select_anio_carrera.val(), "nuevo-curso-nombre-materia");
 
         }
 
@@ -176,31 +177,29 @@ $(document).ready(function () {
 
     // Evento de cambio de valor en el select de materias
     select_materias.on('change', function () {
-        // $('#nuevo-curso-comision').prop('disabled', true);
-        // $('#nuevo-curso-turno').prop('disabled', true);
+  
 
-        // $("#nuevo-curso-comision").val(0);
-        // $("#nuevo-curso-turno").val(0);
-
-        // if (select_materias.val() != 0) {
-        //     $('#nuevo-curso-turno').prop('disabled', false);
-        //     funciones_get_data_form.get_turno_select(select_materias.val());
-        // }
-
-    });
-
-    // Evento de cambio de valor en el select de turnos
-    select_turno.on('change', function () {
-        $('#nuevo-curso-comision').prop('disabled', true);
-
-        $("#nuevo-curso-comision").val(0);
-
-        if (select_turno.val() != 0) {
-            $('#nuevo-curso-comision').prop('disabled', false);
-            funciones_get_data_form.get_comision_select(select_materias.val(), select_turno.val());
+        if (select_materias.val() != 0) {
+            $('#nuevo-curso-semestre').prop('disabled', false);
+            funciones_get_data_form.get_semestre_for_select(select_nombre_carrera.val(), select_anio_carrera.val(), select_materias.val(), "nuevo-curso-semestre");
 
         }
+
     });
+
+
+
+
+    // ----------------------------------------------------------------
+
+    // creo dinamicamente las opciones del select de turnos
+    // funciones_get_data_form.get_turnos_for_select('nuevo-curso-turno');
+
+    // creo dinamicamente las opciones del select de comisiones
+    // funciones_get_data_form.get_comisiones_for_select('nuevo-curso-comision');
+
+    // creo dinamicamente las opciones del select de profesores
+    get_profesores_for_select();
 
 
     // ----------------------------------------------------------------
@@ -225,7 +224,7 @@ $(document).ready(function () {
         $('#nuevo-curso-nombre-materia').prop('disabled', true);
         // $('#nuevo-curso-comision').prop('disabled', true);
         // $('#nuevo-curso-turno').prop('disabled', true);
-        
+
         $("#errorMessage").addClass("invisible");
 
 
@@ -236,7 +235,7 @@ $(document).ready(function () {
     }
 
 
-  
+
 
 
 });
