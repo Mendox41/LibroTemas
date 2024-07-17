@@ -177,7 +177,8 @@ include ('../../php/session/validate-admin.php');
                                         <input type="text" class="form-control" id="nombre-usuario-modal-filtro">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="ciclo-lectivo-modal-filtro" class="form-label">Año ciclo lectivo</label>
+                                        <label for="ciclo-lectivo-modal-filtro" class="form-label">Año ciclo
+                                            lectivo</label>
                                         <input type="text" class="form-control" id="ciclo-lectivo-modal-filtro">
                                     </div>
                                     <div class="col-sm-4">
@@ -185,7 +186,8 @@ include ('../../php/session/validate-admin.php');
                                         <input type="text" class="form-control" id="semestre-modal-filtro">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="nombre-profesor-modal-filtro" class="form-label">Nombre Profesor</label>
+                                        <label for="nombre-profesor-modal-filtro" class="form-label">Nombre
+                                            Profesor</label>
                                         <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
                                     </div>
                                     <div class="col-sm-4">
@@ -244,6 +246,131 @@ include ('../../php/session/validate-admin.php');
                         <div class="modal-footer">
                             <button id="btn-acept-modal-respuesta" type="button" class="btn btn-primary"
                                 data-bs-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- readaptar codigo -->
+            <!-- Modal Ingreso nuevo curso -->
+            <div class="modal-container-ingreso-nuevo-curso" id="modal-container-ingreso-nuevo-curso">
+                <div class="modal modal-lg" id="modal-form-ingreso-nuevo-curso" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Ingreso de Nuevo Curso</h1>
+                                <button id="btn-close-modal-nuevo-curso" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="modal-body">
+
+
+                                <div class="row g-3 form-filtro" id="modal-form-nuevo-curso">
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-nombre-carrera" class="form-label">Carrera</label>
+                                        <select name="nuevo-curso-nombre-carrera" class="form-control"
+                                            id="nuevo-curso-nombre-carrera"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-anio-carrera" class="form-label">Año
+                                            carrera</label>
+                                        <select name="nuevo-curso-anio-carrera" class="form-control"
+                                            id="nuevo-curso-anio-carrera" disabled>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-nombre-materia" class="form-label">Materia</label>
+                                        <select name="nuevo-curso-nombre-materia" class="form-control"
+                                            id="nuevo-curso-nombre-materia" disabled>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-ciclo" class="form-label">Ciclo</label>
+                                        <input type="text" class="form-control" id="nuevo-curso-ciclo"
+                                            placeholder="Ingrese Ciclo">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-semestre" class="form-label">Semestre</label>
+                                        <select name="nuevo-curso-semestre" class="form-control"
+                                            id="nuevo-curso-semestre">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-turno" class="form-label">Turno</label>
+                                        <select name="nuevo-curso-turno" class="form-control" id="nuevo-curso-turno">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-comision" class="form-label">Comision</label>
+                                        <select name="nuevo-curso-comision" class="form-control"
+                                            id="nuevo-curso-comision">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="nuevo-curso-profesor" class="form-label">Profesor Asociado</label>
+                                        <select name="nuevo-curso-profesor" class="form-control"
+                                            id="nuevo-curso-profesor">
+                                        </select>
+                                    </div>
+
+                                    <!-- 
+                                    <div class="col-sm-12">
+                                        <label for="fecha-curso-modal-filtro" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="nuevo-curso-fecha">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="titulo-curso-modal-filtro" class="form-label">Titulo</label>
+                                        <input type="text" class="form-control" id="nuevo-curso-titulo">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="descripcion-curso-modal-filtro"
+                                            class="form-label">Descripcion</label>
+                                        <textarea class="form-control" id="nuevo-curso-descripcion" rows="1"></textarea>
+                                    </div> -->
+
+                                    <div class="col-md-12 ">
+                                        <label for="errorMessage" id="errorMessage" class="invisible"></label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-ingreso-nuevo-curso">Cancel</button>
+                                <button class="btn btn-success" id="btn-aceptar-ingreso-nuevo-curso">Aceptar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- modal confirm ingreso curso-->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-ingreso-curso">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Confirmacion de nuevo
+                                Registro
+                            </h7>
+                            <button id="btn-close-modal-confirm" type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="modal-title-confirm">¿Desea registrar el curso con los datos
+                                Ingresados?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-cancel-modal-confirm" type="button" class="btn btn-danger"
+                                data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success"
+                                id="btn-confirm-ingreso-curso">Confirmar</button>
                         </div>
                     </div>
                 </div>
