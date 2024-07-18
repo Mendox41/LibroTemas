@@ -64,7 +64,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("iiiiiiiiii", $id_curso, $id_carrera, $id_anio, $id_semestre, $id_materia, $id_comision, $c_anio, $id_profesor, $id_turno);
+$stmt->bind_param("iiiiiiiii", $id_curso, $id_carrera, $id_anio, $id_semestre, $id_materia, $id_comision, $c_anio, $id_profesor, $id_turno);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
