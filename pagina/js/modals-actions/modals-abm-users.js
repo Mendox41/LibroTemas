@@ -33,14 +33,15 @@ $(document).ready(function () {
     // Funciones para ventana de confirm ingreso nuevo usuario (readaptar codigo)
     $("#btn-close-modal-confirm").click(function () {
         restablecer_contenedores();
-        $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
+        $("#modal-container-confirm-ingreso-usuario").removeClass("d-block");
 
     });
 
     // (readaptar codigo)
+
     $("#btn-cancel-modal-confirm").click(function () {
         restablecer_contenedores();
-        $("#modal-container-confirm-ingreso-tema").removeClass("d-block");
+        $("#modal-container-confirm-ingreso-usuario").removeClass("d-block");
 
     });
 
@@ -97,18 +98,35 @@ $(document).ready(function () {
     // funciones para modal de modificacion de datos de un usuario 
 
     // btn cancelar del modal
-    $("#btn-cancel-modal-form-modf-datos-usuario").click(function () {
+    $("#btn-cancel-modify-usuario").click(function () {
         restablecer_contenedores();
-        $("#modal-form-modif-datos-usuario").removeClass("d-block");
+        $("#modal-form-modify-usuario").removeClass("d-block");
 
     });
 
     // btn x del modal
-    $("#btn-close-modal-form-modif-datos-usuario").click(function () {
+    $("#btn-close-modal-modify-usuario").click(function () {
         restablecer_contenedores();
-        $("#modal-form-modif-datos-usuario").removeClass("d-block");
+        $("#modal-form-modify-usuario").removeClass("d-block");
 
     });
+
+    // funciones para modal de confirm modificacion de datos de un usuario 
+
+    // btn cancelar del modal
+    $("#btn-cancel-modal-confirm-modify-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-container-confirm-modify-usuario").removeClass("d-block");
+
+    });
+
+    // btn x del modal
+    $("#close-btn-modal-confirm-modify-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-container-confirm-modify-usuario").removeClass("d-block");
+
+    });
+
 
     // --------------------------------------------
 
@@ -143,76 +161,63 @@ export function deshabilitar_contenedores() {
     $("#body").addClass("fondo-desactivado");
 }
 
-// Funcion para restablecer valores del modal ver datos de tema seleccionado
-export function restablecer_valores_modal_ver_tema() {
-    document.getElementById('ver-tema-td-carrera').innerHTML = "";
-    document.getElementById('ver-tema-td-anio-carrera').innerHTML = "";
-    document.getElementById('ver-tema-td-materia').innerHTML = "";
-    document.getElementById('ver-tema-td-turno').innerHTML = "";
-    document.getElementById('ver-tema-td-comision').innerHTML = "";
+// Funcion para restablecer valores del modal ver datos de usuario seleccionado
+export function restablecer_valores_modal_ver_usuario() {
+    document.getElementById('ver-usuario-td-carrera').innerHTML = "";
+    document.getElementById('ver-usuario-td-anio-carrera').innerHTML = "";
+    document.getElementById('ver-usuario-td-materia').innerHTML = "";
+    document.getElementById('ver-usuario-td-turno').innerHTML = "";
+    document.getElementById('ver-usuario-td-comision').innerHTML = "";
 
-    document.getElementById('ver-tema-td-ciclo').innerHTML = '';
-    document.getElementById('ver-tema-td-semestre').innerHTML = '';
+    document.getElementById('ver-usuario-td-ciclo').innerHTML = '';
+    document.getElementById('ver-usuario-td-semestre').innerHTML = '';
 
 
-    document.getElementById('ver-tema-td-usuario-profesor').innerHTML = "";
-    document.getElementById('ver-tema-td-nombre-profesor').innerHTML = "";
-    document.getElementById('ver-tema-td-fecha-tema').innerHTML = "";
-    document.getElementById('ver-tema-td-fecha-registrado').innerHTML = "";
-    document.getElementById('ver-tema-td-fecha-modificacion').innerHTML = "";
-    document.getElementById('ver-tema-td-titulo-tema').innerHTML = "";
-    document.getElementById('ver-tema-td-descripcion-tema').innerHTML = "";
+    document.getElementById('ver-usuario-td-usuario-profesor').innerHTML = "";
+    document.getElementById('ver-usuario-td-nombre-profesor').innerHTML = "";
+    document.getElementById('ver-usuario-td-fecha-usuario').innerHTML = "";
+    document.getElementById('ver-usuario-td-fecha-registrado').innerHTML = "";
+    document.getElementById('ver-usuario-td-fecha-modificacion').innerHTML = "";
+    document.getElementById('ver-usuario-td-titulo-usuario').innerHTML = "";
+    document.getElementById('ver-usuario-td-descripcion-usuario').innerHTML = "";
 
 }
 
-// Funcion para restablecer valores del modal modificar datos de tema seleccionado
-export function restablecer_valores_modal_modify_tema() {
+// Funcion para restablecer valores del modal modificar datos de usuario seleccionado
+export function restablecer_valores_modal_modify_usuario() {
 
     // vacio campos
-    $('#tema-nombre-carrera-modal-modify').val("");
-    $('#tema-anio-carrera-modal-modify').val("");
-    $('#tema-nombre-materia-modal-modify').val("");
-    $('#tema-turno-modal-modify').val("");
-    $('#tema-comision-modal-modify').val("");
-
-    $('#fecha-tema-modal-modify').val(0);
-    $('#titulo-tema-modal-modify').val("");
-    $('#descripcion-tema-modal-modify').val("");
-
-    // restablesco estilos si fueron modificados
-    $("#fecha-tema-modal-modify").removeClass('bg-danger-subtle');
-    $("#fecha-tema-modal-modify").removeClass("text-danger-emphasis");
-    $("#fecha-tema-modal-modify").removeClass("border-danger");
+    $('#nombre-usuario-modal-modify').val("");
 
     // oculto el mensaje de error si esta visivle
-    $("#errorMessage-modal-modify-tema").addClass("invisible");
+    $("#errorMessage-modal-modify-usuario").addClass("invisible");
 
 
 
 
 }
 
-// Funcion para deshabilitar y ocultar inputs del modal modify tema
+// Funcion para deshabilitar y ocultar inputs del modal modify usuario
 function disabled_input_modal_modify_topic() {
 
-    $('#id-libro-tema-modal-modify').prop('disabled', true);
-    $('#id-libro-tema-modal-modify').prop('hidden', true);
+    $('#id-libro-usuario-modal-modify').prop('disabled', true);
+    $('#id-libro-usuario-modal-modify').prop('hidden', true);
 
-    $('#tema-nombre-carrera-modal-modify').prop('disabled', true);
-    $('#tema-anio-carrera-modal-modify').prop('disabled', true);
-    $('#tema-nombre-materia-modal-modify').prop('disabled', true);
-    $('#tema-turno-modal-modify').prop('disabled', true);
-    $('#tema-comision-modal-modify').prop('disabled', true);
+    $('#usuario-nombre-carrera-modal-modify').prop('disabled', true);
+    $('#usuario-anio-carrera-modal-modify').prop('disabled', true);
+    $('#usuario-nombre-materia-modal-modify').prop('disabled', true);
+    $('#usuario-turno-modal-modify').prop('disabled', true);
+    $('#usuario-comision-modal-modify').prop('disabled', true);
 }
 
-// Funcion para deshabilitar y ocultar inputs del modal confirm delete tema
+// Funcion para deshabilitar y ocultar inputs del modal confirm delete usuario
 function disabled_input_modal_confirm_delete_topic() {
-    $('#id-libro-tema-modal-confirm-delete').prop('disabled', true);
-    $('#id-libro-tema-modal-confirm-delete').prop('hidden', true);
+    $('#id-libro-usuario-modal-confirm-delete').prop('disabled', true);
+    $('#id-libro-usuario-modal-confirm-delete').prop('hidden', true);
 
 };
 
-export function retablecer_inputs_modal_filtro_temas() {
+export function retablecer_inputs_modal_filtro_usuarios() {
     // vacio los valores del modal/form  
     $("#nombre-carrera-modal-filtro").val("");
     $("#anio-carrera-modal-filtro").val("");
@@ -227,16 +232,16 @@ export function retablecer_inputs_modal_filtro_temas() {
     $("#ciclo-lectivo-modal-filtro").val("");
     $("#semestre-modal-filtro").val("");
 
-    $("#fecha-tema-desde-modal-filtro").val(0);
-    $("#fecha-tema-hasta-modal-filtro").val(0);
+    $("#fecha-usuario-desde-modal-filtro").val(0);
+    $("#fecha-usuario-hasta-modal-filtro").val(0);
 
-    $("#titulo-tema-modal-filtro").val("");
-    $("#descripcion-tema-modal-filtro").val("");
+    $("#titulo-usuario-modal-filtro").val("");
+    $("#descripcion-usuario-modal-filtro").val("");
 
 };
 
 
-export function update_inputs_modal_filtro_temas() {
+export function update_inputs_modal_filtro_usuarios() {
     var carrera_f_i = $("#nombre-carrera-filtro").val();
     var anio_carrera_f_i = $("#anio-carrera-filtro").val();
     var nombre_materia_f_i = $("#nombre-materia-filtro").val();
@@ -249,11 +254,11 @@ export function update_inputs_modal_filtro_temas() {
     var semestre_f_i = $("#semestre-filtro").val();
     var ciclo_lectivo_f_i = $("#ciclo-lectivo-filtro").val();
 
-    var fecha_desde_f_i = $("#fecha-tema-desde-filtro").val();
-    var fecha_hasta_f_i = $("#fecha-tema-hasta-filtro").val();
+    var fecha_desde_f_i = $("#fecha-usuario-desde-filtro").val();
+    var fecha_hasta_f_i = $("#fecha-usuario-hasta-filtro").val();
 
-    var titulo_tema_f_i = $("#titulo-tema-filtro").val();
-    var descripcion_tema_f_i = $("#descripcion-tema-filtro").val();
+    var titulo_usuario_f_i = $("#titulo-usuario-filtro").val();
+    var descripcion_usuario_f_i = $("#descripcion-usuario-filtro").val();
 
 
     //   actualizo los valores del modal filtro con los ingresados en el filtro inicial
@@ -270,9 +275,9 @@ export function update_inputs_modal_filtro_temas() {
     $("#ciclo-lectivo-modal-filtro").val(semestre_f_i);
     $("#semestre-modal-filtro").val(ciclo_lectivo_f_i);
 
-    $("#fecha-tema-desde-modal-filtro").val(fecha_desde_f_i);
-    $("#fecha-tema-hasta-modal-filtro").val(fecha_hasta_f_i);
+    $("#fecha-usuario-desde-modal-filtro").val(fecha_desde_f_i);
+    $("#fecha-usuario-hasta-modal-filtro").val(fecha_hasta_f_i);
 
-    $("#titulo-tema-modal-filtro").val(titulo_tema_f_i);
-    $("#descripcion-tema-modal-filtro").val(descripcion_tema_f_i);
+    $("#titulo-usuario-modal-filtro").val(titulo_usuario_f_i);
+    $("#descripcion-usuario-modal-filtro").val(descripcion_usuario_f_i);
 }

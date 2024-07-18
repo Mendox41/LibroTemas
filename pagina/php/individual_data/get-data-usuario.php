@@ -58,7 +58,6 @@ while ($stmt->fetch()) {
     $objUsuario->isActive = $isActive;
     $objUsuario->IsAdmin = $IsAdmin;
 
-    $objUsuario->id_profesor_for_btns = $id_usuario;
 
     array_push($usuarios, $objUsuario);
 }

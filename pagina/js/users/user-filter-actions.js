@@ -1,6 +1,7 @@
-// import { fill_table_ver_datos_user, fill_form_modify_user } from './get-user.js';
-import { deshabilitar_contenedores, restablecer_contenedores } from '../modals-actions/modals-abm-users.js';
+import { fill_form_modify_user } from './get_user.js';
+import { deshabilitar_contenedores, restablecer_contenedores, restablecer_valores_modal_modify_usuario } from '../modals-actions/modals-abm-users.js';
 //  restablecer_valores_modal_ver_usuario 
+// id_libro_usuario
 
 $(document).ready(function () {
 
@@ -139,17 +140,17 @@ $(document).ready(function () {
                                     // fn carga de datos de user en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_tema(); // Crear funcion con datos modificados a usuarios
-                                    $('#ver-tema-id-libro-tema').val("");
+                                    // restablecer_valores_modal_ver_usuario(); // Crear funcion con datos modificados a usuarios
+                                    $('#ver-usuario-id-libro-usuario').val("");
 
                                     fill_table_ver_datos_user(valor);
-                                    $('#ver-tema-id-libro-tema').val(valor);
+                                    $('#ver-usuario-id-libro-usuario').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de ver tema
-                                    $("#modal-form-ver-tema").addClass("d-block");
+                                    // habilito modal de ver usuario
+                                    $("#modal-form-ver-usuario").addClass("d-block");
 
                                     // $("#header").addClass("opacity-25");
                                     // $("#main-container").addClass("opacity-25");
@@ -177,21 +178,17 @@ $(document).ready(function () {
                                     // alert(valor);
                                     // vacio campo con datos anteriores
 
-                                    $('#id-libro-tema-modal-modify').val("");
-                                    restablecer_valores_modal_modify_tema();
+                                    $('#id-usuario-modal-modify').val("");
+                                    restablecer_valores_modal_modify_usuario();
 
                                     fill_form_modify_user(valor);
-                                    $('#id-libro-tema-modal-modify').val(valor);
+                                    $('#id-usuario-modal-modify').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de modificar tema
-                                    $("#modal-form-modify-tema").addClass("d-block");
-
-                                    // $("#header").addClass("opacity-25");
-                                    // $("#main-container").addClass("opacity-25");
-                                    // $("#body").addClass("fondo-desactivado");
+                                    // habilito modal de modificar usuario
+                                    $("#modal-form-modify-usuario").addClass("d-block");
 
 
                                 };
@@ -502,17 +499,17 @@ $(document).ready(function () {
                                     // fn carga de datos de user en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_tema(); // Crear funcion con datos modificados a usuarios
-                                    $('#ver-tema-id-libro-tema').val("");
+                                    // restablecer_valores_modal_ver_usuario(); // Crear funcion con datos modificados a usuarios
+                                    $('#ver-usuario-id-libro-usuario').val("");
 
                                     fill_table_ver_datos_user(valor);
-                                    $('#ver-tema-id-libro-tema').val(valor);
+                                    $('#ver-usuario-id-libro-usuario').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de ver tema
-                                    $("#modal-form-ver-tema").addClass("d-block");
+                                    // habilito modal de ver usuario
+                                    $("#modal-form-ver-usuario").addClass("d-block");
 
                                     // $("#header").addClass("opacity-25");
                                     // $("#main-container").addClass("opacity-25");
@@ -540,21 +537,17 @@ $(document).ready(function () {
                                     // alert(valor);
                                     // vacio campo con datos anteriores
 
-                                    $('#id-libro-tema-modal-modify').val("");
-                                    restablecer_valores_modal_modify_tema();
+                                    $('#id-usuario-modal-modify').val("");
+                                    restablecer_valores_modal_modify_usuario();
 
                                     fill_form_modify_user(valor);
-                                    $('#id-libro-tema-modal-modify').val(valor);
+                                    $('#id-usuario-modal-modify').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de modificar tema
-                                    $("#modal-form-modify-tema").addClass("d-block");
-
-                                    // $("#header").addClass("opacity-25");
-                                    // $("#main-container").addClass("opacity-25");
-                                    // $("#body").addClass("fondo-desactivado");
+                                    // habilito modal de modificar usuario
+                                    $("#modal-form-modify-usuario").addClass("d-block");
 
 
                                 };
