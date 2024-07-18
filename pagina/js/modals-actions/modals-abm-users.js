@@ -62,7 +62,7 @@ $(document).ready(function () {
     // funciones para la ventana de ver datos de un usuario
 
     // btn x del modal
-    $("#btn-close-modal-ver-usuario-usuario").click(function () {
+    $("#btn-close-modal-ver-usuario").click(function () {
         restablecer_contenedores();
         $("#modal-form-ver-usuario").removeClass("d-block");
 
@@ -144,6 +144,23 @@ $(document).ready(function () {
         restablecer_contenedores();
     });
 
+        // --------------------------------------------
+
+    // Funciones del modal confirm act/desact usuario
+
+    // btn x
+    $("#close-btn-modal-confirm-delete-usuario").click(function () {
+        $("#modal-container-confirm-delete-usuario").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
+    // btn cancelar
+    $("#btn-cancel-modal-confirm-delete-usuario").click(function () {
+        $("#modal-container-confirm-delete-usuario").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
+
 
 });
 
@@ -163,23 +180,12 @@ export function deshabilitar_contenedores() {
 
 // Funcion para restablecer valores del modal ver datos de usuario seleccionado
 export function restablecer_valores_modal_ver_usuario() {
-    document.getElementById('ver-usuario-td-carrera').innerHTML = "";
-    document.getElementById('ver-usuario-td-anio-carrera').innerHTML = "";
-    document.getElementById('ver-usuario-td-materia').innerHTML = "";
-    document.getElementById('ver-usuario-td-turno').innerHTML = "";
-    document.getElementById('ver-usuario-td-comision').innerHTML = "";
+    document.getElementById('ver-usuario-td-usuario-profesor').innerHTML = '';
+    document.getElementById('ver-usuario-td-legajo').innerHTML = '';
+    document.getElementById('ver-usuario-td-nombre-profesor').innerHTML = '';
+    document.getElementById('ver-usuario-td-admin').innerHTML = '';
+    document.getElementById('ver-usuario-td-estado').innerHTML = '';
 
-    document.getElementById('ver-usuario-td-ciclo').innerHTML = '';
-    document.getElementById('ver-usuario-td-semestre').innerHTML = '';
-
-
-    document.getElementById('ver-usuario-td-usuario-profesor').innerHTML = "";
-    document.getElementById('ver-usuario-td-nombre-profesor').innerHTML = "";
-    document.getElementById('ver-usuario-td-fecha-usuario').innerHTML = "";
-    document.getElementById('ver-usuario-td-fecha-registrado').innerHTML = "";
-    document.getElementById('ver-usuario-td-fecha-modificacion').innerHTML = "";
-    document.getElementById('ver-usuario-td-titulo-usuario').innerHTML = "";
-    document.getElementById('ver-usuario-td-descripcion-usuario').innerHTML = "";
 
 }
 

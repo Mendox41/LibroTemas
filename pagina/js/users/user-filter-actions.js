@@ -1,5 +1,5 @@
-import { fill_form_modify_user } from './get_user.js';
-import { deshabilitar_contenedores, restablecer_contenedores, restablecer_valores_modal_modify_usuario } from '../modals-actions/modals-abm-users.js';
+import { fill_form_modify_user, fill_table_ver_datos_user } from './get_user.js';
+import { deshabilitar_contenedores, restablecer_contenedores, restablecer_valores_modal_modify_usuario, restablecer_valores_modal_ver_usuario } from '../modals-actions/modals-abm-users.js';
 //  restablecer_valores_modal_ver_usuario 
 // id_libro_usuario
 
@@ -140,11 +140,11 @@ $(document).ready(function () {
                                     // fn carga de datos de user en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_usuario(); // Crear funcion con datos modificados a usuarios
-                                    $('#ver-usuario-id-libro-usuario').val("");
+                                    restablecer_valores_modal_ver_usuario();
+                                    $('#ver-usuario-id-usuario').val("");
 
                                     fill_table_ver_datos_user(valor);
-                                    $('#ver-usuario-id-libro-usuario').val(valor);
+                                    $('#ver-usuario-id-usuario').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
@@ -157,6 +157,7 @@ $(document).ready(function () {
                                     // $("#body").addClass("fondo-desactivado");
 
                                 };
+
 
                                 var icono_ver = document.createElement("ion-icon");
                                 icono_ver.setAttribute('name', "search");
@@ -499,11 +500,11 @@ $(document).ready(function () {
                                     // fn carga de datos de user en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_usuario(); // Crear funcion con datos modificados a usuarios
-                                    $('#ver-usuario-id-libro-usuario').val("");
+                                    restablecer_valores_modal_ver_usuario();
+                                    $('#ver-usuario-id-usuario').val("");
 
                                     fill_table_ver_datos_user(valor);
-                                    $('#ver-usuario-id-libro-usuario').val(valor);
+                                    $('#ver-usuario-id-usuario').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();

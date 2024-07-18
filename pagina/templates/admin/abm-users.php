@@ -132,12 +132,14 @@ include ('../../php/session/validate-admin.php');
                                     <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="apellido-profesor-modal-filtro" class="form-label">Apellido Profesor</label>
+                                    <label for="apellido-profesor-modal-filtro" class="form-label">Apellido
+                                        Profesor</label>
                                     <input type="text" class="form-control" id="apellido-profesor-modal-filtro">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="apellido-profesor-modal-filtro" class="form-label">Estado</label>
-                                    <select class="form-select" name="select-estado-filtro" id="select-estado-modal-filtro">
+                                    <select class="form-select" name="select-estado-filtro"
+                                        id="select-estado-modal-filtro">
                                         <option value="">Seleccione Opcion</option>
                                         <option value="1">Activo</option>
                                         <option value="0">Desactivado</option>
@@ -285,11 +287,9 @@ include ('../../php/session/validate-admin.php');
                 </div>
             </div>
 
-            <!-- codigo a readaptar -->
-
             <!-- Modal para ver datos de usuario -->
             <div class="modal-container-ver-usuario" id="modal-container-ver-usuario">
-                <div class="modal modal-lg " id="modal-form-ver-usuario" data-bs-backdrop="static"
+                <div class="modal modal-lg" id="modal-form-ver-usuario" data-bs-backdrop="static"
                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
                         <div class="modal-content">
@@ -301,8 +301,7 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-usuario-id-usuario" type="text" class="form-control" disabled
-                                    hidden>
+                                <input id="ver-usuario-id-usuario" type="text" class="form-control" disabled >
 
                                 <div class="table-responsive">
 
@@ -310,73 +309,26 @@ include ('../../php/session/validate-admin.php');
 
                                         <tbody>
                                             <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Carrera</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-carrera"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Año Carrera</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-anio-carrera"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Materia</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-materia"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Turno</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-turno"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Comision</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-comision"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Ciclo Lectivo
-                                                </td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-ciclo"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class="bg-secondary-subtle text-secondary-emphasis">Semestre</td>
-                                                <td class="bg-secondary-subtle text-secondary-emphasis"
-                                                    id="ver-usuario-td-semestre"></td>
-                                            </tr>
-                                            <tr class="">
                                                 <td>Usuario</td>
                                                 <td id="ver-usuario-td-usuario-profesor"></td>
                                             </tr>
                                             <tr class="">
-                                                <td>Profesor</td>
+                                                <td>Legajo</td>
+                                                <td id="ver-usuario-td-legajo"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td>Docente</td>
                                                 <td id="ver-usuario-td-nombre-profesor"></td>
                                             </tr>
                                             <tr class="">
-                                                <td>Fecha del Tema dado</td>
-                                                <td id="ver-usuario-td-fecha-usuario"></td>
+                                                <td>Estado</td>
+                                                <td id="ver-usuario-td-estado"></td>
                                             </tr>
                                             <tr class="">
-                                                <td>Fecha registro
-                                                </td>
-                                                <td id="ver-usuario-td-fecha-registrado"></td>
+                                                <td>Administrador</td>
+                                                <td id="ver-usuario-td-admin"></td>
                                             </tr>
-                                            <tr class="">
-                                                <td>Ultima Fecha modificacion</td>
-                                                <td id="ver-usuario-td-fecha-modificacion"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class=" bg-primary-subtle text-primary-emphasis">Titulo del Tema
-                                                </td>
-                                                <td class=" bg-primary-subtle text-primary-emphasis"
-                                                    id="ver-usuario-td-titulo-usuario"></td>
-                                            </tr>
-                                            <tr class="">
-                                                <td class=" bg-primary-subtle text-primary-emphasis">Descripcion</td>
-                                                <td class=" bg-primary-subtle text-primary-emphasis"
-                                                    id="ver-usuario-td-descripcion-usuario"></td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -388,8 +340,8 @@ include ('../../php/session/validate-admin.php');
                             <div class="modal-footer btns-modal-space-between">
                                 <div id="btns-modificar" class="">
                                     <button type="submit" class="btn btn-warning"
-                                        id="btn-modif-modal-ver-usuario">Modificar
-                                        Datos</button>
+                                        id="btn-modif-contra-modal-ver-usuario">Modificar
+                                        Contraseña</button>
                                     <button type="submit" class="btn btn-danger"
                                         id="btn-eliminar-modal-ver-usuario">Eliminar</button>
 
@@ -427,15 +379,13 @@ include ('../../php/session/validate-admin.php');
 
                                 <div class="row g-3 form-filtro" id="modal-form-modify-usuario">
 
-                                    <input type="text" id="id-usuario-modal-modify" class="form-control" disabled>
+                                    <input type="text" id="id-usuario-modal-modify" class="form-control" disabled hidden>
 
                                     <div class="col-sm-12">
-                                        <label for="nombre-usuario-modal-modify"
-                                            class="form-label">Usuario</label>
-                                        <input type="text" id="nombre-usuario-modal-modify"
-                                            class="form-control">
+                                        <label for="nombre-usuario-modal-modify" class="form-label">Usuario</label>
+                                        <input type="text" id="nombre-usuario-modal-modify" class="form-control">
                                     </div>
-                                    
+
 
                                     <div class="col-md-12 ">
                                         <label for="errorMessage-modal-modify-usuario"
@@ -491,7 +441,7 @@ include ('../../php/session/validate-admin.php');
                     <div class="modal-content" id="contenido-confirm-delete-usuario">
                         <div class="modal-header">
                             <h7 class="modal-title fs-7 titulo-confirm " id="staticBackdropLabel">Confirmacion
-                                Eliminar Tema
+                                Eliminar Usuario
                             </h7>
                             <button id="close-btn-modal-confirm-delete-usuario" type="button" class="btn-close"
                                 data-bs-dismiss="modal" aria-label="Close"></button>
@@ -499,8 +449,8 @@ include ('../../php/session/validate-admin.php');
                         <div class="modal-body">
                             <h3 class="titulo-confirm text-danger" id="">¿Desea confirmar la eliminacion de los datos
                                 del
-                                Tema?</h3>
-                            <input type="text" id="id-usuario-modal-confirm-delete" class="form-control">
+                                Usuario?</h3>
+                            <input type="text" id="id-usuario-modal-confirm-delete" class="form-control" disabled>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
@@ -576,6 +526,7 @@ include ('../../php/session/validate-admin.php');
     <script type="module" src="../../js/modals-actions/modals-abm-users.js"></script>
     <script type="module" src="../../js/users/user-filter-actions.js"></script>
     <script type="module" src="../../js/users/modify-status-user.js"></script>
+    <script type="module" src="../../js/users/modify-user-data.js"></script>
 
 
     <script type="module" src="../../js/users/new-user.js"></script>
@@ -583,7 +534,7 @@ include ('../../php/session/validate-admin.php');
 
     <!-- <script type="module" src="../../js/users/modify-user.js"></script> -->
 
-    <!-- <script type="module" src="../../js/users/delete-user.js"></script> -->
+    <script type="module" src="../../js/users/delete-user.js"></script>
 
 
 

@@ -61,7 +61,7 @@ $(document).ready(function () {
                     if (data.success == true) {
                         $("#modal-title-respuesta").addClass("text-success");
 
-                        update_tabla_filtro_usuarios();
+                        // update_tabla_filtro_usuarios();
 
                     } else {
                         $("#modal-title-respuesta").addClass("text-danger");
