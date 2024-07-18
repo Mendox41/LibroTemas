@@ -210,35 +210,58 @@ $(document).ready(function () {
                                 btn_delete_user.setAttribute("id_user", valor);
                                 btn_delete_user.setAttribute('type', "button");
 
+                                var estado = user.isActive;
+
+                                if (estado == 1) {
+                                    btn_delete_user.classList.add("btn", "btn-danger");
+
+                                } else {
+                                    btn_delete_user.classList.add("btn", "btn-success");
+
+                                }
 
                                 // btn_delete_user.textContent = 'Eliminar';
-                                btn_delete_user.classList.add("btn", "btn-danger");
                                 btn_delete_user.onclick = function () {
-                                    // fn delete user
-                                    // alert(valor);
-                                    // vacio campo con datos anteriores
-                                    $('#id-libro-tema-modal-confirm-delete').val("");
+                                    $('#id-usuario-modal-confirm-act-desac').val("");
+                                    $('#estado-usuario-modal-confirm-act-desac').val("");
 
 
-                                    $('#id-libro-tema-modal-confirm-delete').val(valor);
+                                    $('#id-usuario-modal-confirm-act-desac').val(valor);
+                                    $('#estado-usuario-modal-confirm-act-desac').val(estado);
+
+
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de confirm eliminar tema
-                                    $("#modal-container-confirm-delete-tema").addClass("d-block");
+                                    var titulo_modal_confirm_act_desac = $('#titulo-confirm-act-desac-usuario');
+                                    var h3_modal_confirm_act_desac = $('#h3-act-desac-usuario');
 
-                                    // $("#header").addClass("opacity-25");
-                                    // $("#main-container").addClass("opacity-25");
-                                    // $("#body").addClass("fondo-desactivado");
+                                    titulo_modal_confirm_act_desac.empty();
+                                    h3_modal_confirm_act_desac.empty();
+
+                                    if (estado == 0) {
+                                        titulo_modal_confirm_act_desac.text('Modal confirm activar usuario');
+                                        h3_modal_confirm_act_desac.text('¿Desea activar este usuario?');
+                                    } else {
+                                        titulo_modal_confirm_act_desac.text('Modal confirm desactivar usuario');
+                                        h3_modal_confirm_act_desac.text('¿Desea desactivar este usuario?');
+                                    }
+
+
+
+                                    // habilito modal de confirm eliminar usuario
+                                    $("#modal-container-confirm-act-desac-usuario").addClass("d-block");
+
+
 
 
                                 };
 
-                                var icono_eliminar = document.createElement("ion-icon");
-                                icono_eliminar.setAttribute('name', "trash");
+                                var icono_power = document.createElement("ion-icon");
+                                icono_power.setAttribute('name', "power");
 
-                                btn_delete_user.appendChild(icono_eliminar);
+                                btn_delete_user.appendChild(icono_power);
 
 
                                 td_tbody_tabla.appendChild(ver_user);

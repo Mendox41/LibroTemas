@@ -572,6 +572,34 @@ include ('../../php/session/validate-admin.php');
                 </div>
             </div>
 
+              <!-- modal confirm activar/desactivar usuario -->
+              <div class="modal" tabindex="-1" id="modal-container-confirm-act-desac-usuario">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-act-desac-usuario">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm-act-desac-usuario " id="titulo-confirm-act-desac-usuario">
+                            </h7>
+                            <button id="close-btn-modal-confirm-act-desac-usuario" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="h3-act-desac-usuario"></h3>
+                            <input type="text" id="id-usuario-modal-confirm-act-desac" class="form-control" disabled >
+                            <input type="text" id="estado-usuario-modal-confirm-act-desac" class="form-control" disabled >
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-act-desac-usuario">Cancel</button>
+                            <button class="btn btn-success"
+                                id="btn-aceptar-modal-confirm-act-desac-usuario">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
 
@@ -604,6 +632,8 @@ include ('../../php/session/validate-admin.php');
     <!-- js -->
     <script type="module" src="../../js/modals-actions/modals-abm-users.js"></script>
     <script type="module" src="../../js/users/user-filter-actions.js"></script>
+    <script type="module" src="../../js/users/modify-status-user.js"></script>
+
 
     <script type="module" src="../../js/users/new-user.js"></script>
 

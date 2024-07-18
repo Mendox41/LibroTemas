@@ -40,11 +40,10 @@ $(document).ready(function () {
         var id_comision = $("#modify-curso-comision").val();
         var ciclo = $("#modify-curso-ciclo").val();
         var id_profesor = $("#modify-curso-profesor").val();
-        var isActive = $("#modify-curso-estado").val();
 
 
         // si uno de los campos esta vacio entra aca
-        if (isActive == "" || id_curso == "" || id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0) {
+        if (id_curso == "" || id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0) {
 
             // $("#errorMessage").empty();
             // $("#errorMessage").text('Todos los campos deben ser completados');
@@ -73,12 +72,11 @@ $(document).ready(function () {
         var id_comision = $("#modify-curso-comision").val();
         var ciclo = $("#modify-curso-ciclo").val();
         var id_profesor = $("#modify-curso-profesor").val();
-        var isActive = $("#modify-curso-estado").val();
-        
 
 
 
-        if (isActive == "" || id_curso == "" || id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0) {
+
+        if (id_curso == "" || id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0) {
             alert("Todos los campos deben ser completados");
 
         } else {
@@ -96,8 +94,7 @@ $(document).ready(function () {
                     id_turno: id_turno,
                     id_comision: id_comision,
                     c_anio: ciclo,
-                    id_profesor: id_profesor,
-                    isActive: isActive
+                    id_profesor: id_profesor
                 },
                 success: function (respuesta) {
                     alert(respuesta);
@@ -213,21 +210,131 @@ $(document).ready(function () {
     // creo dinamicamente las opciones del select de profesores
     get_profesores_for_select_modal('modify-curso-profesor');
 
-    // if (select_nombre_carrera.val() != 0) {
-    //     funciones_get_data_form.get_anio_carrera_for_select(select_nombre_carrera.val(), "modify-curso-anio-carrera");
-    // }
-
-    // if (select_anio_carrera.val() != 0) {
-    //     funciones_get_data_form.get_materias_for_select(select_nombre_carrera.val(), select_anio_carrera.val(), "modify-curso-nombre-materia");
-
-    // }
-
-    // if (select_materias.val() != 0) {
-    //     funciones_get_data_form.get_semestre_for_select(select_nombre_carrera.val(), select_anio_carrera.val(), select_materias.val(), "modify-curso-semestre");
-
-    // }
 
     // ----------------------------------------------------------------
 
+    // evento para activar o desactivar un curso
+
+    $("#btn-aceptar-modal-confirm-act-desac-curso").click(function () {
+
+        var id_curso = $("#id-curso-modal-confirm-act-desac").val();
+        var estado_curso = $("#estado-curso-modal-confirm-act-desac").val();
+
+
+        if (id_curso == "" || estado_curso == "") {
+            console.log("No se encuentra ingresado estado o id_curso");
+        } else if (estado_curso == 0) {
+
+            var objAjax = $.ajax({
+                type: "post",
+                url: "../../php/course/activate-course.php",
+                data: {
+                    id_curso: id_curso,
+                },
+                success: function (respuesta) {
+                    var data = JSON.parse(respuesta);
+
+                    // oculto el modal del formy del de confirmar ingreso de un nuevo tema
+                    $("#modal-container-confirm-act-desac-curso").removeClass("d-block");
+
+                    // agrego el mensaje de respuesta del servidor
+                    $("#modal-title-respuesta").empty();
+                    $("#modal-title-respuesta").text(data.message);
+                    if (data.success == true) {
+                        $("#modal-title-respuesta").addClass("text-success");
+
+                        // actualizo datos de la tabla dinamicamente
+                        // update_tabla_filtro_temas();
+
+
+                    } else {
+                        $("#modal-title-respuesta").addClass("text-danger");
+                    };
+
+                    // hago visible el modal de respuesta
+                    $("#modal-container-respuesta").addClass("d-block");
+
+
+
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error en la solicitud:', textStatus, errorThrown);
+                    console.log('Estado de la respuesta:', jqXHR.status);
+                    console.log('Respuesta completa:', jqXHR.responseText);
+                    if (jqXHR.status === 0) {
+                        alert('No se pudo conectar al servidor. Por favor, verifica tu conexión a internet y la URL del servidor.');
+                    } else {
+                        alert('Error en la solicitud AJAX: ' + textStatus + ' - ' + errorThrown + '\nEstado: ' + jqXHR.status);
+                    }
+                }
+
+
+            });
+
+
+        } else {
+
+            var objAjax = $.ajax({
+                type: "post",
+                url: "../../php/course/deactivate-course.php",
+                data: {
+                    id_curso: id_curso,
+                },
+                success: function (respuesta) {
+                    var data = JSON.parse(respuesta);
+
+                    // oculto el modal del formy del de confirmar ingreso de un nuevo tema
+                    $("#modal-container-confirm-act-desac-curso").removeClass("d-block");
+
+                    // agrego el mensaje de respuesta del servidor
+                    $("#modal-title-respuesta").empty();
+                    $("#modal-title-respuesta").text(data.message);
+                    if (data.success == true) {
+                        $("#modal-title-respuesta").addClass("text-success");
+
+                        // actualizo datos de la tabla dinamicamente
+                        // update_tabla_filtro_temas();
+
+
+                    } else {
+                        $("#modal-title-respuesta").addClass("text-danger");
+                    };
+
+                    // hago visible el modal de respuesta
+                    $("#modal-container-respuesta").addClass("d-block");
+
+
+
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error en la solicitud:', textStatus, errorThrown);
+                    console.log('Estado de la respuesta:', jqXHR.status);
+                    console.log('Respuesta completa:', jqXHR.responseText);
+                    if (jqXHR.status === 0) {
+                        alert('No se pudo conectar al servidor. Por favor, verifica tu conexión a internet y la URL del servidor.');
+                    } else {
+                        alert('Error en la solicitud AJAX: ' + textStatus + ' - ' + errorThrown + '\nEstado: ' + jqXHR.status);
+                    }
+                }
+
+
+            });
+
+
+            
+        };
+
+
+
+
+    });
+
 
 });
+
+
+
+export function activate_couse(val) {
+
+};
+
+export function desactivate_couse(val) {
+};

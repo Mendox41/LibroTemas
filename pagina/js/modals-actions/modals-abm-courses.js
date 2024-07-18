@@ -174,6 +174,26 @@ $(document).ready(function () {
 
     // ----------------------------------------------------------------
 
+    // Funciones del modal confirm act/desact curso
+
+    // btn x
+    $("#close-btn-modal-confirm-act-desac-curso").click(function () {
+        $("modal-container-confirm-act-desac-curso").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
+    // btn cancelar
+    $("#btn-cancel-modal-confirm-act-desac-curso").click(function () {
+        $("#modal-container-confirm-act-desac-curso").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
+
+
+    // ----------------------------------------------------------------
+
+
+
 
 });
 
@@ -219,7 +239,7 @@ export function restablecer_valores_modal_ver_curso() {
 export function restablecer_valores_modal_modify_curso() {
 
     // vacio campos
-    
+
     $('#modify-curso-ciclo').val("");
 
     $('#modify-curso-nombre-carrera').val(0);
@@ -230,7 +250,7 @@ export function restablecer_valores_modal_modify_curso() {
     $('#modify-curso-comision').val(0);
     $('#modify-curso-profesor').val(0);
 
-   
+
 
     // restablesco estilos si fueron modificados
 

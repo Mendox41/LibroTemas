@@ -502,18 +502,6 @@ include ('../../php/session/validate-admin.php');
                                             id="modify-curso-profesor">
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label for="modify-curso-estado" class="form-label">Estado</label>
-                                        <select name="modify-curso-estado" class="form-control"
-                                            id="modify-curso-estado">
-                                            <option value="">Seleccione Estado</option>
-                                            <option value="1">Activo</option>
-                                            <option value="0">Desactivado</option>
-
-
-                                        </select>
-                                    </div>
-
                                     <div class="col-md-12 ">
                                         <label for="errorMessage" id="errorMessage" class="invisible"></label>
                                     </div>
@@ -575,7 +563,7 @@ include ('../../php/session/validate-admin.php');
                             <h3 class="titulo-confirm text-danger" id="">¿Desea confirmar la eliminacion de los datos
                                 del
                                 Tema?</h3>
-                            <input type="text" id="id-libro-curso-modal-confirm-delete" class="form-control">
+                            <input type="text" id="id-curso-modal-confirm-delete" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
@@ -586,6 +574,34 @@ include ('../../php/session/validate-admin.php');
                     </div>
                 </div>
             </div>
+
+            <!-- modal confirm activar/desactivar curso -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-act-desac-curso">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-act-desac-curso">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm-act-desac-curso " id="titulo-confirm-act-desac-curso">
+                            </h7>
+                            <button id="close-btn-modal-confirm-act-desac-curso" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="h3-act-desac-curso"></h3>
+                            <input type="text" id="id-curso-modal-confirm-act-desac" class="form-control" hidden disabled>
+                            <input type="text" id="estado-curso-modal-confirm-act-desac" class="form-control" hidden disabled>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-act-desac-curso">Cancel</button>
+                            <button class="btn btn-success"
+                                id="btn-aceptar-modal-confirm-act-desac-curso">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
         </div>

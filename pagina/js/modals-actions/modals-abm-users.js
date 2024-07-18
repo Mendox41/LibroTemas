@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    
+
     // Funciones para ventana de form de nuevo usuario
 
     $("#btn-close-modal-form-nuevo-usuario").click(function () {
@@ -103,6 +103,22 @@ $(document).ready(function () {
 
     });
 
+    // --------------------------------------------
+
+    // Funciones del modal confirm act/desact usuario
+
+    // btn x
+    $("#close-btn-modal-confirm-act-desac-usuario").click(function () {
+        $("#modal-container-confirm-act-desac-usuario").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
+    // btn cancelar
+    $("#btn-cancel-modal-confirm-act-desac-usuario").click(function () {
+        $("#modal-container-confirm-act-desac-usuario").removeClass("d-block");
+        restablecer_contenedores();
+    });
+
 
 });
 
@@ -163,6 +179,8 @@ export function restablecer_valores_modal_modify_tema() {
 
     // oculto el mensaje de error si esta visivle
     $("#errorMessage-modal-modify-tema").addClass("invisible");
+
+
 
 
 }

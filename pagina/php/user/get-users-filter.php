@@ -96,7 +96,7 @@ while ($stmt->fetch()) {
     $objCourse->isActive = $isActive;
     $objCourse->IsAdmin = $IsAdmin;
 
-    $objCourse->id_profesor_for_btns = $id_profesor;
+    $objCourse->id_profesor_for_btns = $id_usuario;
 
     $cont += 1;
 
