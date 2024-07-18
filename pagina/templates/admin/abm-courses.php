@@ -41,21 +41,6 @@ include ('../../php/session/validate-admin.php');
                         Nuevo Curso
                     </button>
                 </div>
-
-                <div class="p-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            disabled>
-                            Exportar
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" id="btn-export-pdf">PDF</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-csv">CSV</a></li>
-                            <li><a class="dropdown-item" href="#" id="btn-export-txt">TXT</a></li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="p-2">
                     <button type="button" name="" id="btn-filtro-curso" class="btn btn-primary" disabled>
                         Filtro
@@ -143,7 +128,7 @@ include ('../../php/session/validate-admin.php');
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Filtro de Temas</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Filtro de Cursos</h1>
                                 <button id="btn-close-modal-filtro" type="button" class="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
@@ -251,7 +236,6 @@ include ('../../php/session/validate-admin.php');
                 </div>
             </div>
 
-            <!-- readaptar codigo -->
             <!-- Modal Ingreso nuevo curso -->
             <div class="modal-container-ingreso-nuevo-curso" id="modal-container-ingreso-nuevo-curso">
                 <div class="modal modal-lg" id="modal-form-ingreso-nuevo-curso" data-bs-backdrop="static"
@@ -315,22 +299,6 @@ include ('../../php/session/validate-admin.php');
                                         </select>
                                     </div>
 
-                                    <!-- 
-                                    <div class="col-sm-12">
-                                        <label for="fecha-curso-modal-filtro" class="form-label">Fecha</label>
-                                        <input type="date" class="form-control" id="nuevo-curso-fecha">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="titulo-curso-modal-filtro" class="form-label">Titulo</label>
-                                        <input type="text" class="form-control" id="nuevo-curso-titulo">
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="descripcion-curso-modal-filtro"
-                                            class="form-label">Descripcion</label>
-                                        <textarea class="form-control" id="nuevo-curso-descripcion" rows="1"></textarea>
-                                    </div> -->
-
                                     <div class="col-md-12 ">
                                         <label for="errorMessage" id="errorMessage" class="invisible"></label>
                                     </div>
@@ -375,6 +343,250 @@ include ('../../php/session/validate-admin.php');
                     </div>
                 </div>
             </div>
+
+            <!-- readaptar codigo -->
+
+            <!-- Modal para ver datos de curso -->
+            <div class="modal-container-ver-curso" id="modal-container-ver-curso">
+                <div class="modal modal-lg " id="modal-form-ver-curso" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Datos de curso registrado</h1>
+                                <button id="btn-close-modal-ver-curso" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <input id="ver-curso-id" type="text" class="form-control" disabled hidden>
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-hover table-bordered tabla-datos-curso">
+
+                                        <tbody>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Carrera</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-carrera"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Año Carrera</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-anio-carrera"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Materia</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-materia"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Turno</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-turno"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Comision</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-comision"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Ciclo Lectivo
+                                                </td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-ciclo"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="bg-secondary-subtle text-secondary-emphasis">Semestre</td>
+                                                <td class="bg-secondary-subtle text-secondary-emphasis"
+                                                    id="ver-curso-td-semestre"></td>
+                                            </tr>
+                                            <tr class="">
+                                                <td>Profesor</td>
+                                                <td id="ver-curso-td-nombre-profesor"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="modal-footer btns-modal-space-between">
+                                <div id="btns-modificar" class="">
+                                    <button type="submit" class="btn btn-warning"
+                                        id="btn-modif-modal-ver-curso">Modificar
+                                        Datos</button>
+                                    <button type="submit" class="btn btn-danger"
+                                        id="btn-eliminar-modal-ver-curso">Eliminar</button>
+
+                                </div>
+                                <div id="otros-btns">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                        id="btn-volver-modal-ver-curso">Volver</button>
+                                    <!-- <button type="submit" class="btn btn-success"
+                                        id="btn-ingreso-curso">Ingresar</button> -->
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal modificar curso -->
+            <div class="modal-container-modify-curso" id="modal-container-modify-curso">
+                <div class="modal modal-lg" id="modal-form-modify-curso" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Modificación datos de Tema</h1>
+                                <button id="btn-close-modal-modify-curso" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="modal-body">
+                                <input type="text" id="modify-id-curso" disabled hidden>
+
+                                <div class="row g-3 form-filtro" id="modal-form-modify-curso">
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-nombre-carrera" class="form-label">Carrera</label>
+                                        <select name="modify-curso-nombre-carrera" class="form-control"
+                                            id="modify-curso-nombre-carrera"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-anio-carrera" class="form-label">Año
+                                            carrera</label>
+                                        <select name="modify-curso-anio-carrera" class="form-control"
+                                            id="modify-curso-anio-carrera">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-nombre-materia" class="form-label">Materia</label>
+                                        <select name="modify-curso-nombre-materia" class="form-control"
+                                            id="modify-curso-nombre-materia">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-semestre" class="form-label">Semestre</label>
+                                        <select name="modify-curso-semestre" class="form-control"
+                                            id="modify-curso-semestre">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-turno" class="form-label">Turno</label>
+                                        <select name="modify-curso-turno" class="form-control" id="modify-curso-turno">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-ciclo" class="form-label">Ciclo</label>
+                                        <input type="text" class="form-control" id="modify-curso-ciclo"
+                                            placeholder="Ingrese Ciclo">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-comision" class="form-label">Comision</label>
+                                        <select name="modify-curso-comision" class="form-control"
+                                            id="modify-curso-comision">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-profesor" class="form-label">Profesor Asociado</label>
+                                        <select name="modify-curso-profesor" class="form-control"
+                                            id="modify-curso-profesor">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="modify-curso-estado" class="form-label">Estado</label>
+                                        <select name="modify-curso-estado" class="form-control"
+                                            id="modify-curso-estado">
+                                            <option value="">Seleccione Estado</option>
+                                            <option value="1">Activo</option>
+                                            <option value="0">Desactivado</option>
+
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="errorMessage" id="errorMessage" class="invisible"></label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-modify-curso">Cancel</button>
+                                <button class="btn btn-success" id="btn-aceptar-modify-curso">Aceptar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- modal confirm modificacion curso -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-modify-curso">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-modify-curso">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Confirmacion
+                                modificacion Tema
+                            </h7>
+                            <button id="close-btn-modal-confirm-modify-curso" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="">¿Desea confirmar la modificacion de los datos del
+                                Tema?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-modify-curso">Cancel</button>
+                            <button class="btn btn-warning" id="btn-aceptar-modal-confirm-modify-curso">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal confirm eliminacion curso -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-delete-curso">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-delete-curso">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm " id="staticBackdropLabel">Confirmacion
+                                Eliminar Tema
+                            </h7>
+                            <button id="close-btn-modal-confirm-delete-curso" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm text-danger" id="">¿Desea confirmar la eliminacion de los datos
+                                del
+                                Tema?</h3>
+                            <input type="text" id="id-libro-curso-modal-confirm-delete" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-delete-curso">Cancel</button>
+                            <button class="btn btn-success" id="btn-aceptar-modal-confirm-delete-curso">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
 

@@ -12,7 +12,7 @@ $id_comision = !empty($_POST['id_comision']) ? $_POST['id_comision'] : null;
 $c_anio = !empty($_POST['c_anio']) ? $_POST['c_anio'] : null;
 $id_profesor = !empty($_POST['id_profesor']) ? $_POST['id_profesor'] : null;
 $id_turno = !empty($_POST['id_turno']) ? $_POST['id_turno'] : null;
-$isActive = !empty($_POST['isActive']) ? $_POST['isActive'] : null;
+$isActive = !empty($_POST['isActive']) ? $_POST['isActive'] : "";
 
 $result = new stdClass();
 $result->success = false;
@@ -53,7 +53,7 @@ if ($id_curso === null) {
     error_request($result, "Falta el campo id_turno");
     echo json_encode($result);
     exit();
-}elseif ($isActive === null) {
+}elseif ($isActive === "") {
     error_request($result, "Falta el campo isActive");
     echo json_encode($result);
     exit();

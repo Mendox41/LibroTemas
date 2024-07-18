@@ -219,20 +219,20 @@ export function restablecer_valores_modal_ver_curso() {
 export function restablecer_valores_modal_modify_curso() {
 
     // vacio campos
-    $('#curso-nombre-carrera-modal-modify').val("");
-    $('#curso-anio-carrera-modal-modify').val("");
-    $('#curso-nombre-materia-modal-modify').val("");
-    $('#curso-turno-modal-modify').val("");
-    $('#curso-comision-modal-modify').val("");
+    
+    $('#modify-curso-ciclo').val("");
 
-    $('#fecha-curso-modal-modify').val(0);
-    $('#titulo-curso-modal-modify').val("");
-    $('#descripcion-curso-modal-modify').val("");
+    $('#modify-curso-nombre-carrera').val(0);
+    $('#modify-curso-anio-carrera').val(0);
+    $('#modify-curso-nombre-materia').val(0);
+    $('#modify-curso-semestre').val(0);
+    $('#modify-curso-turno').val(0);
+    $('#modify-curso-comision').val(0);
+    $('#modify-curso-profesor').val(0);
+
+   
 
     // restablesco estilos si fueron modificados
-    $("#fecha-curso-modal-modify").removeClass('bg-danger-subtle');
-    $("#fecha-curso-modal-modify").removeClass("text-danger-emphasis");
-    $("#fecha-curso-modal-modify").removeClass("border-danger");
 
     // oculto el mensaje de error si esta visivle
     $("#errorMessage-modal-modify-curso").addClass("invisible");

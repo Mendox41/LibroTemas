@@ -312,7 +312,7 @@ export function get_anio_carrera_for_select(id_carrera, id_select_anio_carrera) 
 
 export function get_materias_for_select(id_carrera, id_anio_carrera, id_select_materia) {
     $.ajax({
-        url: '../../php/individual_data/get-materias.php',
+        url: '../../php/individual_data/get_materias_for_new_course.php',
         type: 'POST',
         data: {
             id_carrera: id_carrera,
@@ -328,7 +328,7 @@ export function get_materias_for_select(id_carrera, id_anio_carrera, id_select_m
             var data_materias = JSON.parse(respuesta);
             data_materias.datos.forEach(function (valor) {
                 var objOpcion = document.createElement("option");
-                objOpcion.setAttribute("value", valor.id_relacion);
+                objOpcion.setAttribute("value", valor.id_materia);
                 if (valor.descripcion_materia != "") {
                     objOpcion.innerHTML = valor.nombre_materia + " (" + valor.descripcion_materia + ")";
 
@@ -353,6 +353,7 @@ export function get_materias_for_select(id_carrera, id_anio_carrera, id_select_m
 };
 
 export function get_semestre_for_select(id_carrera, id_anio_carrera, id_materia, id_select_semestre) {
+    // console.log(id_carrera + ' ' + id_anio_carrera + ' ' + id_materia);
     $.ajax({
         url: '../../php/individual_data/get-semestre.php',
         type: 'POST',
@@ -364,7 +365,6 @@ export function get_semestre_for_select(id_carrera, id_anio_carrera, id_materia,
         },
 
         success: function (respuesta) {
-            alert(respuesta);
             $("#" + id_select_semestre).empty();
             crear_primer_opcion('Semestre', id_select_semestre);
 
@@ -393,7 +393,7 @@ export function get_semestre_for_select(id_carrera, id_anio_carrera, id_materia,
 
 export function get_comisiones_for_select(id_select_comisiones) {
     $.ajax({
-        url: '../../php/individual_data/get_comision.php',
+        url: '../../php/individual_data/get_comisiones_for_new_course.php',
         type: 'POST',
 
         success: function (respuesta) {
@@ -407,7 +407,7 @@ export function get_comisiones_for_select(id_select_comisiones) {
             crear_primer_opcion('Carrera', id_select_comisiones);
 
             var data_comisiones = JSON.parse(respuesta);
-            data_comisiones.datos.forEach(function (valor) {
+            data_comisiones.comisiones.forEach(function (valor) {
                 var objOpcion = document.createElement("option");
                 objOpcion.setAttribute("value", valor.id_comision);
                 objOpcion.innerHTML = valor.comision;
@@ -429,7 +429,7 @@ export function get_comisiones_for_select(id_select_comisiones) {
 
 export function get_turnos_for_select(id_select_turnos) {
     $.ajax({
-        url: '../../php/individual_data/get_turnos.php',
+        url: '../../php/individual_data/get_turnos_for_new_course.php',
         type: 'POST',
 
         success: function (respuesta) {
@@ -442,11 +442,11 @@ export function get_turnos_for_select(id_select_turnos) {
             $("#" + id_select_turnos).empty();
             crear_primer_opcion('Carrera', id_select_turnos);
 
-            var data_comisiones = JSON.parse(respuesta);
-            data_comisiones.datos.forEach(function (valor) {
+            var data_turnos = JSON.parse(respuesta);
+            data_turnos.turnos.forEach(function (valor) {
                 var objOpcion = document.createElement("option");
-                objOpcion.setAttribute("value", valor.id_comision);
-                objOpcion.innerHTML = valor.comision;
+                objOpcion.setAttribute("value", valor.id_turno);
+                objOpcion.innerHTML = valor.turno;
                 document.getElementById(id_select_turnos).appendChild(objOpcion);
             });
         },

@@ -31,31 +31,24 @@ $(document).ready(function () {
 
 
     $("#btn-aceptar-ingreso-nuevo-curso").click(function () {
-        // el id de relacion lo almaceno en el select de materia
-        var id_relacion = $("#nuevo-curso-nombre-materia").val();
+        var id_carrera = $("#nuevo-curso-nombre-carrera").val();
+        var id_anio = $("#nuevo-curso-anio-carrera").val();
+        var id_materia = $("#nuevo-curso-materia").val();
+        var id_semestre = $("#nuevo-curso-semestre").val();
         var id_turno = $("#nuevo-curso-turno").val();
         var id_comision = $("#nuevo-curso-comision").val();
-        var fecha_curso = $("#nuevo-curso-fecha").val();
-        var titulo_curso = $("#nuevo-curso-titulo").val();
-        var descripcion_curso = $("#nuevo-curso-descripcion").val();
+        var ciclo = $("#nuevo-curso-ciclo").val();
+        var id_profesor = $("#select-profesor-asociado").val();
+
 
         // si uno de los campos esta vacio entra aca
-        if (id_relacion == 0 || id_turno == 0 || id_comision == 0 || fecha_curso == 0 || titulo_curso == "" || descripcion_curso == "") {
+        if (id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0){
 
             $("#errorMessage").empty();
             $("#errorMessage").text('Todos los campos deben ser completados');
             $("#errorMessage").removeClass("invisible");
 
-
-        } else if (!validacion_fecha(fecha_curso)) {
-            $("#errorMessage").empty();
-            $("#errorMessage").text('La fecha ingresada debe ser menor o igual que la fecha actual');
-
-            $("#nuevo-curso-fecha").addClass('bg-danger-subtle');
-            $("#nuevo-curso-fecha").addClass("text-danger-emphasis");
-            $("#nuevo-curso-fecha").addClass("border-danger");
-
-            $("#errorMessage").removeClass("invisible");
+            alert('Todos los campos deben ser completados');
 
         } else {
             // si todos los campos estan completos entra aca
@@ -69,57 +62,59 @@ $(document).ready(function () {
 
 
     $("#btn-confirm-ingreso-curso").click(function () {
-        get_usuario().then(function (id_usuario) {
-            if (id_usuario === false) {
-                alert("Error: Id usuario not found");
-            } else if (id_relacion == 0 || id_turno == 0 || id_comision == 0 || fecha_curso == 0 || titulo_curso == "" || descripcion_curso == "") {
-                alert("Todos los campos deben ser completados");
 
-            } else {
-                // el id de relacion lo almaceno en el select de materia
-                var id_relacion = $("#nuevo-curso-nombre-materia").val();
-                var id_turno = $("#nuevo-curso-turno").val();
-                var id_comision = $("#nuevo-curso-comision").val();
-                var fecha_curso = $("#nuevo-curso-fecha").val();
-                var titulo_curso = $("#nuevo-curso-titulo").val();
-                var descripcion_curso = $("#nuevo-curso-descripcion").val();
-                $.ajax({
-                    type: "post",
-                    url: "../../php/topic/new-topic-admin.php",
-                    data: {
-                        id_usuario: id_usuario,
-                        new_id_relacion: id_relacion,
-                        new_id_turno: id_turno,
-                        new_id_comision: id_comision,
-                        new_curso: titulo_curso,
-                        new_descripcion: descripcion_curso,
-                        new_time: fecha_curso
-                    },
-                    success: function (respuesta) {
-                        var data = JSON.parse(respuesta);
-                        // oculto el modal del form y del de confirmar ingreso de un nuevo curso
-                        $("#modal-container-confirm-ingreso-curso").removeClass("d-block");
-                        // agrego el mensaje de respuesta del servidor
-                        $("#modal-title-respuesta").empty();
-                        $("#modal-title-respuesta").text(data.message);
+        var id_carrera = $("#nuevo-curso-nombre-carrera").val();
+        var id_anio = $("#nuevo-curso-anio-carrera").val();
+        var id_materia = $("#nuevo-curso-nombre-materia").val();
+        var id_semestre = $("#nuevo-curso-semestre").val();
+        var id_turno = $("#nuevo-curso-turno").val();
+        var id_comision = $("#nuevo-curso-comision").val();
+        var ciclo = $("#nuevo-curso-ciclo").val();
+        var id_profesor = $("#select-profesor-asociado").val();
 
-                        if (data.success == true) {
-                            $("#modal-title-respuesta").addClass("text-success");
-                            // update_tabla_filtro_cursos();
-                        } else {
-                            $("#modal-title-respuesta").addClass("text-danger");
 
-                        }
+        if (id_carrera == 0 || id_anio == 0 || id_materia == 0 || id_semestre == 0 || id_turno == 0 || id_comision == 0 || ciclo == 0 || id_profesor == 0){
+            alert("Todos los campos deben ser completados");
 
-                        // hago visible el modal de respuesta
-                        $("#modal-container-respuesta").addClass("d-block");
+        } else {
+            console.log(id_materia);
+
+            $.ajax({
+                type: "post",
+                url: "../../php/course/new-course.php",
+                data: {
+                    id_carrera: id_carrera,
+                    id_anio: id_anio,
+                    id_materia: id_materia,
+                    id_semestre: id_semestre,
+                    id_turno:id_turno,
+                    id_comision:id_comision,
+                    ciclo:ciclo,
+                    id_profesor:id_profesor
+                },
+                success: function (respuesta) {
+
+                    var data = JSON.parse(respuesta);
+                    // oculto el modal del form y del de confirmar ingreso de un nuevo curso
+                    $("#modal-container-confirm-ingreso-curso").removeClass("d-block");
+                    // agrego el mensaje de respuesta del servidor
+                    $("#modal-title-respuesta").empty();
+                    $("#modal-title-respuesta").text(data.message);
+
+                    if (data.success == true) {
+                        $("#modal-title-respuesta").addClass("text-success");
+                        // update_tabla_filtro_cursos();
+                    } else {
+                        $("#modal-title-respuesta").addClass("text-danger");
+
                     }
-                });
-            }
-        }).catch(function (error) {
-            console.error("Error al obtener el usuario:", error);
-            alert("Error al obtener el usuario");
-        });
+
+                    // hago visible el modal de respuesta
+                    $("#modal-container-respuesta").addClass("d-block");
+                }
+            });
+        }
+
     });
 
 
@@ -143,11 +138,15 @@ $(document).ready(function () {
         // console.log("Cambió el valor del select");
         $('#nuevo-curso-anio-carrera').prop('disabled', true);
         $('#nuevo-curso-nombre-materia').prop('disabled', true);
+        $('#nuevo-curso-semestre').prop('disabled', true);
+
         // $('#nuevo-curso-comision').prop('disabled', true);
         // $('#nuevo-curso-turno').prop('disabled', true);
 
         $("#nuevo-curso-anio-carrera").val(0);
         $("#nuevo-curso-nombre-materia").val(0);
+        $("#nuevo-curso-semestre").val(0);
+
         // $("#nuevo-curso-comision").val(0);
         // $("#nuevo-curso-turno").val(0);
 
@@ -160,11 +159,14 @@ $(document).ready(function () {
     // Evento de cambio de valor en el select de anio carrera
     select_anio_carrera.on('change', function () {
         $('#nuevo-curso-nombre-materia').prop('disabled', true);
+        $('#nuevo-curso-semestre').prop('disabled', true);
+
+
         // $('#nuevo-curso-comision').prop('disabled', true);
         // $('#nuevo-curso-turno').prop('disabled', true);
 
         $("#nuevo-curso-nombre-materia").val(0);
-        // $("#nuevo-curso-comision").val(0);
+        $("#nuevo-curso-semestre").val(0);
         // $("#nuevo-curso-turno").val(0);
 
         if (select_anio_carrera.val() != 0) {
@@ -177,7 +179,8 @@ $(document).ready(function () {
 
     // Evento de cambio de valor en el select de materias
     select_materias.on('change', function () {
-  
+        $('#nuevo-curso-semestre').prop('disabled', true);
+        $("#nuevo-curso-semestre").val(0);
 
         if (select_materias.val() != 0) {
             $('#nuevo-curso-semestre').prop('disabled', false);
@@ -193,10 +196,10 @@ $(document).ready(function () {
     // ----------------------------------------------------------------
 
     // creo dinamicamente las opciones del select de turnos
-    // funciones_get_data_form.get_turnos_for_select('nuevo-curso-turno');
+    funciones_get_data_form.get_turnos_for_select('nuevo-curso-turno');
 
     // creo dinamicamente las opciones del select de comisiones
-    // funciones_get_data_form.get_comisiones_for_select('nuevo-curso-comision');
+    funciones_get_data_form.get_comisiones_for_select('nuevo-curso-comision');
 
     // creo dinamicamente las opciones del select de profesores
     get_profesores_for_select();
@@ -204,9 +207,7 @@ $(document).ready(function () {
 
     // ----------------------------------------------------------------
 
-    // function cargar_campos_form_nuevo_curso(id_carrera) {
 
-    // };
 
     function vaciar_campos_form_nuevo_curso() {
         $("#nuevo-curso-nombre-carrera").val(0);
