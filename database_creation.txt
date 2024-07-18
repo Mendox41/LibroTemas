@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2024 a las 10:02:27
+-- Tiempo de generación: 18-07-2024 a las 21:50:44
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -306,7 +306,8 @@ SELECT
     INNER JOIN anios AS T7 ON T7.id_anio = T2.id_anio
     INNER JOIN semestres AS T8 ON T8.id_semestre = T2.id_semestre
     INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
-	WHERE T3.id_usuario = id_user
+	WHERE T3.id_usuario = id_user 
+		AND T1.isActive = 1
     ORDER BY t6.nom_abreviado, T7.anio, T8.semestre, T9.materia;
 END$$
 
@@ -398,8 +399,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT
         id_comision = p_id_comision,
         id_profesor = p_id_profesor,
         id_turno = p_id_turno,
-        c_anio = c_anio,
-        isActive = p_isActive
+        c_anio = c_anio
     WHERE id_curso = p_id_curso;
 END$$
 
@@ -423,11 +423,26 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_user_pass` (IN `p_id_user` I
     WHERE id_usuario = p_id_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_user_user` (IN `p_id_user` INT, IN `p_usuario` VARCHAR(250))   BEGIN
-	UPDATE usuarios
-    SET 
-        usuario = p_usuario
-    WHERE id_usuario = p_id_user;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_user_user` (IN `p_id_user` INT, IN `p_usuario` VARCHAR(250), OUT `mensaje` VARCHAR(255))   BEGIN
+    DECLARE usuario_existe BOOLEAN;
+
+    -- Llama al procedimiento para validar si el usuario ya existe
+    CALL validate_usuario_nombre(p_usuario, @usuario_existe);
+
+    -- Asigna el valor de la variable de sesión a la variable local
+    SET usuario_existe = @usuario_existe;
+
+    -- Condición para verificar si el usuario ya existe
+    IF usuario_existe THEN 
+        SET mensaje = 'El usuario ya existe.';
+    ELSE
+        -- Realiza la actualización del usuario
+        UPDATE usuarios
+        SET 
+            usuario = p_usuario
+        WHERE id_usuario = p_id_user;
+        SET mensaje = 'El usuario fue modificado correctamente.';
+    END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `new_course` (IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_semestre` INT, IN `p_id_materia` INT, IN `p_ciclo` INT, IN `p_id_turno` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT)   BEGIN
@@ -1245,7 +1260,7 @@ INSERT INTO `usuarios` (`id_usuario`, `usuario`, `pass`, `isActive`, `isAdmin`, 
 (4, 'tomas', '$2y$10$5FWKKBm7ZBjp0AtiamGMx.Eob/GAT0IzrL/3ZGzRHENIwNZc475LO', 1, 0, NULL),
 (5, 'nacho', '$2y$10$niy/bLFKA2EIjj6dLLkKmugrNmdV0pspRCqTPsasc6yvxaujNP4Qq', 1, 0, NULL),
 (6, 'gustavo', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL),
-(99, 'tomas', '$2y$10$Es3S/MV9ztshDj3VrgZu6u3IC4GhR38Hih2Ca1tQnpnwMNysu7o82', 1, 0, NULL),
+(99, 'tomy', '$2y$10$Es3S/MV9ztshDj3VrgZu6u3IC4GhR38Hih2Ca1tQnpnwMNysu7o82', 1, 0, NULL),
 (100, 'agus', '$2y$10$zOfcBfEFyTMIjU04Q7epJeGA0/ez1soaPCL9ekQJBBtiz21TZLc.C', 1, 0, NULL),
 (101, 'piccin', '$2y$10$bmnpsuH8MbB9i9dVVTIrY.gMj5InUtGRSWaYJ6sdrDUV36J50DLUW', 1, 0, NULL);
 
