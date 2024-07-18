@@ -20,7 +20,8 @@ $(document).ready(function () {
             active = dataSession.active;
             admin = dataSession.admin;
 
-            if (dataSession.success == true && id_usuario !== null && id_usuario !== undefined) {
+
+            if (dataSession.success == true && id_usuario !== null && id_usuario !== undefined && active == 1) {
                 // alert(id_usuario);
 
                 $.ajax({

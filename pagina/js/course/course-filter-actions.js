@@ -222,6 +222,8 @@ $(document).ready(function () {
                                     // alert(valor);
                                     // vacio campo con datos anteriores
 
+
+
                                     $('#id-curso-modal-confirm-act-desac').val("");
                                     $('#estado-curso-modal-confirm-act-desac').val("");
 
@@ -416,6 +418,7 @@ $(document).ready(function () {
 
                     $('#contenedor-tabla-abm-course').addClass('bg-white');
 
+
                     // actualizo campos de inputs del filtro inicial al modal filtro cursos
                     // update_inputs_modal_filtro_cursos(); // FALTA CREAR EL MODAL DE FILTRO DE CURSOS
 
@@ -457,6 +460,9 @@ $(document).ready(function () {
                         // alert(course);
                         var tr_tbody_tabla = document.createElement('tr');
 
+                        var estado = course.isActive;
+
+
                         Object.entries(course).forEach(function ([dato_course, valor]) {
 
                             if (dato_course == 'id_curso_for_btns') {
@@ -479,10 +485,10 @@ $(document).ready(function () {
 
                                     // vacio campo con datos anteriores
                                     // restablecer_valores_modal_ver_curso(); // Crear funcion con datos modificados a cursos
-                                    $('#ver-curso-id-curso').val("");
+                                    $('#').val("");
 
                                     fill_table_ver_datos_course(valor);
-                                    $('#ver-curso-id-curso').val(valor);
+                                    $('#').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
@@ -516,11 +522,11 @@ $(document).ready(function () {
                                     // alert(valor);
                                     // vacio campo con datos anteriores
 
-                                    $('#id-curso-modal-modify').val("");
+                                    $('#modify-id-curso').val("");
                                     restablecer_valores_modal_modify_curso();
 
                                     fill_form_modify_course(valor);
-                                    $('#id-curso-modal-modify').val(valor);
+                                    $('#modify-id-curso').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
@@ -545,39 +551,67 @@ $(document).ready(function () {
 
                                 // Btn eliminar course
                                 var btn_delete_course = document.createElement("button");
-                                btn_delete_course.id = 'btn_delete_course';
+                                btn_delete_course.id = 'btn_act_desac_course';
                                 btn_delete_course.setAttribute("id_course", valor);
                                 btn_delete_course.setAttribute('type', "button");
 
+                                if (estado == 0) {
+                                    btn_delete_course.classList.add("btn", "btn-success");
+
+                                } else {
+                                    btn_delete_course.classList.add("btn", "btn-danger");
+
+                                }
+
 
                                 // btn_delete_course.textContent = 'Eliminar';
-                                btn_delete_course.classList.add("btn", "btn-danger");
                                 btn_delete_course.onclick = function () {
                                     // fn delete course
                                     // alert(valor);
                                     // vacio campo con datos anteriores
-                                    $('#id-curso-modal-confirm-delete').val("");
 
 
-                                    $('#id-curso-modal-confirm-delete').val(valor);
+
+                                    $('#id-curso-modal-confirm-act-desac').val("");
+                                    $('#estado-curso-modal-confirm-act-desac').val("");
+
+
+                                    $('#id-curso-modal-confirm-act-desac').val(valor);
+                                    $('#estado-curso-modal-confirm-act-desac').val(estado);
+
+
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
-                                    // habilito modal de confirm eliminar curso
-                                    $("#modal-container-confirm-delete-curso").addClass("d-block");
+                                    var titulo_modal_confirm_act_desac = $('#titulo-confirm-act-desac-curso');
+                                    var h3_modal_confirm_act_desac = $('#h3-act-desac-curso');
 
-                                    // $("#header").addClass("opacity-25");
-                                    // $("#main-container").addClass("opacity-25");
-                                    // $("#body").addClass("fondo-desactivado");
+                                    titulo_modal_confirm_act_desac.empty();
+                                    h3_modal_confirm_act_desac.empty();
+
+                                    if (estado == 0) {
+                                        titulo_modal_confirm_act_desac.text('Modal confirm activar curso');
+                                        h3_modal_confirm_act_desac.text('¿Desea activar este curso?');
+                                    } else {
+                                        titulo_modal_confirm_act_desac.text('Modal confirm desactivar curso');
+                                        h3_modal_confirm_act_desac.text('¿Desea desactivar este curso?');
+                                    }
+
+
+
+                                    // habilito modal de confirm eliminar curso
+                                    $("#modal-container-confirm-act-desac-curso").addClass("d-block");
+
+
 
 
                                 };
 
-                                var icono_eliminar = document.createElement("ion-icon");
-                                icono_eliminar.setAttribute('name', "trash");
+                                var icono_power = document.createElement("ion-icon");
+                                icono_power.setAttribute('name', "power");
 
-                                btn_delete_course.appendChild(icono_eliminar);
+                                btn_delete_course.appendChild(icono_power);
 
 
                                 td_tbody_tabla.appendChild(ver_course);

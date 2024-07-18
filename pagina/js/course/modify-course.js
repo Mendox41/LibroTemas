@@ -80,7 +80,6 @@ $(document).ready(function () {
             alert("Todos los campos deben ser completados");
 
         } else {
-            console.log(isActive)
 
             $.ajax({
                 type: "POST",
@@ -97,7 +96,6 @@ $(document).ready(function () {
                     id_profesor: id_profesor
                 },
                 success: function (respuesta) {
-                    alert(respuesta);
                     var data = JSON.parse(respuesta);
                     // oculto el modal del form y del de confirmar ingreso de un modify curso
                     $("#modal-container-confirm-modify-curso").removeClass("d-block");

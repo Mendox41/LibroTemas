@@ -1,5 +1,12 @@
 $(document).ready(function () {
 
+    // Funciones para ventana de form de modal filtro
+
+    $("#btn-close-modal-filtro").click(function () {
+        restablecer_contenedores();
+        $("#modal-form-buscar-usuario").removeClass("d-block");
+
+    });
 
     // Funciones para ventana de form de nuevo usuario
 

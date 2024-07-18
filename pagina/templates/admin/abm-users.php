@@ -107,7 +107,7 @@ include ('../../php/session/validate-admin.php');
 
             <!-- Modal filtro usuario -->
             <div class="modal-container-ingreso-nuevo-usuario" id="modal-container-filtro-usuario">
-                <div class="modal modal-lg" id="modal-form-buscar-usuario" data-bs-backdrop="static"
+                <div class="modal modal-lg " id="modal-form-buscar-usuario" data-bs-backdrop="static"
                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen">
                         <div class="modal-content">
@@ -117,80 +117,46 @@ include ('../../php/session/validate-admin.php');
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
-                            <div class="modal-body" id="modal-body">
-
-                                <div class="row g-3 form-filtro" id="form-filtro-usuario">
-
-                                    <div class="col-sm-4">
-                                        <label for="nombre-carrera-modal-filtro" class="form-label">Carrera</label>
-                                        <input type="text" class="form-control" id="nombre-carrera-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="anio-carrera-modal-filtro" class="form-label">Año carrera</label>
-                                        <input type="text" class="form-control" id="anio-carrera-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="nombre-materia-modal-filtro" class="form-label">Materia</label>
-                                        <input type="text" class="form-control" id="nombre-materia-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="comision-modal-filtro" class="form-label">Comision</label>
-                                        <input type="text" class="form-control" id="comision-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="turno-modal-filtro" class="form-label">Turno</label>
-                                        <input type="text" class="form-control" id="turno-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="nombre-usuario-modal-filtro" class="form-label">Usuario</label>
-                                        <input type="text" class="form-control" id="nombre-usuario-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="ciclo-lectivo-modal-filtro" class="form-label">Año ciclo
-                                            lectivo</label>
-                                        <input type="text" class="form-control" id="ciclo-lectivo-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="semestre-modal-filtro" class="form-label">Semestre</label>
-                                        <input type="text" class="form-control" id="semestre-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="nombre-profesor-modal-filtro" class="form-label">Nombre
-                                            Profesor</label>
-                                        <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="apellido-profesor-modal-filtro" class="form-label">Apellido
-                                            Profesor</label>
-                                        <input type="text" class="form-control" id="apellido-profesor-modal-filtro">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="apellido-profesor-modal-filtro" class="form-label">Estado</label>
-                                        <select class="form-select" name="select-estado-modal-filtro"
-                                            id="select-estado-modal-filtro">
-                                            <option value="">Seleccione Opcion</option>
-                                            <option value="1">Activo</option>
-                                            <option value="0">Desactivado</option>
-                                        </select>
-                                    </div>
-
+                            <div class="row g-3 form-filtro" id="form-modal-filtro-usuario">
+                                <h3 id="titulo-modal-filtro">Filtro de busqueda de Usuarios</h3>
+                                <div class="col-sm-6">
+                                    <label for="nombre-usuario-modal-filtro" class="form-label">Usuario</label>
+                                    <input type="text" class="form-control" id="nombre-usuario-modal-filtro">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="legajo-modal-filtro" class="form-label">Legajo</label>
+                                    <input type="text" class="form-control" id="legajo-modal-filtro">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="nombre-profesor-modal-filtro" class="form-label">Nombre Profesor</label>
+                                    <input type="text" class="form-control" id="nombre-profesor-modal-filtro">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="apellido-profesor-modal-filtro" class="form-label">Apellido Profesor</label>
+                                    <input type="text" class="form-control" id="apellido-profesor-modal-filtro">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="apellido-profesor-modal-filtro" class="form-label">Estado</label>
+                                    <select class="form-select" name="select-estado-filtro" id="select-estado-modal-filtro">
+                                        <option value="">Seleccione Opcion</option>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Desactivado</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="admin-modal-filtro" class="form-label">Administrador</label>
+                                    <select class="form-select" name="admin-modal-filtro" id="admin-modal-filtro">
+                                        <option value="">Seleccione Opcion</option>
+                                        <option value="1">Si</option>
+                                        <option value="0">No</option>
+                                    </select>
                                 </div>
 
-                                <div class="modal-footer btns-modal-space-between">
 
-                                    <div id="btns-izq" class="">
-                                        <button class="btn btn-warning"
-                                            id="btn-restablecer-datos-modal-filtro">Restablecer
-                                            campos</button>
-                                    </div>
-                                    <div id="otros-der">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                            id="btn-cancel-modal-filtro-usuario">Cancel</button>
-                                        <button class="btn btn-success"
-                                            id="btn-modal-filtro-buscar-usuario">Buscar</button>
-                                    </div>
-
+                                <div class="d-flex flex-row-reverse">
+                                    <button class="btn btn-primary" id="btn-buscar-usuario-modal-filtro">Buscar</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -323,8 +289,8 @@ include ('../../php/session/validate-admin.php');
 
             <!-- Modal para ver datos de usuario -->
             <div class="modal-container-ver-usuario" id="modal-container-ver-usuario">
-                <div class="modal modal-lg " id="modal-form-ver-usuario" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal modal-lg " id="modal-form-ver-usuario" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -335,7 +301,8 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-usuario-id-libro-usuario" type="text" class="form-control" disabled hidden>
+                                <input id="ver-usuario-id-libro-usuario" type="text" class="form-control" disabled
+                                    hidden>
 
                                 <div class="table-responsive">
 
@@ -463,8 +430,10 @@ include ('../../php/session/validate-admin.php');
                                     <input type="text" id="id-libro-usuario-modal-modify" class="form-control">
 
                                     <div class="col-sm-6">
-                                        <label for="usuario-nombre-carrera-modal-modify" class="form-label">Carrera</label>
-                                        <input type="text" id="usuario-nombre-carrera-modal-modify" class="form-control">
+                                        <label for="usuario-nombre-carrera-modal-modify"
+                                            class="form-label">Carrera</label>
+                                        <input type="text" id="usuario-nombre-carrera-modal-modify"
+                                            class="form-control">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="usuario-anio-carrera-modal-modify" class="form-label">Año
@@ -472,8 +441,10 @@ include ('../../php/session/validate-admin.php');
                                         <input type="text" id="usuario-anio-carrera-modal-modify" class="form-control">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="usuario-nombre-materia-modal-modify" class="form-label">Materia</label>
-                                        <input type="text" id="usuario-nombre-materia-modal-modify" class="form-control">
+                                        <label for="usuario-nombre-materia-modal-modify"
+                                            class="form-label">Materia</label>
+                                        <input type="text" id="usuario-nombre-materia-modal-modify"
+                                            class="form-control">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="usuario-turno-modal-modify" class="form-label">Turno</label>
@@ -500,7 +471,8 @@ include ('../../php/session/validate-admin.php');
                                     </div>
 
                                     <div class="col-md-12 ">
-                                        <label for="errorMessage-modal-modify-usuario" id="errorMessage-modal-modify-usuario"
+                                        <label for="errorMessage-modal-modify-usuario"
+                                            id="errorMessage-modal-modify-usuario"
                                             class="invisible errorMessage"></label>
                                     </div>
 
@@ -538,7 +510,8 @@ include ('../../php/session/validate-admin.php');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                                 id="btn-cancel-modal-confirm-modify-usuario">Cancel</button>
-                            <button class="btn btn-warning" id="btn-aceptar-modal-confirm-modify-usuario">Aceptar</button>
+                            <button class="btn btn-warning"
+                                id="btn-aceptar-modal-confirm-modify-usuario">Aceptar</button>
 
                         </div>
                     </div>
@@ -565,27 +538,30 @@ include ('../../php/session/validate-admin.php');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                                 id="btn-cancel-modal-confirm-delete-usuario">Cancel</button>
-                            <button class="btn btn-success" id="btn-aceptar-modal-confirm-delete-usuario">Aceptar</button>
+                            <button class="btn btn-success"
+                                id="btn-aceptar-modal-confirm-delete-usuario">Aceptar</button>
 
                         </div>
                     </div>
                 </div>
             </div>
 
-              <!-- modal confirm activar/desactivar usuario -->
-              <div class="modal" tabindex="-1" id="modal-container-confirm-act-desac-usuario">
+            <!-- modal confirm activar/desactivar usuario -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-act-desac-usuario">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content" id="contenido-confirm-act-desac-usuario">
                         <div class="modal-header">
-                            <h7 class="modal-title fs-7 titulo-confirm-act-desac-usuario " id="titulo-confirm-act-desac-usuario">
+                            <h7 class="modal-title fs-7 titulo-confirm-act-desac-usuario "
+                                id="titulo-confirm-act-desac-usuario">
                             </h7>
                             <button id="close-btn-modal-confirm-act-desac-usuario" type="button" class="btn-close"
                                 data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <h3 class="titulo-confirm" id="h3-act-desac-usuario"></h3>
-                            <input type="text" id="id-usuario-modal-confirm-act-desac" class="form-control" disabled >
-                            <input type="text" id="estado-usuario-modal-confirm-act-desac" class="form-control" disabled >
+                            <input type="text" id="id-usuario-modal-confirm-act-desac" class="form-control" disabled>
+                            <input type="text" id="estado-usuario-modal-confirm-act-desac" class="form-control"
+                                disabled>
 
                         </div>
                         <div class="modal-footer">
