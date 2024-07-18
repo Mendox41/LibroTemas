@@ -24,8 +24,7 @@ export function fill_table_ver_datos_course(valor) {
                     document.getElementById('ver-curso-td-ciclo').innerHTML = curso.c_anio || 'N/A';
                     document.getElementById('ver-curso-td-semestre').innerHTML = curso.semestre || 'N/A';
 
-
-                    document.getElementById('ver-curso-td-usuario-profesor').innerHTML = curso.usuario || 'N/A';
+                    document.getElementById('ver-curso-td-nombre-profesor').innerHTML = curso.nombre_apellido || 'N/A';
                    
                 } else {
                     console.error('No se encontraron datos del curso en la respuesta.');

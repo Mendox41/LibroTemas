@@ -212,18 +212,19 @@ export function deshabilitar_contenedores() {
 }
 
 // ----------------------------------------------------------------
-// codigo para readaptar a curso
 // Funcion para restablecer valores del modal ver datos de curso seleccionado
 export function restablecer_valores_modal_ver_curso() {
-    document.getElementById('ver-curso-td-carrera').innerHTML = "";
-    document.getElementById('ver-curso-td-anio-carrera').innerHTML = "";
-    document.getElementById('ver-curso-td-materia').innerHTML = "";
-    document.getElementById('ver-curso-td-turno').innerHTML = "";
-    document.getElementById('ver-curso-td-comision').innerHTML = "";
+    document.getElementById('ver-curso-td-carrera').innerHTML = '';
+    document.getElementById('ver-curso-td-anio-carrera').innerHTML = '';
+    document.getElementById('ver-curso-td-materia').innerHTML = '';
+    document.getElementById('ver-curso-td-turno').innerHTML = '';
+    document.getElementById('ver-curso-td-comision').innerHTML = '';
 
-    document.getElementById('ver-curso-td-ciclo').innerHTML = '';
+    document.getElementById('ver-curso-td-ciclo').innerHTML ='';
     document.getElementById('ver-curso-td-semestre').innerHTML = '';
 
+    document.getElementById('ver-curso-td-nombre-profesor').innerHTML = '';
+   
 
    
 

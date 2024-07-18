@@ -348,7 +348,7 @@ include ('../../php/session/validate-admin.php');
 
             <!-- Modal para ver datos de curso -->
             <div class="modal-container-ver-curso" id="modal-container-ver-curso">
-                <div class="modal modal-lg " id="modal-form-ver-curso" data-bs-backdrop="static"
+                <div class="modal modal-lg" id="modal-form-ver-curso" data-bs-backdrop="static"
                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
                         <div class="modal-content">
@@ -416,14 +416,14 @@ include ('../../php/session/validate-admin.php');
 
 
                             <div class="modal-footer btns-modal-space-between">
-                                <div id="btns-modificar" class="">
+                                <!-- <div id="btns-modificar" class="">
                                     <button type="submit" class="btn btn-warning"
                                         id="btn-modif-modal-ver-curso">Modificar
                                         Datos</button>
                                     <button type="submit" class="btn btn-danger"
                                         id="btn-eliminar-modal-ver-curso">Eliminar</button>
 
-                                </div>
+                                </div> -->
                                 <div id="otros-btns">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                                         id="btn-volver-modal-ver-curso">Volver</button>

@@ -1,6 +1,6 @@
 import { fill_table_ver_datos_course, fill_form_modify_course } from './get-course.js';
-import { deshabilitar_contenedores, restablecer_contenedores, restablecer_valores_modal_modify_curso } from '../modals-actions/modals-abm-courses.js';
-//  restablecer_valores_modal_ver_curso 
+import { deshabilitar_contenedores, restablecer_contenedores, restablecer_valores_modal_modify_curso, restablecer_valores_modal_ver_curso } from '../modals-actions/modals-abm-courses.js';
+
 
 $(document).ready(function () {
 
@@ -136,21 +136,17 @@ $(document).ready(function () {
                                     // fn carga de datos de course en tabla del modal
 
                                     // vacio campo con datos anteriores
-                                    // restablecer_valores_modal_ver_curso(); // Crear funcion con datos modificados a cursos
-                                    $('#').val("");
+                                    restablecer_valores_modal_ver_curso();
+                                    $('#ver-curso-id').val("");
 
                                     fill_table_ver_datos_course(valor);
-                                    $('#').val(valor);
+                                    $('#ver-curso-id').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
 
                                     // habilito modal de ver curso
                                     $("#modal-form-ver-curso").addClass("d-block");
-
-                                    // $("#header").addClass("opacity-25");
-                                    // $("#main-container").addClass("opacity-25");
-                                    // $("#body").addClass("fondo-desactivado");
 
                                 };
 
