@@ -26,12 +26,7 @@ export function fill_table_ver_datos_course(valor) {
 
 
                     document.getElementById('ver-curso-td-usuario-profesor').innerHTML = curso.usuario || 'N/A';
-                    document.getElementById('ver-curso-td-nombre-profesor').innerHTML = curso.nombre_apellido || 'N/A';
-                    document.getElementById('ver-curso-td-fecha-curso').innerHTML = curso.fecha || 'N/A';
-                    document.getElementById('ver-curso-td-fecha-registrado').innerHTML = curso.fecha_ingreso || 'N/A';
-                    document.getElementById('ver-curso-td-fecha-modificacion').innerHTML = curso.fecha_modif || 'N/A';
-                    document.getElementById('ver-curso-td-titulo-curso').innerHTML = curso.curso || 'N/A';
-                    document.getElementById('ver-curso-td-descripcion-curso').innerHTML = curso.descripcion || 'N/A';
+                   
                 } else {
                     console.error('No se encontraron datos del curso en la respuesta.');
                 }

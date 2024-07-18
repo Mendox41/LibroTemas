@@ -301,7 +301,7 @@ include ('../../php/session/validate-admin.php');
 
                             <div class="modal-body">
 
-                                <input id="ver-usuario-id-usuario" type="text" class="form-control" disabled >
+                                <input id="ver-usuario-id-usuario" type="text" class="form-control" disabled hidden >
 
                                 <div class="table-responsive">
 
@@ -407,6 +407,82 @@ include ('../../php/session/validate-admin.php');
                     </div>
                 </div>
 
+            </div>
+
+             <!-- Modal modificar contraseña usuario -->
+             <div class="modal-container-modify-contra-usuario" id="modal-container-modify-contra-usuario">
+                <div class="modal modal-lg" id="modal-form-modify-contra-usuario" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Modificación contraseña de Usuario</h1>
+                                <button id="btn-close-modal-modify-contra-usuario" type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="modal-body">
+
+
+                                <div class="row g-3 form-filtro" id="modal-form-modify-contra-usuario">
+
+                                    <input type="text" id="id-usuario-modal-modify-contra" class="form-control" hidden disabled >
+
+                                    <div class="col-sm-12">
+                                        <label for="contra-modal-modify" class="form-label">Nueva contraseña</label>
+                                        <input type="password" id="contra-modal-modify" class="form-control">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="contra-confirm-modal-modify" class="form-label">Confirmar contraseña</label>
+                                        <input type="password" id="contra-confirm-modal-modify" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="errorMessage-modal-modify-usuario"
+                                            id="errorMessage-modal-modify-usuario"
+                                            class="invisible errorMessage"></label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    id="btn-cancel-modify-contra-usuario">Cancel</button>
+                                <button class="btn btn-success" id="btn-aceptar-modify-contra-usuario">Aceptar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- modal confirm modificacion contraseña usuario -->
+            <div class="modal" tabindex="-1" id="modal-container-confirm-modify-contra-usuario">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" id="contenido-confirm-modify-contra-usuario">
+                        <div class="modal-header">
+                            <h7 class="modal-title fs-7 titulo-confirm" id="staticBackdropLabel">Confirmacion
+                                modificacion de contraseña Usuario
+                            </h7>
+                            <button id="close-btn-modal-confirm-modify-contra-usuario" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="titulo-confirm" id="">¿Desea confirmar la modificacion de la contraseña del
+                                Usuario?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="btn-cancel-modal-confirm-modify-contra-usuario">Cancel</button>
+                            <button class="btn btn-warning"
+                                id="btn-aceptar-modal-confirm-modify-contra-usuario">Aceptar</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- modal confirm modificacion usuario -->

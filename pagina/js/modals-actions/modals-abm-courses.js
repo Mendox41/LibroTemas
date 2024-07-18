@@ -225,13 +225,7 @@ export function restablecer_valores_modal_ver_curso() {
     document.getElementById('ver-curso-td-semestre').innerHTML = '';
 
 
-    document.getElementById('ver-curso-td-usuario-profesor').innerHTML = "";
-    document.getElementById('ver-curso-td-nombre-profesor').innerHTML = "";
-    document.getElementById('ver-curso-td-fecha-curso').innerHTML = "";
-    document.getElementById('ver-curso-td-fecha-registrado').innerHTML = "";
-    document.getElementById('ver-curso-td-fecha-modificacion').innerHTML = "";
-    document.getElementById('ver-curso-td-titulo-curso').innerHTML = "";
-    document.getElementById('ver-curso-td-descripcion-curso').innerHTML = "";
+   
 
 }
 

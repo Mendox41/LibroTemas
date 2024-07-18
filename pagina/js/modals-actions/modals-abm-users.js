@@ -94,6 +94,41 @@ $(document).ready(function () {
     });
 
 
+    
+    // funciones para modal de modificacion de contraseña de usuario registrado
+
+    // btn cancelar del modal
+    $("#btn-cancel-modify-contra-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-form-modify-contra-usuario").removeClass("d-block");
+
+    });
+
+    // btn x del modal
+    $("#btn-close-modal-modify-contra-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-form-modify-contra-usuario").removeClass("d-block");
+
+    });
+
+    // funciones para modal de confirmacion de modificacion de contraseña de usuario registrado
+
+    // btn cancelar del modal
+    $("#btn-cancel-modal-confirm-modify-contra-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-container-confirm-modify-contra-usuario").removeClass("d-block");
+
+    });
+
+    // btn x del modal
+    $("#close-btn-modal-confirm-modify-contra-usuario").click(function () {
+        restablecer_contenedores();
+        $("#modal-container-confirm-modify-contra-usuario").removeClass("d-block");
+
+    });
+
+
+
 
     // funciones para modal de modificacion de datos de un usuario 
 

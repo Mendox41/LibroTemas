@@ -485,10 +485,10 @@ $(document).ready(function () {
 
                                     // vacio campo con datos anteriores
                                     // restablecer_valores_modal_ver_curso(); // Crear funcion con datos modificados a cursos
-                                    $('#').val("");
+                                    $('#ver-curso-id').val("");
 
                                     fill_table_ver_datos_course(valor);
-                                    $('#').val(valor);
+                                    $('#ver-curso-id').val(valor);
 
                                     // deshabilito contenedores de fondo
                                     deshabilitar_contenedores();
