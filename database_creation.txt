@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2024 a las 09:03:06
+-- Tiempo de generación: 18-07-2024 a las 10:02:27
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -380,7 +380,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150)
     WHERE usuario = log_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_semestre` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `c_anio` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT, IN `p_isActive` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_semestre` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `c_anio` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT, IN `p_isActive` INT)   BEGIN
     DECLARE p_id_relacion INT;
     
     SELECT id_relacion INTO p_id_relacion 
@@ -765,7 +765,7 @@ CREATE TABLE `cursos` (
   `id_comision` int DEFAULT NULL,
   `id_profesor` int DEFAULT NULL,
   `id_turno` int DEFAULT NULL,
-  `isActive` smallint DEFAULT NULL,
+  `isActive` int DEFAULT NULL,
   `c_anio` year DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
