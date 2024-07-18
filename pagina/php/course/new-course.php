@@ -55,7 +55,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("iiiiiii", $id_carrera, $id_anio, $id_semestre, $id_materia, $ciclo, $id_turno, $id_comision, $id_profesor);
+$stmt->bind_param("iiiiiiii", $id_carrera, $id_anio, $id_semestre, $id_materia, $ciclo, $id_turno, $id_comision, $id_profesor);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);
@@ -63,6 +63,7 @@ if (!$stmt->execute()) {
     exit();
 }
 
+$result->message = 'El curso fue activado correctamente';
 $result->success = true;
 
 $stmt->close();
