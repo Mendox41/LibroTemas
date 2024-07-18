@@ -12,7 +12,6 @@ $id_comision = !empty($_POST['id_comision']) ? $_POST['id_comision'] : null;
 $c_anio = !empty($_POST['c_anio']) ? $_POST['c_anio'] : null;
 $id_profesor = !empty($_POST['id_profesor']) ? $_POST['id_profesor'] : null;
 $id_turno = !empty($_POST['id_turno']) ? $_POST['id_turno'] : null;
-$isActive = !empty($_POST['isActive']) ? $_POST['isActive'] : "";
 
 $result = new stdClass();
 $result->success = false;
@@ -53,23 +52,19 @@ if ($id_curso === null) {
     error_request($result, "Falta el campo id_turno");
     echo json_encode($result);
     exit();
-}elseif ($isActive === "") {
-    error_request($result, "Falta el campo isActive");
-    echo json_encode($result);
-    exit();
 }
 
 $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
-$stmt = $conn->prepare("CALL modify_course(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("CALL modify_course(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     error_stmt($result, "Error preparing the query: " . $conn->error, $stmt, $conn);
     echo json_encode($result);
     exit();
 }
 
-$stmt->bind_param("iiiiiiiiii", $id_curso, $id_carrera, $id_anio, $id_semestre, $id_materia, $id_comision, $c_anio, $id_profesor, $id_turno, $isActive);
+$stmt->bind_param("iiiiiiiiii", $id_curso, $id_carrera, $id_anio, $id_semestre, $id_materia, $id_comision, $c_anio, $id_profesor, $id_turno);
 
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $conn->error, $stmt, $conn);

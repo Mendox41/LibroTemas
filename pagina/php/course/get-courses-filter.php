@@ -1,11 +1,9 @@
 <?php
-
-// Incluir el archivo de conexión a la base de datos
+// Incluir archivos necesarios
 include(__DIR__ . "/../database/conection.php");
-
-// Incluir las funciones de error
 include(__DIR__ . "/../error_stmt/errorFunctions.php");
 
+// Obtener parámetros de filtro de la solicitud POST
 $nombre_carrera = isset($_POST["nombre_carrera"]) ? $_POST["nombre_carrera"] : '';
 $anio_carrera = isset($_POST["anio_carrera"]) ? $_POST["anio_carrera"] : '';
 $semestre = isset($_POST["semestre"]) ? $_POST["semestre"] : '';
@@ -18,13 +16,15 @@ $apellido_profesor = isset($_POST["apellido_profesor"]) ? $_POST["apellido_profe
 $usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : '';
 $activo = isset($_POST["activo"]) ? $_POST["activo"] : '';
 
+// Inicializar objeto de resultado
 $result = new stdClass();
 $result->success = false;
 
+// Seleccionar la base de datos
 $databaseName = "300hs_laborales";
 mysqli_select_db($conn, $databaseName);
 
-// Armo la consulta     
+// Construir la consulta SQL base
 $sql = "SELECT T1.id_curso, T3.carrera, T4.anio, T5.semestre, T6.materia, T7.comision, T8.turno, T1.c_anio, T9.nombre, t9.apellido, T10.usuario, T1.isActive
         FROM cursos AS T1
         INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
@@ -38,9 +38,11 @@ $sql = "SELECT T1.id_curso, T3.carrera, T4.anio, T5.semestre, T6.materia, T7.com
         INNER JOIN usuarios AS T10 ON T10.id_usuario = T9.id_usuario
         WHERE 1=1";
 
+// Inicializar arrays para parámetros y tipos
 $parameters = [];
 $types = "";
 
+// Añadir condiciones de filtro a la consulta SQL
 if (!empty($nombre_carrera)) {
     $sql .= " AND T3.carrera LIKE ?";
     $parameters[] = "%". $nombre_carrera."%";
@@ -97,6 +99,7 @@ if ($activo !== '') {
     $types .= "i";
 }
 
+// Preparar la declaración
 $stmt = $conn->prepare($sql);
 
 // Verificar si la preparación de la consulta fue exitosa
@@ -106,27 +109,30 @@ if (!$stmt) {
     exit;
 }
 
-// Vincular los parámetros
+// Vincular los parámetros si existen
 if (!empty($parameters)) {
     $stmt->bind_param($types, ...$parameters);
 }
 
-// Ejecutar la consulta y verificar si fue exitosa
+// Ejecutar la consulta
 if (!$stmt->execute()) {
     error_stmt($result, "Error executing the query: " . $stmt->error, $stmt, $conn);
     echo json_encode($result);
     exit;
 }
 
+// Almacenar el resultado y vincular las variables de resultado
 $stmt->store_result();
 $stmt->bind_result($id_curso, $carrera, $anio, $semestre, $materia, $comision, $turno, $c_anio, $nombre, $apellido, $usuario, $isActive);
 
+// Inicializar array para almacenar los resultados
 $course = [];
 $cont = 0;
 
+// Fetch y almacenar cada fila de resultados
 while ($stmt->fetch()) {
     $objCourse = new stdClass();
-
+    // Asignar valores a las propiedades del objeto
     $objCourse->id_curso = $id_curso;
     $objCourse->carrera = $carrera;
     $objCourse->anio = $anio;
@@ -144,6 +150,7 @@ while ($stmt->fetch()) {
     array_push($course, $objCourse);
 }
 
+// Verificar si se encontraron cursos
 if (empty($course)) {
     error_stmt($result, "No se encontraron cursos", $stmt, $conn);
 } else {
@@ -152,9 +159,10 @@ if (empty($course)) {
     $result->success = true;
 }
 
+// Cerrar la declaración y la conexión
 $stmt->close();
 $conn->close();
 
+// Devolver el resultado en formato JSON
 echo json_encode($result);
-
 ?>
