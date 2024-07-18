@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2024 a las 22:28:37
+-- Tiempo de generación: 18-07-2024 a las 22:36:08
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -255,6 +255,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tem
     INNER JOIN materias AS T9 ON T9.id_materia = T2.id_materia
     INNER JOIN usuarios AS T10 ON T10.id_usuario = T3.id_usuario
 	WHERE T1.id_libro_tema = p_id_libro_tema;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_usuario` (IN `p_id_usuario` INT)   BEGIN
+	SELECT T2.id_usuario, T2.usuario, T1.legajo, T1.nombre, T1.apellido, T2.isActive, T2.isAdmin 
+	FROM profesores AS T1
+	INNER JOIN usuarios AS T2 ON T2.id_usuario = T1.id_usuario
+	WHERE T2.id_usuario = p_id_usuario;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_materias` (IN `id_carrera_selected` INT, IN `id_anio_carrera_selected` INT)   BEGIN
