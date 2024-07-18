@@ -53,7 +53,7 @@ if ($id_curso === null) {
     error_request($result, "Falta el campo id_turno");
     echo json_encode($result);
     exit();
-}elseif ($isActive === null) {
+}elseif ($isActive === "") {
     error_request($result, "Falta el campo isActive");
     echo json_encode($result);
     exit();
@@ -76,7 +76,7 @@ if (!$stmt->execute()) {
     echo json_encode($result);
     exit();
 }
-
+$result->message = 'El curso fue modificado correctamente';
 $result->success = true;
 
 $stmt->close();

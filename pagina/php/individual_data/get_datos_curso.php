@@ -44,7 +44,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $descripcion, $id_semestre, $semestre, $id_turno, $turno, $c_anio, $id_comision, $id_profesor, $apellido, $nombre);
+$stmt->bind_result($id_carrera, $carrera, $id_anio, $anio, $id_materia, $materia, $descripcion, $id_semestre, $semestre, $id_turno, $turno, $c_anio, $id_comision, $id_profesor, $apellido, $nombre, $isActive);
 
 $curso = [];
 

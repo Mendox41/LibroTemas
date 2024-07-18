@@ -63,7 +63,7 @@ if (!$stmt->execute()) {
     exit();
 }
 
-$result->message = 'El curso fue activado correctamente';
+$result->message = 'El curso fue ingresado correctamente';
 $result->success = true;
 
 $stmt->close();
