@@ -74,7 +74,7 @@ if (!empty($turno)) {
 if (!empty($ciclo)) {
     $sql .= " AND T1.c_anio LIKE ?";
     $parameters[] = "%".$ciclo."%";
-    $types .= "";
+    $types .= "s";
 }
 if (!empty($nombre_profesor)) {
     $sql .= " AND T9.nombre LIKE ?";
