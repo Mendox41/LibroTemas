@@ -44,7 +44,7 @@ if (!$stmt->execute()) {
 }
 
 // Manejo de resultados
-$stmt->bind_result($id_profesor, $id_usuario, $usuario, $legajo, $nombre, $apellido, $isActive, $IsAdmin);
+$stmt->bind_result($id_usuario, $usuario, $legajo, $nombre, $apellido, $isActive, $IsAdmin);
 
 $usuarios = [];
 
@@ -54,11 +54,11 @@ while ($stmt->fetch()) {
     $objUsuario->id_usuario = $id_usuario;
     $objUsuario->usuario = $usuario;
     $objUsuario->legajo = $legajo;
-    $objUsuario->nombre_apellido = $apellido. ', ' .$nombre;
+    $objUsuario->nombre_apellido = $apellido . ', ' . $nombre;
     $objUsuario->isActive = $isActive;
     $objUsuario->IsAdmin = $IsAdmin;
 
-    $objCourse->id_profesor_for_btns = $id_usuario;
+    $objUsuario->id_profesor_for_btns = $id_usuario;
 
     array_push($usuarios, $objUsuario);
 }
