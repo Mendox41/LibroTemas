@@ -65,6 +65,7 @@ while ($stmt->fetch()) {
     $datoCurso->id_comision = $id_comision;
     $datoCurso->id_profesor = $id_profesor;
     $datoCurso->nombre_apellido = $apellido . ", " . $nombre;
+    $datoCurso->isActive = $isActive;
 
     array_push($curso, $datoCurso);
 }
