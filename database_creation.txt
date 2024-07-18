@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2024 a las 07:40:36
+-- Tiempo de generación: 18-07-2024 a las 08:04:44
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -379,27 +379,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `log_user` NVARCHAR(150)
     WHERE usuario = log_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
-	DECLARE p_anio INT;
-    DECLARE p_active SMALLINT;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modify_course` (IN `p_id_curso` INT, IN `p_id_carrera` INT, IN `p_id_semestre` INT, IN `p_id_anio` INT, IN `p_id_materia` INT, IN `p_id_comision` INT, IN `c_anio` INT, IN `p_id_profesor` INT, IN `p_id_turno` INT)   BEGIN
+    DECLARE p_id_relacion INT;
+    
+    SELECT id_relacion INTO p_id_relacion 
+    FROM relaciones 
+    WHERE 
+        id_carrera = p_id_carrera 
+        AND id_anio = p_id_anio
+        AND id_semestre = p_id_semestre
+        AND id_materia = p_id_materia
+    LIMIT 1;
 
-    -- Obtener el año actual
-    SET p_anio = YEAR(NOW());
-
-    -- Obtener el estado actual del curso
-    SELECT isActive INTO p_active
-    FROM cursos
-    WHERE id_curso = p_id_curso;
-
-    -- Actualizar los datos en la tabla cursos
     UPDATE cursos
-    SET id_carrera = p_id_carrera,
-        id_anio = p_id_anio,
-        id_materia = p_id_materia,
+    SET 
+        id_relacion = p_id_relacion,
         id_comision = p_id_comision,
         id_profesor = p_id_profesor,
         id_turno = p_id_turno,
-        c_anio = p_anio
+        c_anio = c_anio
     WHERE id_curso = p_id_curso;
 END$$
 
