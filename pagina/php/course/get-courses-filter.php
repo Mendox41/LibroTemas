@@ -74,7 +74,7 @@ if (!empty($turno)) {
 if (!empty($ciclo)) {
     $sql .= " AND T1.c_anio LIKE ?";
     $parameters[] = "%".$ciclo."%";
-    $types .= "";
+    $types .= "s";
 }
 if (!empty($nombre_profesor)) {
     $sql .= " AND T9.nombre LIKE ?";
@@ -93,7 +93,7 @@ if (!empty($usuario)) {
 }
 if ($activo !== '') {
     $sql .= " AND T1.isActive = ?";
-    $parameters[] = (int)$activo;
+    $parameters[] = (int)$activo; // Asegurarse de que el tipo sea entero
     $types .= "i";
 }
 
@@ -128,22 +128,16 @@ while ($stmt->fetch()) {
     $objCourse = new stdClass();
 
     $objCourse->id_curso = $id_curso;
-
     $objCourse->carrera = $carrera;
     $objCourse->anio = $anio;
     $objCourse->materia = $materia;
     $objCourse->turno = $turno;
     $objCourse->comision = $comision;
-
     $objCourse->c_anio = $c_anio;
     $objCourse->semestre = $semestre;
-
     $objCourse->apellido = $apellido;
-    
     $objCourse->isActive = $isActive;
-
     $objCourse->id_curso_for_btns = $id_curso;
-
 
     $cont += 1;
 

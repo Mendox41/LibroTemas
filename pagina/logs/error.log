@@ -170,3 +170,7 @@
 [2024-07-17 23:48:35] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\individual_data\get_materias_for_new_course.php:20] | ID de carrera no proporcionado
 [2024-07-17 23:48:47] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\individual_data\get_materias_for_new_course.php:20] | ID de carrera no proporcionado
 [2024-07-18 05:54:18] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\individual_data\get-turnos.php:68] | No hay turnos registrados con esos datos
+[2024-07-18 09:44:37] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\course\get-courses-filter.php:148] | No se encontraron cursos
+[2024-07-18 09:45:13] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\course\get-courses-filter.php:148] | No se encontraron cursos
+[2024-07-18 09:46:32] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\course\get-courses-filter.php:148] | No se encontraron cursos
+[2024-07-18 10:00:50] | [C:\xampp\htdocs\prog\300hs_laborales\LibroTemas\pagina\php\course\get-courses-filter.php:148] | No se encontraron cursos
