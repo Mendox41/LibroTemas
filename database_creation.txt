@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2024 a las 23:52:28
+-- Tiempo de generación: 18-07-2024 a las 07:40:36
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.12
 
@@ -194,6 +194,35 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_curso` (IN `id_relacion_selecte
             AND id_turno = id_turno_selected
             AND id_comision = id_comision_selected;
             
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_curso` (IN `p_id_curso` INT)   BEGIN
+	SELECT 
+	T2.id_carrera,
+    T4.carrera,
+    T2.id_anio,
+    T5.anio,
+    T2.id_materia,
+    T7.materia,
+    descripcion,
+    T2.id_semestre,
+    T6.semestre,
+    T1.id_turno,
+    t8.turno,
+    T1.c_anio,
+    T1.id_comision,
+    T1.id_profesor,
+    T3.apellido,
+    T3.nombre
+	FROM cursos AS T1
+	INNER JOIN relaciones AS T2 ON T2.id_relacion = T1.id_relacion
+	INNER JOIN profesores AS T3 ON T3.id_profesor = T1.id_profesor
+	INNER JOIN carreras AS T4 ON T4.id_carrera = T2.id_carrera
+	INNER JOIN anios AS T5 ON T5.id_anio = T2.id_anio
+	INNER JOIN semestres AS T6 ON T6.id_semestre = T2.id_semestre
+	INNER JOIN materias AS T7 ON T7.id_materia = T2.id_materia
+	INNER JOIN turnos as T8 ON T8.id_turno = T1.id_turno
+	WHERE T1.id_curso = p_id_curso;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_datos_tema` (IN `p_id_libro_tema` INT)   BEGIN
@@ -761,7 +790,8 @@ INSERT INTO `cursos` (`id_curso`, `id_relacion`, `id_comision`, `id_profesor`, `
 (47, 92, 2, 99, 1, 1, '2024'),
 (48, 1, 1, 99, 3, 1, '2024'),
 (49, 68, 1, 99, 1, 1, '2024'),
-(50, 20, 1, 99, 3, 1, '2024');
+(50, 20, 1, 99, 3, 1, '2024'),
+(128, 1, 1, 39, 1, 1, '2024');
 
 -- --------------------------------------------------------
 
@@ -790,8 +820,7 @@ INSERT INTO `libro_temas` (`id_libro_tema`, `id_curso`, `tema`, `descripcion`, `
 (2, 14, 'Python', 'hoy di python basico', '2024-05-02', 18, 37, '2024-06-06 16:42:00', NULL),
 (3, 20, 'Java', 'En esta clase di java', '2024-05-02', 26, 20, '2024-06-06 16:42:00', NULL),
 (4, 20, 'PHP', 'En esta clase di php', '2024-05-06', 26, 20, '2024-06-06 16:42:00', NULL),
-(5, 20, 'C', 'En esta clase di c', '2024-06-06', 26, 20, '2024-06-06 16:42:00', NULL),
-(38, 18, 'Linux', 'En esta clase di redireccionamiento de carpetas y sus comandos', '2024-07-17', 1, 68, '2024-07-17 03:14:15', NULL);
+(5, 20, 'C', 'En esta clase di c', '2024-06-06', 26, 20, '2024-06-06 16:42:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -1284,13 +1313,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_curso` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_temas`
 --
 ALTER TABLE `libro_temas`
-  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_libro_tema` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
